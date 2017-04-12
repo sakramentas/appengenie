@@ -9,6 +9,7 @@ import Notification from '../../components/notification';
 import IssueFilters from '../../components/issue/issue-filters';
 import IssueForm from '../../components/issue/issue-form';
 import IssueList from '../../components/issue/issue-list';
+// import IssuePage from '../../components/issue/issue-page';
 
 
 export class Issues extends Component {
@@ -21,7 +22,7 @@ export class Issues extends Component {
     loadIssues: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     notification: PropTypes.object.isRequired,
-    issues: PropTypes.instanceOf(List).isRequired,
+    // issues: PropTypes.instanceOf(List).isRequired,
     undeleteIssue: PropTypes.func.isRequired,
     unloadIssues: PropTypes.func.isRequired,
     updateIssue: PropTypes.func.isRequired
@@ -59,12 +60,12 @@ export class Issues extends Component {
     return (
       <div className="g-row">
         <div className="g-col">
-          Issue Page
+          Latest wishes
           <IssueForm createIssue={this.props.createIssue} />
         </div>
 
         <div className="g-col">
-          <IssueFilters filter={this.props.filterType} />
+          {/*<IssueFilters filter={this.props.filterType} />*/}
           <IssueList
             deleteIssue={this.props.deleteIssue}
             issues={this.props.issues}

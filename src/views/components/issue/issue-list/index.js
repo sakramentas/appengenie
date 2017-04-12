@@ -1,17 +1,20 @@
-import React, { PropTypes } from 'react';
-import { List } from 'immutable';
+import React, {PropTypes} from 'react';
+import {List} from 'immutable';
 import IssueItem from '../issue-item';
+import {Link} from 'react-router';
 
 
 function IssueList({deleteIssue, issues, updateIssue}) {
   let issueItems = issues.map((issue, index) => {
     return (
-      <IssueItem
-        deleteIssue={deleteIssue}
-        key={index}
-        issue={issue}
-        updateIssue={updateIssue}
-      />
+      <Link to={`/issues/${index}`}>
+        <IssueItem
+          deleteIssue={deleteIssue}
+          key={index}
+          issue={issue}
+          updateIssue={updateIssue}
+        />
+      </Link>
     );
   });
 

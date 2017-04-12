@@ -3,13 +3,15 @@ import App from './app';
 import SignIn from './pages/sign-in';
 import Tasks from './pages/tasks';
 import Issues from './pages/issues';
+import IssuePage from './pages/issues/issue-page';
 
 
 export const paths = {
   ROOT: '/',
   SIGN_IN: '/sign-in',
   TASKS: '/',
-  ISSUES: '/issues'
+  ISSUES: '/issues',
+  ISSUE_PAGE: '/issues/:id'
 };
 
 
@@ -44,6 +46,11 @@ export const getRoutes = getState => {
       {
         path: paths.ISSUES,
         component: Issues,
+        onEnter: requireAuth(getState)
+      },
+      {
+        path: paths.ISSUE_PAGE,
+        component: IssuePage,
         onEnter: requireAuth(getState)
       },
       {
