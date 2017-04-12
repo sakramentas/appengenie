@@ -47,7 +47,7 @@ class TaskForm extends Component {
           maxLength="64"
           onChange={this.onChange}
           onKeyUp={this.onKeyUp}
-          placeholder="What needs to be done?"
+          placeholder="I wish there was an app to"
           ref={c => this.titleInput = c}
           type="text"
           value={this.state.title}

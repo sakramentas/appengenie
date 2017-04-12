@@ -6,9 +6,9 @@ import { createSelector } from 'reselect';
 import { getNotification, notificationActions } from 'src/core/notification';
 import { getIssueFilter, getVisibleIssues, issuesActions } from 'src/core/issues';
 import Notification from '../../components/notification';
-import IssueFilters from '../../components/issue-filters';
-import IssueForm from '../../components/issue-form';
-import IssueList from '../../components/issue-list';
+import IssueFilters from '../../components/issue/issue-filters';
+import IssueForm from '../../components/issue/issue-form';
+import IssueList from '../../components/issue/issue-list';
 
 
 export class Issues extends Component {

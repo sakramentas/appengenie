@@ -6,9 +6,10 @@ import { createSelector } from 'reselect';
 import { getNotification, notificationActions } from 'src/core/notification';
 import { getTaskFilter, getVisibleTasks, tasksActions } from 'src/core/tasks';
 import Notification from '../../components/notification';
-import TaskFilters from '../../components/task-filters';
-import TaskForm from '../../components/task-form';
-import TaskList from '../../components/task-list';
+import TaskFilters from '../../components/task/task-filters';
+import TaskForm from '../../components/task/task-form';
+import TaskList from '../../components/task/task-list';
+import TrendingList from '../../components/trending/trending-list';
 
 
 export class Tasks extends Component {
@@ -68,6 +69,11 @@ export class Tasks extends Component {
             deleteTask={this.props.deleteTask}
             tasks={this.props.tasks}
             updateTask={this.props.updateTask}
+          />
+          <TrendingList
+            deleteTrending={this.props.deleteTask}
+            trendings={this.props.tasks}
+            updateTrending={this.props.updateTask}
           />
         </div>
 
