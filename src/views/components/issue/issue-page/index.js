@@ -14,11 +14,27 @@ function IssuePage(props) {
   //     />
   //   );
   // });
+  console.log(props.id)
+
+  let issueSelected = props.issues
+    .filter((issue) => {
+      return issue.key === props.id
+    })
+    .map(el => el.details);
+
+  let issueSelected2 = props.issues
+    .reduce((result, line) => {
+      result[line] = result[line] || []
+      result[line].push(result[line[0]])
+      return result
+    }, [])
+
+  console.log('issueselected',issueSelected2)
 
   return (
     <div className="issue-list">
       Issue selected
-      {issueItems}
+      {issueSelected}
     </div>
   );
 }

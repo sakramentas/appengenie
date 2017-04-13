@@ -5,11 +5,12 @@ import IssuePage from '../issue-page';
 
 
 class IssueItem extends Component {
-  static propTypes = {
-    deleteIssue: PropTypes.func.isRequired,
-    issue: PropTypes.instanceOf(Issue).isRequired,
-    updateIssue: PropTypes.func.isRequired
-  };
+  // static propTypes = {
+  //   deleteIssue: PropTypes.func.isRequired,
+  //   issue: PropTypes.instanceOf(Issue).isRequired,
+  //   updateIssue: PropTypes.func.isRequired,
+  //   handleIssueClick: PropTypes.func.isRequired
+  // };
 
   constructor(props, context) {
     super(props, context);
@@ -21,6 +22,8 @@ class IssueItem extends Component {
     this.saveTitle = ::this.saveTitle;
     this.stopEditing = ::this.stopEditing;
     this.toggleStatus = ::this.toggleStatus;
+    this.handleIssueClick = ::this.handleIssueClick;
+
     this.onKeyUp = ::this.onKeyUp;
   }
 
@@ -43,7 +46,7 @@ class IssueItem extends Component {
       const title = event.target.value.trim();
 
       if (title.length && title !== issue.title) {
-        this.props.updateIssue(issue, {title});
+        this.props.updateIssue(issue, {details});
       }
 
       this.stopEditing();
@@ -95,29 +98,33 @@ class IssueItem extends Component {
   }
 
   renderIssuePage(issue) {
-    console.log('issue title', issue.title)
     return (
       <IssuePage
-        title={issue.title}
+        title={issue}
       />
     );
+  }
+
+  handleIssueClick() {
+    // console.log(this.props.issue.key)
+    this.props.onClick(this.props.issue.key);
   }
 
   render() {
     const {editing} = this.state;
     const {issue} = this.props;
-    console.log(this.props)
 
     return (
       <div
         className={classNames('issue-item', {'issue-item--completed': issue.completed, 'issue-item--editing': editing})}
-        tabIndex="0">
+        tabIndex="0"
+        onClick={this.handleIssueClick}>
         <div className="cell">
           <button
             aria-hidden={editing}
             aria-label="Mark issue as completed"
             className={classNames('btn issue-item__button', {'hide': editing})}
-            onClick={this.renderIssuePage(issue)}
+            onClick={this.renderIssuePage}
             ref={c => this.toggleStatusButton = c}
             type="button">
             <svg className={classNames('icon', {'icon--active': issue.completed})} width="24" height="24"

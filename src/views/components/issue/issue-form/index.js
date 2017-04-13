@@ -9,7 +9,11 @@ class IssueForm extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {title: ''};
+    this.state = {
+      title: '',
+      details: 'testing details',
+      answers: ' testing answers'
+    };
 
     this.onChange = ::this.onChange;
     this.onKeyUp = ::this.onKeyUp;
@@ -32,8 +36,8 @@ class IssueForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const title = this.state.title.trim();
-    if (title.length) this.props.createIssue(title);
+    const {title, details, answers} = this.state;
+    if (title.length) this.props.createIssue(title, details, answers);
     this.clearInput();
   }
 

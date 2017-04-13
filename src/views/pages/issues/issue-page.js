@@ -12,7 +12,7 @@ import IssueList from '../../components/issue/issue-list';
 // import IssuePage from '../../components/issue/issue-page';
 
 
-export class IssuePage extends Component {
+export class Issue extends Component {
   // static propTypes = {
   //   createIssue: PropTypes.func.isRequired,
   //   deleteIssue: PropTypes.func.isRequired,
@@ -57,10 +57,10 @@ export class IssuePage extends Component {
   }
 
   render() {
+    console.log('issue page', this.props)
     return (
       <div className="g-row">
        ISSUE PAGE
-        {this.props.title}
       </div>
     );
   }
@@ -91,4 +91,4 @@ const mapDispatchToProps = Object.assign(
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(IssuePage);
+)(Issue);
