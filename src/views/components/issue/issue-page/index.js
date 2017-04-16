@@ -20,7 +20,7 @@ function IssuePage(props) {
     .filter((issue) => {
       return issue.key === props.id
     })
-    .map(el => el.details);
+    .map(el => el.title);
 
   let issueSelected2 = props.issues
     .reduce((result, line) => {

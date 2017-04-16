@@ -78,10 +78,10 @@ export class Issues extends Component {
     });
 
     // return console.log('handling click', e.target.value)
-    //  pushState(
-    //    {currentIssueId: issueId},
-    //    `/issues/${issueId}`
-    //  );
+     pushState(
+       {currentIssueId: issueKey},
+       `/issues/${issueKey}`
+     );
     //  let issueItems = this.props.issues.filter((issue, index) => {
     //    return (
     //      <div key={index}>
@@ -109,7 +109,7 @@ export class Issues extends Component {
         </div>
 
         <div className="g-col">
-          {this.renderIssuePage()}
+          {/*{this.renderIssuePage()}*/}
           <IssueFilters filter={this.props.filterType}/>
           <IssueList
             deleteIssue={this.props.deleteIssue}
