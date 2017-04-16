@@ -6,6 +6,7 @@ import {
   DELETE_ISSUE_ERROR,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
+  FILTER_ISSUE_SELECTED,
   LOAD_ISSUES_SUCCESS,
   UNDELETE_ISSUE_ERROR,
   UNLOAD_ISSUES_SUCCESS,
@@ -111,8 +112,16 @@ export function filterIssues(filterType) {
 export function loadIssues() {
   return (dispatch, getState) => {
     const { auth } = getState();
+    console.log('getstate', getState())
     issueList.path = `issues/${auth.id}`;
     issueList.subscribe(dispatch);
+  };
+}
+
+export function filterIssueSelected(key) {
+  return {
+    type: FILTER_ISSUE_SELECTED,
+    payload: {key}
   };
 }
 

@@ -1,5 +1,4 @@
-import { createSelector } from 'reselect';
-
+import {createSelector} from 'reselect';
 
 export function getIssues(state) {
   return state.issues;
@@ -11,6 +10,10 @@ export function getIssueList(state) {
 
 export function getIssueFilter(state) {
   return getIssues(state).filter;
+}
+
+export function getIssueFilterSelected(state) {
+  return getIssues(state).filterSelected;
 }
 
 export function getDeletedIssue(state) {
@@ -26,15 +29,23 @@ export const getVisibleIssues = createSelector(
   getIssueList,
   getIssueFilter,
   (issues, filter) => {
-    switch (filter) {
-      case 'active':
-        return issues.filter(issue => !issue.completed);
-
-      case 'completed':
-        return issues.filter(issue => issue.completed);
-
-      default:
-        return issues;
+    if (filter.length) {
+      return issues.filter(issue => !issue.title.indexOf(filter))
+    } else {
+      return issues
     }
   }
 );
+
+export const getVisibleIssueSelected = createSelector(
+  getIssueList,
+  getIssueFilterSelected,
+  (issues, filter) => {
+    if (filter) {
+      return issues.filter(issue => !issue.key.indexOf(filter))
+    } else {
+      return issues
+    }
+  }
+);
+

@@ -4,33 +4,22 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { getNotification, notificationActions } from 'src/core/notification';
-import { getIssueFilter, getVisibleIssues, issuesActions } from 'src/core/issues';
-import Notification from '../../components/notification';
-import IssueFilters from '../../components/issue/issue-filters';
-import IssueForm from '../../components/issue/issue-form';
-import IssueList from '../../components/issue/issue-list';
+import { getIssueFilter, getIssueFilterSelected, issuesActions } from 'src/core/issues';
+// import Notification from '../../components/notification';
+// import IssueFilters from '../../components/issue/issue-filters';
+// import IssueForm from '../../components/issue/issue-form';
+// import IssueList from '../../components/issue/issue-list';
 // import IssuePage from '../../components/issue/issue-page';
 
 
 export class Issue extends Component {
-  // static propTypes = {
-  //   createIssue: PropTypes.func.isRequired,
-  //   deleteIssue: PropTypes.func.isRequired,
-  //   dismissNotification: PropTypes.func.isRequired,
-  //   filterIssues: PropTypes.func.isRequired,
-  //   filterType: PropTypes.string.isRequired,
-  //   loadIssues: PropTypes.func.isRequired,
-  //   location: PropTypes.object.isRequired,
-  //   notification: PropTypes.object.isRequired,
-  //   // issues: PropTypes.instanceOf(List).isRequired,
-  //   undeleteIssue: PropTypes.func.isRequired,
-  //   unloadIssues: PropTypes.func.isRequired,
-  //   updateIssue: PropTypes.func.isRequired
-  // };
 
   componentWillMount() {
-    // this.props.loadIssues();
-    // this.props.filterIssues(this.props.location.query.filter);
+    console.log('id', this.props.location.query.id)
+    // this.props.filterIssues();
+    this.props.loadIssues();
+    this.props.filterIssueSelected(this.props.location.query.id);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,13 +46,23 @@ export class Issue extends Component {
   }
 
   render() {
-    console.log('issue page', this.props)
+    console.log('issue page', this.props.issues)
     return (
       <div className="g-row">
        ISSUE PAGE
+        <IssueBox issues={this.props.issues} />
       </div>
     );
   }
+}
+
+const IssueBox = (props) => {
+  console.log('esse issue', props.issues)
+  return (
+    <div>
+      {props.issues}
+    </div>
+  )
 }
 
 
@@ -74,10 +73,10 @@ export class Issue extends Component {
 const mapStateToProps = createSelector(
   getNotification,
   getIssueFilter,
-  getVisibleIssues,
-  (notification, filterType, issues) => ({
+  getIssueFilterSelected,
+  (notification, key, issues) => ({
     notification,
-    filterType,
+    key,
     issues
   })
 );

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {Component, PropTypes} from 'react';
 import {Issue} from 'src/core/issues';
 import IssuePage from '../issue-page';
+import { Link } from 'react-router';
 
 
 class IssueItem extends Component {
@@ -117,8 +118,8 @@ class IssueItem extends Component {
     return (
       <div
         className={classNames('issue-item', {'issue-item--completed': issue.completed, 'issue-item--editing': editing})}
-        tabIndex="0"
-        onClick={this.handleIssueClick}>
+        tabIndex="0">
+        <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${this.props.issue.key}`}}}>
         <div className="cell">
           {/*<button*/}
             {/*aria-hidden={editing}*/}
@@ -137,6 +138,7 @@ class IssueItem extends Component {
         <div className="cell">
           {editing ? this.renderTitleInput(issue) : this.renderTitle(issue)}
         </div>
+
 
         <div className="cell">
           <button
@@ -176,6 +178,7 @@ class IssueItem extends Component {
             </svg>
           </button>
         </div>
+          </Link>
       </div>
     );
   }

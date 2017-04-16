@@ -8,6 +8,7 @@ import {
   CREATE_ISSUE_SUCCESS,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
+  FILTER_ISSUE_SELECTED,
   LOAD_ISSUES_SUCCESS,
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
@@ -16,6 +17,7 @@ import {
 export const IssuesState = new Record({
   deleted: null,
   filter: '',
+  filterSelected: '',
   list: new List(),
   previous: null
 });
@@ -41,6 +43,10 @@ export function issuesReducer(state = new IssuesState(), {payload, type}) {
 
     case FILTER_ISSUES:
       return state.set('filter', payload.filterType || '');
+
+    case FILTER_ISSUE_SELECTED:
+      console.log('payload', payload.key)
+      return state.set('filterSelected', payload.key || '');
 
     case LOAD_ISSUES_SUCCESS:
       return state.set('list', new List(payload.reverse()));

@@ -11,7 +11,7 @@ export const paths = {
   SIGN_IN: '/sign-in',
   TASKS: '/',
   ISSUES: '/issues',
-  ISSUE_PAGE: '/issues/:id'
+  ISSUE_PAGE: '/issues/page'
 };
 
 

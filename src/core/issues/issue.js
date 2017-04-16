@@ -6,6 +6,4 @@ export const Issue = new Record({
   key: null,
   title: null,
   details: null,
-  user: null,
-  answers: null
 });

@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
+import IssueCreate from '../issue-create';
 
 class IssueSearch extends Component {
   // static propTypes = {
@@ -9,23 +10,14 @@ class IssueSearch extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      title: '',
-      details: 'testing details',
-      answers: ' testing answers'
-    };
-
     this.onChange = ::this.onChange;
     this.onKeyUp = ::this.onKeyUp;
     this.onSubmit = ::this.onSubmit;
-  }
-
-  clearInput() {
-    this.setState({title: ''});
+    this.renderIssueCreate = ::this.renderIssueCreate;
   }
 
   onChange(event) {
-    this.setState({title: event.target.value});
+    this.props.setSearchTerm(event);
   }
 
   onKeyUp(event) {
@@ -41,25 +33,35 @@ class IssueSearch extends Component {
     this.clearInput();
   }
 
-  render() {
-    let {showIssueCreateForm} = this.props;
-    let {setSearchTerm} = this.props;
-    return (
-      <form className="issue-search" onSubmit={this.onSubmit} noValidate>
-        <input
-          autoComplete="off"
-          autoFocus
-          className="issue-search__input"
-          maxLength="64"
-          onChange={setSearchTerm}
-          onKeyUp={this.onKeyUp}
-          placeholder="I wish there was an app to"
-          ref={c => this.titleInput = c}
-          type="text"
+  renderIssueCreate() {
+    if (this.props.issues.size != null && this.props.issues.size <= 0) {
+      return (
+        <IssueCreate createIssue={this.props.createIssue}/>
+      )
+    }
+  }
 
-        />
-        <input type="checkbox" onChange={showIssueCreateForm} />
-      </form>
+
+  render() {
+
+    return (
+      <div>
+        <form className="issue-search" onSubmit={this.onSubmit} noValidate>
+          <input
+            autoComplete="off"
+            autoFocus
+            className="issue-search__input"
+            maxLength="64"
+            onChange={this.onChange}
+            onKeyUp={this.onKeyUp}
+            placeholder="I wish there was an app to"
+            ref={c => this.titleInput = c}
+            type="text"
+
+          />
+        </form>
+        {this.renderIssueCreate()}
+      </div>
     );
   }
 }

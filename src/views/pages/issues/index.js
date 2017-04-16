@@ -9,7 +9,7 @@ import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
 import Notification from '../../components/notification';
 import IssueFilters from '../../components/issue/issue-filters';
 import IssueSearch from '../../components/issue/issue-search';
-import IssueCreate from '../../components/issue/issue-create';
+
 import IssueList from '../../components/issue/issue-list';
 import IssuePage from '../../components/issue/issue-page';
 
@@ -24,41 +24,27 @@ export class Issues extends Component {
     this.state = {
       currentIssueId: '',
       pageHeader: 'Issues List',
-      showIssueCreateForm: false
+      loading: true
     }
     this.handleIssuePageClick = ::this.handleIssuePageClick;
     this.renderIssuePage = ::this.renderIssuePage;
-    this.showIssueCreateForm = ::this.showIssueCreateForm;
     this.setSearchTerm = ::this.setSearchTerm;
   }
 
-  // static propTypes = {
-  //   createIssue: PropTypes.func.isRequired,
-  //   deleteIssue: PropTypes.func.isRequired,
-  //   dismissNotification: PropTypes.func.isRequired,
-  //   filterIssues: PropTypes.func.isRequired,
-  //   filterType: PropTypes.string.isRequired,
-  //   loadIssues: PropTypes.func.isRequired,
-  //   location: PropTypes.object.isRequired,
-  //   notification: PropTypes.object.isRequired,
-  //   issues: PropTypes.instanceOf(List).isRequired,
-  //   undeleteIssue: PropTypes.func.isRequired,
-  //   unloadIssues: PropTypes.func.isRequired,
-  //   updateIssue: PropTypes.func.isRequired
-  // };
 
+  // Load Issues (action)
   componentWillMount() {
-    // Load Issues (action)
     this.props.loadIssues();
     // Filter issues by History api. Param filter
-    // this.props.filterIssues(this.state.searchTerm);
+    this.props.filterIssues(this.state.issues);
+    this.setState({loading: true})
   }
 
   // componentWillReceiveProps(nextProps) {
-    // If the component will receive another filter, call filterIssues with the filter argument.
-    // if (nextProps.filterIssues !== this.props.filterIssues) {
-    //   this.props.filterIssues(nextProps.filterIssues);
-    // }
+  // If the component will receive another filter, call filterIssues with the filter argument.
+  // if (nextProps.filterIssues !== this.props.filterIssues) {
+  //   this.props.filterIssues(nextProps.filterIssues);
+  // }
   // }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -73,6 +59,10 @@ export class Issues extends Component {
 
   componentWillUnmount() {
     this.props.unloadIssues();
+  }
+
+  componentDidMount() {
+    this.setState({loading: false})
   }
 
   renderNotification() {
@@ -96,10 +86,10 @@ export class Issues extends Component {
     });
 
     // return console.log('handling click', e.target.value)
-     pushState(
-       {currentIssueId: issueKey},
-       `/issues/${issueKey}`
-     );
+    pushState(
+      {currentIssueId: issueKey},
+      `/issues/${issueKey}`
+    );
     //  let issueItems = this.props.issues.filter((issue, index) => {
     //    return (
     //      <div key={index}>
@@ -108,23 +98,17 @@ export class Issues extends Component {
     //    )
     //  })
     // let selectedIssue = this.props.issues.filter(issue => issue.title == issue[issueKey])
-
+    this.renderIssuePage()
 
   }
 
   renderIssuePage() {
     return (
-      (this.state.currentIssueId !== '') ? <IssuePage issues={this.props.issues} key={this.state.currentIssueId} id={this.state.currentIssueId}/> : ''
+        <IssuePage issues={this.props.issues} />
     )
   }
 
-  showIssueCreateForm(event) {
-    if (event.target.checked) {
-      this.setState({showIssueCreateForm: true})
-    } else {
-      this.setState({showIssueCreateForm: false})
-    }
-  }
+
 
   setSearchTerm(event) {
     let searchValue = event.target.value;
@@ -133,6 +117,8 @@ export class Issues extends Component {
     } else {
       this.props.filterIssues(this.props.issues)
     }
+    // this.setState({issuesSize: this.props.issues.size})
+    console.log(this.props.issues.size)
   }
 
   render() {
@@ -140,8 +126,11 @@ export class Issues extends Component {
       <div className="g-row">
         <div className="g-col">
           {this.state.pageHeader}
-          <IssueSearch showIssueCreateForm={this.showIssueCreateForm} setSearchTerm={this.setSearchTerm}/>
-          { this.state.showIssueCreateForm ? <IssueCreate createIssue={this.props.createIssue} /> : '' }
+          <IssueSearch showIssueCreateForm={this.showIssueCreateForm}
+                       setSearchTerm={this.setSearchTerm}
+                       createIssue={this.props.createIssue}
+                       issues={this.props.issues} />
+
         </div>
 
         <div className="g-col">

@@ -55,8 +55,7 @@ class IssueCreate extends Component {
     return (
       <form className="issue-create" onSubmit={this.onSubmit} noValidate>
         <input
-          autoComplete="off"
-          autoFocus
+          autoComplete="on"
           className="issue-create__input issue-create__input--title"
           maxLength="100"
           onChange={this.onChangeTitle}
