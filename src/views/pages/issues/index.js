@@ -7,7 +7,7 @@ import {getNotification, notificationActions} from 'src/core/notification';
 import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
 import Notification from '../../components/notification';
 import IssueFilters from '../../components/issue/issue-filters';
-import IssueForm from '../../components/issue/issue-form';
+import IssueSearch from '../../components/issue/issue-search';
 import IssueList from '../../components/issue/issue-list';
 import IssuePage from '../../components/issue/issue-page';
 
@@ -105,7 +105,7 @@ export class Issues extends Component {
       <div className="g-row">
         <div className="g-col">
           {this.state.pageHeader}
-          <IssueForm createIssue={this.props.createIssue}/>
+          <IssueSearch createIssue={this.props.createIssue}/>
         </div>
 
         <div className="g-col">

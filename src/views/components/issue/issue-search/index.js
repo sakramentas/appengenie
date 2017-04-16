@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 
-class IssueForm extends Component {
+class IssueSearch extends Component {
   static propTypes = {
     createIssue: PropTypes.func.isRequired
   };
@@ -43,11 +43,11 @@ class IssueForm extends Component {
 
   render() {
     return (
-      <form className="issue-form" onSubmit={this.onSubmit} noValidate>
+      <form className="issue-search" onSubmit={this.onSubmit} noValidate>
         <input
           autoComplete="off"
           autoFocus
-          className="issue-form__input"
+          className="issue-search__input"
           maxLength="64"
           onChange={this.onChange}
           onKeyUp={this.onKeyUp}
@@ -61,4 +61,4 @@ class IssueForm extends Component {
   }
 }
 
-export default IssueForm;
+export default IssueSearch;

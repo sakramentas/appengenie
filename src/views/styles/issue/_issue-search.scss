@@ -2,7 +2,7 @@
 //  TaskForm
 //---------------------------------------------------------
 
-.issue-form {
+.issue-search {
   margin: 40px 0 10px;
 
   @include media-query(540) {
@@ -11,7 +11,7 @@
 }
 
 
-.issue-form__input {
+.issue-search__input {
   outline: none;
   border: 1px solid #666;
   border-radius: 63px;
