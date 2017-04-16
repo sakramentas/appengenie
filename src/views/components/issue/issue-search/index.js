@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 
 
 class IssueSearch extends Component {
-  static propTypes = {
-    createIssue: PropTypes.func.isRequired
-  };
+  // static propTypes = {
+  //   createIssue: PropTypes.func.isRequired
+  // };
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       title: '',
@@ -42,6 +42,8 @@ class IssueSearch extends Component {
   }
 
   render() {
+    let {showIssueCreateForm} = this.props;
+    let {setSearchTerm} = this.props;
     return (
       <form className="issue-search" onSubmit={this.onSubmit} noValidate>
         <input
@@ -49,13 +51,14 @@ class IssueSearch extends Component {
           autoFocus
           className="issue-search__input"
           maxLength="64"
-          onChange={this.onChange}
+          onChange={setSearchTerm}
           onKeyUp={this.onKeyUp}
           placeholder="I wish there was an app to"
           ref={c => this.titleInput = c}
           type="text"
-          value={this.state.title}
+
         />
+        <input type="checkbox" onChange={showIssueCreateForm} />
       </form>
     );
   }

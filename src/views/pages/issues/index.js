@@ -5,9 +5,11 @@ import {createSelector} from 'reselect';
 
 import {getNotification, notificationActions} from 'src/core/notification';
 import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
+
 import Notification from '../../components/notification';
 import IssueFilters from '../../components/issue/issue-filters';
 import IssueSearch from '../../components/issue/issue-search';
+import IssueCreate from '../../components/issue/issue-create';
 import IssueList from '../../components/issue/issue-list';
 import IssuePage from '../../components/issue/issue-page';
 
@@ -21,10 +23,13 @@ export class Issues extends Component {
     super(props);
     this.state = {
       currentIssueId: '',
-      pageHeader: 'Issues List'
+      pageHeader: 'Issues List',
+      showIssueCreateForm: false
     }
     this.handleIssuePageClick = ::this.handleIssuePageClick;
     this.renderIssuePage = ::this.renderIssuePage;
+    this.showIssueCreateForm = ::this.showIssueCreateForm;
+    this.setSearchTerm = ::this.setSearchTerm;
   }
 
   // static propTypes = {
@@ -43,15 +48,28 @@ export class Issues extends Component {
   // };
 
   componentWillMount() {
+    // Load Issues (action)
     this.props.loadIssues();
-    this.props.filterIssues(this.props.location.query.filter);
+    // Filter issues by History api. Param filter
+    // this.props.filterIssues(this.state.searchTerm);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.query.filter !== this.props.location.query.filter) {
-      this.props.filterIssues(nextProps.location.query.filter);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+    // If the component will receive another filter, call filterIssues with the filter argument.
+    // if (nextProps.filterIssues !== this.props.filterIssues) {
+    //   this.props.filterIssues(nextProps.filterIssues);
+    // }
+  // }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.searchTerm !== nextState.searchTerm) {
+  //     return true;
+  //   }
+  //   if (this.props.filterIssues !== nextProps.filterIssues) {
+  //     return true;
+  //   }
+  //   return true;
+  // }
 
   componentWillUnmount() {
     this.props.unloadIssues();
@@ -100,17 +118,35 @@ export class Issues extends Component {
     )
   }
 
+  showIssueCreateForm(event) {
+    if (event.target.checked) {
+      this.setState({showIssueCreateForm: true})
+    } else {
+      this.setState({showIssueCreateForm: false})
+    }
+  }
+
+  setSearchTerm(event) {
+    let searchValue = event.target.value;
+    if (searchValue.length) {
+      this.props.filterIssues(searchValue);
+    } else {
+      this.props.filterIssues(this.props.issues)
+    }
+  }
+
   render() {
     return (
       <div className="g-row">
         <div className="g-col">
           {this.state.pageHeader}
-          <IssueSearch createIssue={this.props.createIssue}/>
+          <IssueSearch showIssueCreateForm={this.showIssueCreateForm} setSearchTerm={this.setSearchTerm}/>
+          { this.state.showIssueCreateForm ? <IssueCreate createIssue={this.props.createIssue} /> : '' }
         </div>
 
         <div className="g-col">
           {/*{this.renderIssuePage()}*/}
-          <IssueFilters filter={this.props.filterType}/>
+          {/*<IssueFilters filter={this.props.filterType}/>*/}
           <IssueList
             deleteIssue={this.props.deleteIssue}
             issues={this.props.issues}

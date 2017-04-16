@@ -14,9 +14,9 @@ import {
 } from './action-types';
 
 
-export function createIssue(title, details, answers) {
+export function createIssue(title, details) {
   return dispatch => {
-    issueList.push({completed: false, title, details, answers})
+    issueList.push({completed: false, title, details})
       .catch(error => dispatch(createIssueError(error)));
   };
 }

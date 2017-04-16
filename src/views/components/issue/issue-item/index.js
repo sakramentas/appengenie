@@ -120,18 +120,18 @@ class IssueItem extends Component {
         tabIndex="0"
         onClick={this.handleIssueClick}>
         <div className="cell">
-          <button
-            aria-hidden={editing}
-            aria-label="Mark issue as completed"
-            className={classNames('btn issue-item__button', {'hide': editing})}
-            onClick={this.renderIssuePage}
-            ref={c => this.toggleStatusButton = c}
-            type="button">
-            <svg className={classNames('icon', {'icon--active': issue.completed})} width="24" height="24"
-                 viewBox="0 0 24 24">
-              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-            </svg>
-          </button>
+          {/*<button*/}
+            {/*aria-hidden={editing}*/}
+            {/*aria-label="Mark issue as completed"*/}
+            {/*className={classNames('btn issue-item__button', {'hide': editing})}*/}
+            {/*onClick={this.renderIssuePage}*/}
+            {/*ref={c => this.toggleStatusButton = c}*/}
+            {/*type="button">*/}
+            {/*<svg className={classNames('icon', {'icon--active': issue.completed})} width="24" height="24"*/}
+                 {/*viewBox="0 0 24 24">*/}
+              {/*<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>*/}
+            {/*</svg>*/}
+          {/*</button>*/}
         </div>
 
         <div className="cell">
