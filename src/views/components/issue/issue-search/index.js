@@ -47,6 +47,7 @@ class IssueSearch extends Component {
     return (
       <div>
         <form className="issue-search" onSubmit={this.onSubmit} noValidate>
+          <span>I wish there was an APP to...</span>
           <input
             autoComplete="off"
             autoFocus
@@ -54,7 +55,7 @@ class IssueSearch extends Component {
             maxLength="64"
             onChange={this.onChange}
             onKeyUp={this.onKeyUp}
-            placeholder="I wish there was an app to"
+            placeholder=""
             ref={c => this.titleInput = c}
             type="text"
 

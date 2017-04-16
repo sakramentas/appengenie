@@ -125,7 +125,6 @@ export class Issues extends Component {
     return (
       <div className="g-row">
         <div className="g-col">
-          {this.state.pageHeader}
           <IssueSearch showIssueCreateForm={this.showIssueCreateForm}
                        setSearchTerm={this.setSearchTerm}
                        createIssue={this.props.createIssue}
