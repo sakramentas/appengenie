@@ -10,7 +10,7 @@ import { getIssueFilter, getVisibleIssues, issuesActions } from 'src/core/issues
 // import IssueForm from '../../components/issue/issue-form';
 // import IssueList from '../../components/issue/issue-list';
 // import IssuePage from '../../components/issue/issue-page';
-
+import RaisedButton from 'material-ui/RaisedButton';
 
 export class Issue extends Component {
 
@@ -57,6 +57,7 @@ const IssueBox = ({issue}) => {
     <div className="issue-box__question">
       <h3>{issue.title}</h3>
       <span>{issue.details}</span>
+      <RaisedButton label="Default"/>
     </div>
   )
 }

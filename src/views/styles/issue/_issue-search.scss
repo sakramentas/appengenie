@@ -3,14 +3,13 @@
 //---------------------------------------------------------
 
 .issue-search {
-  margin: 0 -16px 10px -16px;
   height: 144px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   text-align: center;
   padding: 14px 10px;
-  background: #9cd870;
+  justify-content: center;
 
   span {
     width: 100%;

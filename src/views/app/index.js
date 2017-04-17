@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { authActions, getAuth } from 'src/core/auth';
 import { paths } from '../routes';
 import Header from '../components/header';
+import BottomNav from '../components/header/bottom-nav';
 
 
 export class App extends Component {
@@ -33,6 +34,11 @@ export class App extends Component {
     return (
       <div>
         <Header
+          authenticated={this.props.auth.authenticated}
+          signOut={this.props.signOut}
+        />
+
+        <BottomNav
           authenticated={this.props.auth.authenticated}
           signOut={this.props.signOut}
         />

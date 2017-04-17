@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-
+import {Redirect} from 'react-router'
 import IssueCreate from '../issue-create';
+import AutoComplete from 'material-ui/AutoComplete';
 
 class IssueSearch extends Component {
   // static propTypes = {
@@ -14,6 +15,11 @@ class IssueSearch extends Component {
     this.onKeyUp = ::this.onKeyUp;
     this.onSubmit = ::this.onSubmit;
     this.renderIssueCreate = ::this.renderIssueCreate;
+
+    this.state = {
+      keyword: '',
+      issuesFiltered: []
+    }
   }
 
   onChange(event) {
@@ -41,26 +47,50 @@ class IssueSearch extends Component {
     }
   }
 
+  redirectToIssuePage() {
+    return (<Redirect to="/issue/"/>)
+  }
+
+  handleUpdateInput = (value) => {
+    this.setState({keyword: value})
+  };
+
+  componentWillMount() {
+    setTimeout(() => {
+      let issuesArray = []
+      this.props.issues.forEach((issue, index) => issuesArray.push([issue.title, issue.key]))
+      this.setState({issuesFiltered: issuesArray})
+      console.log(this.state.issuesFiltered)
+    }, 3000)
+  }
+
 
   render() {
-
     return (
       <div>
-        <form className="issue-search" onSubmit={this.onSubmit} noValidate>
+        <div className="issue-search">
           <span>I wish there was an APP to...</span>
-          <input
-            autoComplete="off"
-            autoFocus
-            className="issue-search__input"
-            maxLength="64"
-            onChange={this.onChange}
-            onKeyUp={this.onKeyUp}
-            placeholder=""
-            ref={c => this.titleInput = c}
-            type="text"
+          {/*<input*/}
+          {/*autoComplete="off"*/}
+          {/*autoFocus*/}
+          {/*className="issue-search__input"*/}
+          {/*maxLength="64"*/}
+          {/*onChange={this.onChange}*/}
+          {/*onKeyUp={this.onKeyUp}*/}
+          {/*placeholder=""*/}
+          {/*ref={c => this.titleInput = c}*/}
+          {/*type="text"*/}
 
+          {/*/>*/}
+          <AutoComplete
+            hintText="Type anything"
+            dataSource={[...this.props.issues].map(issue => issue.title.toLowerCase())}
+            openOnFocus={true}
+            fullWidth={true}
+            onSubmit={this.redirectToIssuePage}
+            onUpdateInput={this.handleUpdateInput}
           />
-        </form>
+        </div>
         {this.renderIssueCreate()}
       </div>
     );

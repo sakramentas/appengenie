@@ -3,23 +3,29 @@
 //---------------------------------------------------------
 
 .header {
-  padding: 10px 0;
-  height: 60px;
-  overflow: hidden;
-  line-height: 40px;
-  background: #292929;
-  position: fixed;
-  width: 100%;
-  z-index: 999;
-  top: 0;
-  left: 0;
+  //padding: 10px 0;
+  //height: 60px;
+  //overflow: hidden;
+  //line-height: 40px;
+  //background: #292929;
+  //position: fixed;
+  //width: 100%;
+  //z-index: 999;
+  //top: 0;
+  //left: 0;
+  > a {
+    align-self: center;
+  }
+}
+
+.link--issues {
+  flex: inherit !important;
 }
 
 
 .header__title {
   @include fa-icon(circle-o);
-  float: left;
-  font-size: rem(14px);
+  font-size: 1.175rem;
   font-weight: 400;
   text-rendering: auto;
   transform: translate(0,0);

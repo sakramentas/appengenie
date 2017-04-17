@@ -1,35 +1,51 @@
-import React, {PropTypes} from 'react';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
+import {Link} from 'react-router';
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
 
-const Header = ({authenticated, signOut}) => {
-  return (
-    <header className="header">
-      <div className="g-row">
-        <div className="g-col">
-          <h1 className="header__title"><Link to="/">LookApp</Link></h1>
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
 
-          <ul className="header__actions">
-            {authenticated ?
-              <div>
-                <li>
-                  <button className="btn" onClick={signOut}>Sign out</button>
-                </li>
-                <li>
-                  <button className="btn"><Link to="/issues">Issues</Link></button>
-                </li>
-              </div>
-              : null}
-            {/*<li><a className="link link--github" href="https://github.com/r-park/todo-react-redux"></a></li>*/}
-          </ul>
-        </div>
-      </div>
-    </header>
-  );
-};
+    this.handleToggle = ::this.handleToggle
+    this.handleClose = ::this.handleClose
+  }
 
-Header.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
-  signOut: PropTypes.func.isRequired
-};
+  handleToggle() {
+    console.log('changed state')
+    return this.setState({open: !this.state.open});
+  }
+
+  handleClose() {
+    return this.setState({open: false});
+  }
+
+  render() {
+    return (
+      <AppBar onClick={this.handleToggle}
+              className="header">
+
+        <Drawer
+          docked={false}
+          width={200}
+          open={this.state.open}
+          onRequestChange={(open) => this.setState({open})}
+        >
+          <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
+          <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
+        </Drawer>
+
+        <Link to="/"><h1 className="header__title">LookApp</h1></Link>
+
+      </AppBar>
+    );
+
+  }
+}
+
 
 export default Header;
