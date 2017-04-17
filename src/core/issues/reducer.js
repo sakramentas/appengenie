@@ -45,8 +45,8 @@ export function issuesReducer(state = new IssuesState(), {payload, type}) {
       return state.set('filter', payload.filterType || '');
 
     case FILTER_ISSUE_SELECTED:
-      console.log('payload', payload.key)
-      return state.set('filterSelected', payload.key || '');
+      console.log('payload', IssuesState);
+      return state.set('filter', payload.filterValue || '');
 
     case LOAD_ISSUES_SUCCESS:
       return state.set('list', new List(payload.reverse()));

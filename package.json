@@ -1,17 +1,16 @@
 {
   "name": "todo-react-redux",
   "version": "0.6.0",
-  "description": "Todo app with React, Redux, and Firebase",
-  "homepage": "https://github.com/r-park/todo-react-redux",
+  "description": "Search engine for mobile applications",
+  "homepage": "https://github.com/sakramentas",
   "repository": {
     "type": "git",
-    "url": "https://github.com/r-park/todo-react-redux.git"
+    "url": "https://github.com/sakramentas/lookapp"
   },
   "author": {
-    "name": "Richard Park",
-    "email": "objectiv@gmail.com"
+    "name": "Lucas Sacramento",
+    "email": "lucas.arki@gmail.com"
   },
-  "license": "MIT",
   "private": true,
   "engines": {
     "node": ">=6.4"
@@ -36,9 +35,11 @@
     "react-redux": "~4.4.5",
     "react-router": "~2.8.1",
     "react-router-redux": "~4.0.6",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "~3.6.0",
     "redux-thunk": "~2.1.0",
-    "reselect": "~2.5.4"
+    "reselect": "~2.5.4",
+    "semantic-ui-react": "^0.68.0"
   },
   "devDependencies": {
     "autoprefixer": "~6.4.1",
@@ -65,6 +66,7 @@
     "karma-jasmine": "~1.0.2",
     "karma-sourcemap-loader": "~0.3.7",
     "karma-webpack": "~1.8.0",
+    "material-ui": "^0.17.4",
     "minx": "r-park/minx.git",
     "morgan": "~1.7.0",
     "node-sass": "~3.10.0",
@@ -74,6 +76,7 @@
     "react-addons-test-utils": "~15.3.2",
     "react-hot-loader": "3.0.0-beta.5",
     "sass-loader": "~4.0.2",
+    "semantic-ui": "^2.2.10",
     "sinon": "~1.17.6",
     "style-loader": "~0.13.1",
     "webpack": "~1.13.2",

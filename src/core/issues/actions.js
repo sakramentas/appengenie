@@ -3,10 +3,12 @@ import { issueList } from './issue-list';
 import {
   CREATE_ISSUE_ERROR,
   CREATE_ISSUE_SUCCESS,
+  SELECT_ISSUE,
+  SELECT_ISSUE_ERROR,
+  SELECT_ISSUE_SUCCESS,
   DELETE_ISSUE_ERROR,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
-  FILTER_ISSUE_SELECTED,
   LOAD_ISSUES_SUCCESS,
   UNDELETE_ISSUE_ERROR,
   UNLOAD_ISSUES_SUCCESS,
@@ -32,6 +34,28 @@ export function createIssueError(error) {
 export function createIssueSuccess(issue) {
   return {
     type: CREATE_ISSUE_SUCCESS,
+    payload: issue
+  };
+}
+export function selectIssue(issue) {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+    console.log('getstate', getState())
+    issueList.path = `issues/${auth.id}/${issue.key}`;
+    issueList.subscribe(dispatch);
+  };
+}
+
+export function selectIssueError(error) {
+  return {
+    type: SELECT_ISSUE_ERROR,
+    payload: error
+  };
+}
+
+export function selectIssueSuccess(issue) {
+  return {
+    type: SELECT_ISSUE_SUCCESS,
     payload: issue
   };
 }
@@ -112,18 +136,12 @@ export function filterIssues(filterType) {
 export function loadIssues() {
   return (dispatch, getState) => {
     const { auth } = getState();
-    console.log('getstate', getState())
+    console.log('getstate', getState());
     issueList.path = `issues/${auth.id}`;
     issueList.subscribe(dispatch);
   };
 }
 
-export function filterIssueSelected(key) {
-  return {
-    type: FILTER_ISSUE_SELECTED,
-    payload: {key}
-  };
-}
 
 export function unloadIssues() {
   issueList.unsubscribe();

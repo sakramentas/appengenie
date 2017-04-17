@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { getNotification, notificationActions } from 'src/core/notification';
-import { getIssueFilter, getIssueFilterSelected, issuesActions } from 'src/core/issues';
+import { getIssueFilter, getVisibleIssues, issuesActions } from 'src/core/issues';
 // import Notification from '../../components/notification';
 // import IssueFilters from '../../components/issue/issue-filters';
 // import IssueForm from '../../components/issue/issue-form';
@@ -15,21 +15,7 @@ import { getIssueFilter, getIssueFilterSelected, issuesActions } from 'src/core/
 export class Issue extends Component {
 
   componentWillMount() {
-    console.log('id', this.props.location.query.id)
-    // this.props.filterIssues();
     this.props.loadIssues();
-    this.props.filterIssueSelected(this.props.location.query.id);
-
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // if (nextProps.location.query.filter !== this.props.location.query.filter) {
-    //   this.props.filterIssues(nextProps.location.query.filter);
-    // }
-  }
-
-  componentWillUnmount() {
-    // this.props.unloadIssues();
   }
 
   renderNotification() {
@@ -45,22 +31,32 @@ export class Issue extends Component {
     // );
   }
 
+  loadSelectedIssue() {
+    return this.props.issues.map((issue, index) => {
+      if (issue.key === this.props.location.query.id) {
+        return (<IssueBox issue={issue} key={index} />)
+      }
+    })
+  }
+
   render() {
     console.log('issue page', this.props.issues)
+    // console.log('medo ', this.loadSelectedIssue())
     return (
-      <div className="g-row">
+      <div className="issue-page">
        ISSUE PAGE
-        <IssueBox issues={this.props.issues} />
+        {this.loadSelectedIssue()}
       </div>
     );
   }
 }
 
-const IssueBox = (props) => {
-  console.log('esse issue', props.issues)
+const IssueBox = ({issue}) => {
+  // console.log('esse issue', props)
   return (
-    <div>
-      {props.issues}
+    <div className="issue-box__question">
+      <h3>{issue.title}</h3>
+      <span>{issue.details}</span>
     </div>
   )
 }
@@ -73,10 +69,10 @@ const IssueBox = (props) => {
 const mapStateToProps = createSelector(
   getNotification,
   getIssueFilter,
-  getIssueFilterSelected,
-  (notification, key, issues) => ({
+  getVisibleIssues,
+  (notification, filterType, issues) => ({
     notification,
-    key,
+    filterType,
     issues
   })
 );
