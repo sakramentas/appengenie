@@ -11,12 +11,11 @@ class Header extends Component {
       open: false
     };
 
-    this.handleToggle = ::this.handleToggle
-    this.handleClose = ::this.handleClose
+    this.handleToggle = ::this.handleToggle;
+    this.handleClose = ::this.handleClose;
   }
 
   handleToggle() {
-    console.log('changed state')
     return this.setState({open: !this.state.open});
   }
 
@@ -26,15 +25,15 @@ class Header extends Component {
 
   render() {
     return (
-      <AppBar onClick={this.handleToggle}
-              className="header">
+      <AppBar
+        onClick={this.handleToggle}
+        className="header">
 
         <Drawer
           docked={false}
           width={200}
           open={this.state.open}
-          onRequestChange={(open) => this.setState({open})}
-        >
+          onRequestChange={open => this.setState({open})}>
           <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
           <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
         </Drawer>

@@ -24,14 +24,15 @@ export function getDeletedIssue(state) {
 //=====================================
 //  MEMOIZED SELECTORS
 //-------------------------------------
-
+//TODO: create different types of filter, such as selected issue and by keyword
 export const getVisibleIssues = createSelector(
   getIssueList,
   getIssueFilter,
   (issues, filter) => {
     if (filter.length) {
-      return issues.filter(issue => !issue.title.indexOf(filter))
-    } else {
+      return issues.filter(issue => !issue.title.indexOf(filter));
+    }
+    else {
       return issues
     }
   }
@@ -42,9 +43,10 @@ export const getVisibleIssueSelected = createSelector(
   getIssueFilterSelected,
   (issues, filter) => {
     if (filter) {
-      return issues.filter(issue => !issue.key.indexOf(filter))
-    } else {
-      return issues
+      return issues.filter(issue => !issue.key.indexOf(filter));
+    }
+    else {
+      return issues;
     }
   }
 );

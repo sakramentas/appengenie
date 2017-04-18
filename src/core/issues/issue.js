@@ -5,5 +5,5 @@ export const Issue = new Record({
   completed: false,
   key: null,
   title: null,
-  details: null,
+  details: null
 });

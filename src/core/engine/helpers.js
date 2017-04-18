@@ -1,15 +1,15 @@
 export function flatten(arr) {
-  return [].concat(...arr)
+  return [].concat(...arr);
 }
 
 export function deepFlatten(arr) {
   return flatten(           // return shalowly flattened array
-    arr.map(x=>             // with each x in array
+    arr.map(x =>             // with each x in array
       Array.isArray(x.title)      // is x an array?
         ? deepFlatten(x)    // if yes, return deeply flattened x
         : x.title.split(' ')                 // if no, return just x
     )
-  )
+  );
 }
 
 

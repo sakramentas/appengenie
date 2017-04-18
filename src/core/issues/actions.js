@@ -3,7 +3,6 @@ import { issueList } from './issue-list';
 import {
   CREATE_ISSUE_ERROR,
   CREATE_ISSUE_SUCCESS,
-  SELECT_ISSUE,
   SELECT_ISSUE_ERROR,
   SELECT_ISSUE_SUCCESS,
   DELETE_ISSUE_ERROR,
@@ -40,7 +39,6 @@ export function createIssueSuccess(issue) {
 export function selectIssue(issue) {
   return (dispatch, getState) => {
     const { auth } = getState();
-    console.log('getstate', getState())
     issueList.path = `issues/${auth.id}/${issue.key}`;
     issueList.subscribe(dispatch);
   };
