@@ -4,17 +4,13 @@ import IssueItem from '../issue-item';
 import {Link} from 'react-router';
 
 
-const IssueList = ({deleteIssue, issues, updateIssue, handleIssueClick}) => {
-  console.log('from issue list', issues)
+const IssueList = ({issues}) => {
+
   let issueItems = issues.map((issue, index) => {
     return (
-
         <IssueItem
-          deleteIssue={deleteIssue}
           key={index}
           issue={issue}
-          updateIssue={updateIssue}
-          onClick={handleIssueClick}
         />
     );
   });
@@ -24,12 +20,6 @@ const IssueList = ({deleteIssue, issues, updateIssue, handleIssueClick}) => {
       {issueItems}
     </div>
   );
-}
-
-// IssueList.propTypes = {
-//   deleteIssue: PropTypes.func.isRequired,
-//   issues: PropTypes.instanceOf(List).isRequired,
-//   updateIssue: PropTypes.func.isRequired
-// };
+};
 
 export default IssueList;

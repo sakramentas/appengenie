@@ -32,7 +32,7 @@ export class Issue extends Component {
   }
 
   loadSelectedIssue() {
-    return this.props.issues.map((issue, index) => {
+    return this.props.issues.map((issue, index) => { //TODO: get the selected issue with getVisibleIssues selector
       if (issue.key === this.props.location.query.id) {
         return (<IssueBox issue={issue} key={index} />)
       }

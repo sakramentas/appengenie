@@ -1,10 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-
+import React, { Component } from 'react';
 
 class IssueCreate extends Component {
-  // static propTypes = {
-  //   createIssue: PropTypes.func.isRequired
-  // };
 
   constructor(props) {
     super(props);
@@ -28,14 +24,12 @@ class IssueCreate extends Component {
     this.setState({
       title: event.target.value
     });
-    console.log(this.state.title)
   }
 
   onChangeDetails(event) {
     this.setState({
       details: event.target.value
     });
-    console.log(this.state.details)
   }
 
   onKeyUp(event) {
@@ -53,7 +47,8 @@ class IssueCreate extends Component {
 
   render() {
     return (
-      <form className="issue-create" onSubmit={this.onSubmit} noValidate>
+      <form className="issue-create"
+            onSubmit={this.onSubmit}>
         <input
           autoComplete="on"
           className="issue-create__input issue-create__input--title"

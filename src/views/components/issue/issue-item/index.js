@@ -57,7 +57,6 @@ class IssueItem extends Component {
           <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${this.props.issue.key}`}}}>
             <FlatButton label="Open"/>
           </Link>
-          <FlatButton label="Answer"/>
         </CardActions>
         <CardText expandable={true}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
