@@ -28,6 +28,11 @@
 }
 
 .alert-short__box {
-  color: dodgerblue;
-  background: gray;
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  line-height: 17px;
+  b {
+    color: #000;
+  }
 }

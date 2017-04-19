@@ -17,6 +17,7 @@ const IssueList = ({issues}) => {
 
   return (
     <div className="issue-list">
+      <span>Latest wishes</span>
       {issueItems}
     </div>
   );

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import {TweenMax} from "gsap";
+import React, {Component} from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class AlertShort extends Component {
 
@@ -7,20 +7,14 @@ class AlertShort extends Component {
     super(props);
   }
 
-  componentWillEnter (callback) {
-    const el = this.container;
-    TweenMax.fromTo(el, 0.3, {y: 100, opacity: 0}, {y: 0, opacity: 1, onComplete: callback});
-  }
-
-  componentWillLeave (callback) {
-    const el = this.container;
-    TweenMax.fromTo(el, 0.3, {y: 0, opacity: 1}, {y: -100, opacity: 0, onComplete: callback});
-  }
   render() {
-    let {text} = this.props;
+    let {text, openIssueForm} = this.props;
     return (
-      <div className="alert-short__box" ref={c => this.container = c}>
-        <span>There are no suggestions for your search. You can create a new Issue with <b>{text}</b></span>
+      <div className="alert-short__box">
+        <span>We couldn't find any wish based on your search.</span>
+        <RaisedButton onClick={openIssueForm}
+                      label={`Create a wish with ${text}`}
+                      secondary={true}/>
       </div>
     );
   }

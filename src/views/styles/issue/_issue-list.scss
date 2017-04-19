@@ -2,3 +2,9 @@
 //  IssueList
 //---------------------------------------------------------
 
+.issue-list {
+  > span {
+    text-align: center;
+    display: block;
+  }
+}

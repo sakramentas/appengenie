@@ -1,35 +1,43 @@
-import React, {Component, PropTypes} from 'react';
-import {Redirect} from 'react-router'
+import React, {Component} from 'react';
+import {browserHistory} from 'react-router'
 import IssueCreate from '../issue-create';
 import AlertShort from '../../notification/alert-short';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
+import {escapeRegexCharacters} from '../../../../helpers'
+import Snackbar from 'material-ui/Snackbar';
 
 import TransitionGroup from 'react-addons-transition-group'; //TODO: create a new component for message animations
 
 class IssueSearch extends Component {
-  // static propTypes = {
-  //   createIssue: PropTypes.func.isRequired
-  // };
 
   constructor(props) {
     super(props);
 
     this.onChange = ::this.onChange;
     this.onKeyUp = ::this.onKeyUp;
-    this.renderIssueCreate = ::this.renderIssueCreate;
     this.onSuggestionsFetchRequested = ::this.onSuggestionsFetchRequested;
     this.onSuggestionsClearRequested = ::this.onSuggestionsClearRequested;
+    this.onSuggestionSelected = ::this.onSuggestionSelected;
+    this.openIssueForm = ::this.openIssueForm;
+    this.renderIssueForm = ::this.renderIssueForm;
+    this.closeIssueForm = ::this.closeIssueForm;
+    this.handleOpenSnackbar = ::this.handleOpenSnackbar;
+    this.handleTouchTap = ::this.handleTouchTap;
+    this.handleRequestClose = ::this.handleRequestClose;
 
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
+      issueFormOpened: 'false',
+      showAlert: true,
+      showSearchInput: true,
+      openSnackbar: false
     }
   }
 
   onChange(event, {newValue, method}) {
-    // this.props.setSearchTerm(event);
     this.setState({
       value: newValue,
       suggestions: this.state.suggestions === [] ? 'Create a new issue' : this.state.suggestions
@@ -48,65 +56,64 @@ class IssueSearch extends Component {
     });
   };
 
-
   onKeyUp(event) {
+    // Clear on esc
     if (event.keyCode === 27) {
       this.clearInput();
     }
   }
 
   suggestCreateIssue() {
-    if (this.state.value !== '' && this.state.suggestions.length <= 0) {
+    if (this.state.value !== '' && this.state.suggestions.length <= 0 && this.state.showAlert) {
       return (
         <TransitionGroup>
-          <AlertShort text={this.state.value} />
+          <AlertShort text={this.state.value} openIssueForm={this.openIssueForm}/>
         </TransitionGroup>
       )
     }
   }
 
-  // onSubmit(event) {
-  //   event.preventDefault();
-  //   const {title, details, answers} = this.state;
-  //   if (title.length) this.props.createIssue(title, details, answers);
-  //   this.clearInput();
-  // }
+  openIssueForm() {
+    return this.setState({
+      issueFormOpened: true,
+      showAlert: false,
+      showSearchInput: false
+    })
+  }
 
-  renderIssueCreate() {
-    if (this.props.issues.size != null && this.props.issues.size <= 0) {
+  closeIssueForm() {
+    return this.setState({
+      issueFormOpened: false,
+      showAlert: true,
+      showSearchInput: true
+    })
+  }
+
+  renderIssueForm() {
+    if (this.state.issueFormOpened === true) {
       return (
-        <IssueCreate createIssue={this.props.createIssue}/>
+        <IssueCreate createIssue={this.props.createIssue}
+                     closeIssueForm={this.closeIssueForm}
+                     handleOpenSnackbar={this.handleOpenSnackbar}
+                     title={this.state.value}/>
       )
     }
   }
 
-  redirectToIssuePage() {
-    return (<Redirect to="/issue/"/>)
-  }
-
-
-  // componentWillMount() {
-  //   setTimeout(() => {
-  //     let issuesArray = []
-  //     this.props.issues.forEach((issue, index) => issuesArray.push([issue.title, issue.key]))
-  //     this.setState({issuesFiltered: issuesArray})
-  //     console.log(this.state.issuesFiltered)
-  //   }, 3000)
-  // }
-  //
-
-  escapeRegexCharacters(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  handleOpenSnackbar() {
+    this.setState({
+      value: '',
+      openSnackbar: true
+    })
   }
 
   getSuggestions(value) {
-    console.log('---- val', value)
-    const escapedValue = this.escapeRegexCharacters(value.trim());
-    console.log('---- escaped val', escapedValue)
+    const escapedValue = escapeRegexCharacters(value.trim());
     if (escapedValue === '') {
       return [];
     }
     const regex = new RegExp('\\b' + escapedValue, 'i');
+
     return [...this.props.issues]
       .map(issue => issue)
       .filter(issue => regex.test(this.getSuggestionValue(issue)));
@@ -138,29 +145,53 @@ class IssueSearch extends Component {
     );
   }
 
+  onSuggestionSelected(event, {suggestion}) {
+    return browserHistory.push(`/issues/page?id=${suggestion.key}`)
+  }
+
+  handleTouchTap() {
+    return browserHistory.push(`/issues/page?id=-Khr3IKNMrki6Psac-T9`)
+  }
+
+  handleRequestClose() {
+    return this.setState({
+      openSnackbar: false
+    })
+  }
+
 
   render() {
-    console.log(this.state)
-    const {value, suggestions} = this.state;
-    const inputProps = {
+    const {value, suggestions, showSearchInput, openSnackbar} = this.state;
+    var inputProps = {
       placeholder: "Type here",
-      value,
+      value: value,
       onChange: this.onChange
     };
     return (
       <div>
-        <div className="issue-search">
-          <span>I wish there was an APP to...</span>
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={this.getSuggestionValue}
-            renderSuggestion={this.renderSuggestion}
-            inputProps={inputProps}/>
-        </div>
+        {showSearchInput ?
+          <div className="issue-search">
+            <span>I wish there was an app to...</span>
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              onSuggestionSelected={this.onSuggestionSelected}
+              getSuggestionValue={this.getSuggestionValue}
+              renderSuggestion={this.renderSuggestion}
+              inputProps={inputProps}
+              ref="searchInput"/>
+          </div>
+          : ''
+        }
         {this.suggestCreateIssue()}
-        {/*{this.renderIssueCreate()}*/}
+        {this.renderIssueForm()}
+        <Snackbar open={openSnackbar}
+                  message={`Wish created with success`}
+                  action="Open"
+                  autoHideDuration={4000}
+                  onActionTouchTap={this.handleTouchTap}
+                  onRequestClose={this.handleRequestClose}/>
       </div>
     );
   }
