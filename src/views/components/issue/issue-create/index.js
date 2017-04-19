@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Card} from 'material-ui/Card';
 
 class IssueCreate extends Component {
 
@@ -14,6 +17,10 @@ class IssueCreate extends Component {
     this.onChangeDetails = ::this.onChangeDetails;
     this.onKeyUp = ::this.onKeyUp;
     this.onSubmit = ::this.onSubmit;
+  }
+
+  componentWillMount() {
+    this.setState({title: this.props.title})
   }
 
   clearInput() {
@@ -43,36 +50,52 @@ class IssueCreate extends Component {
     const {title, details} = this.state;
     if (title.length) this.props.createIssue(title, details);
     this.clearInput();
+    this.props.closeIssueForm();
   }
 
   render() {
+    let {closeIssueForm, handleOpenSnackbar} = this.props;
     return (
-      <form className="issue-create"
-            onSubmit={this.onSubmit}>
-        <input
-          autoComplete="on"
-          className="issue-create__input issue-create__input--title"
-          maxLength="100"
-          onChange={this.onChangeTitle}
-          onKeyUp={this.onKeyUp}
-          placeholder="Wish title"
-          ref={c => this.titleInput = c}
-          type="text"
-          value={this.state.title}
-        />
-        <input
-          autoComplete="off"
-          className="issue-create__input issue-create__input--details"
-          maxLength="240"
-          onChange={this.onChangeDetails}
-          onKeyUp={this.onKeyUp}
-          placeholder="Wish details"
-          ref={c => this.detailsInput = c}
-          type="text"
-          value={this.state.details}
-        />
-        <button type="submit">Send</button>
-      </form>
+      <Card>
+        <form className="issue-create"
+              onSubmit={this.onSubmit}>
+          <span>I wish there was an app to</span>
+          <TextField
+            autoComplete="on"
+            className="issue-create__input issue-create__input--title"
+            maxLength="100"
+            onChange={this.onChangeTitle}
+            onKeyUp={this.onKeyUp}
+            hintText="Wish title"
+            ref={c => this.titleInput = c}
+            type="text"
+            value={this.state.title}
+            fullWidth={true}
+          />
+          <TextField
+            autoComplete="off"
+            className="issue-create__input issue-create__input--details"
+            maxLength="240"
+            onChange={this.onChangeDetails}
+            onKeyUp={this.onKeyUp}
+            hintText="Wish details"
+            ref={c => this.detailsInput = c}
+            type="text"
+            value={this.state.details}
+            fullWidth={true}
+          />
+          <div className="issue-create__input issue-create__input--cta">
+            <RaisedButton type="submit"
+                          label="Send"
+                          primary={true}
+                          onClick={handleOpenSnackbar}/>
+            <RaisedButton type="submit"
+                          label="Cancel"
+                          secondary={true}
+                          onClick={closeIssueForm}/>
+          </div>
+        </form>
+      </Card>
     );
   }
 }
