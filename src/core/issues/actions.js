@@ -3,8 +3,8 @@ import { issueList } from './issue-list';
 import {
   CREATE_ISSUE_ERROR,
   CREATE_ISSUE_SUCCESS,
-  SELECT_ISSUE_ERROR,
-  SELECT_ISSUE_SUCCESS,
+  CREATE_ISSUE_ANSWER_ERROR,
+  CREATE_ISSUE_ANSWER_SUCCESS,
   DELETE_ISSUE_ERROR,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
@@ -36,24 +36,40 @@ export function createIssueSuccess(issue) {
     payload: issue
   };
 }
-export function selectIssue(issue) {
+
+export function createIssueAnswer(key, details, answerKey) {
   return (dispatch, getState) => {
+    // let issueToUpdate = issueList[key];
+    console.log('issuelist', issueList)
+    console.log('issuekey', key)
     const { auth } = getState();
-    issueList.path = `issues/${auth.id}/${issue.key}`;
-    issueList.subscribe(dispatch);
+    let answerPath = `${key}/answers/${answerKey}`;
+    issueList.update(answerPath, {answer: details})
+      .catch(error => dispatch(updateIssueError(error)));
+    // issueList.push({key : {answers: {title, details}}})
+    //   .catch(error => dispatch(createIssueAnswerError(error)));
   };
 }
 
-export function selectIssueError(error) {
+// export const loadIssueAnswers = (key) => {
+//   return (dispatch, getState) => {
+//     const { auth } = getState();
+//     console.log('getstate', getState());
+//     issueList.path = `issues/${auth.id}/${key}/answers/${auth.id}`;
+//     issueList.subscribe(dispatch);
+//   }
+// };
+
+export function createIssueAnswerError(error) {
   return {
-    type: SELECT_ISSUE_ERROR,
+    type: CREATE_ISSUE_ANSWER_ERROR,
     payload: error
   };
 }
 
-export function selectIssueSuccess(issue) {
+export function createIssueAnswerSuccess(issue) {
   return {
-    type: SELECT_ISSUE_SUCCESS,
+    type: CREATE_ISSUE_ANSWER_SUCCESS,
     payload: issue
   };
 }

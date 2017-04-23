@@ -8,7 +8,7 @@ import {
   CREATE_ISSUE_SUCCESS,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
-  FILTER_ISSUE_SELECTED,
+  CREATE_ISSUE_ANSWER_SUCCESS,
   LOAD_ISSUES_SUCCESS,
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
@@ -41,11 +41,22 @@ export function issuesReducer(state = new IssuesState(), {payload, type}) {
         list: state.list.filter(issue => issue.key !== payload.key)
       });
 
+    case CREATE_ISSUE_ANSWER_SUCCESS:
+      console.log('payload answers ', payload)
+      return state.merge({
+        deleted: null,
+        previous: null,
+        list: state.list.map(issue => {
+          return issue.key === payload.key ? {...state, payload} : issue;
+        }),
+        // state.list.answers.unshift(payload)
+        // list: state.deleted && state.deleted.key === payload.key ?
+        //   state.previous :
+        //   state.list.answers.unshift(payload)
+      });
+
     case FILTER_ISSUES:
       return state.set('filter', payload.filterType || '');
-
-    case FILTER_ISSUE_SELECTED:
-      return state.set('filter', payload.filterValue || '');
 
     case LOAD_ISSUES_SUCCESS:
       return state.set('list', new List(payload.reverse()));
