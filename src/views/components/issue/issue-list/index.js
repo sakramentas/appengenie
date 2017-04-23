@@ -1,26 +1,50 @@
-import React, {PropTypes} from 'react';
-import {List} from 'immutable';
+import React, {Component} from 'react';
+import CircularProgress from 'material-ui/CircularProgress';
+
 import IssueItem from '../issue-item';
-import {Link} from 'react-router';
 
+class IssueList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    }
+  }
 
-const IssueList = ({issues}) => {
+  componentWillMount() {
+    this.setState({loading: true});
+  }
 
-  let issueItems = issues.map((issue, index) => {
-    return (
+  componentDidMount() {
+    this.setState({loading: false});
+  }
+
+  issueItems() {
+    let {issues} = this.props;
+    return issues.map((issue, index) => {
+      return (
         <IssueItem
           key={index}
           issue={issue}
         />
-    );
-  });
+      );
+    });
+  }
 
-  return (
-    <div className="issue-list">
-      <span>Latest wishes</span>
-      {issueItems}
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className="issue-list">
+        {this.state.loading === true ?
+          <CircularProgress />
+          :
+          <div>
+            <span>Latest wishes</span>
+            {this.issueItems()}
+          </div>
+        }
+      </div>
+    )
+  }
+}
 
-export default IssueList;
+export default IssueList
