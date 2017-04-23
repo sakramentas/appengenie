@@ -24,7 +24,6 @@ class IssueSearch extends Component {
     this.renderIssueForm = ::this.renderIssueForm;
     this.closeIssueForm = ::this.closeIssueForm;
     this.handleOpenSnackbar = ::this.handleOpenSnackbar;
-    this.handleTouchTap = ::this.handleTouchTap;
     this.handleRequestClose = ::this.handleRequestClose;
 
     this.state = {
@@ -37,7 +36,7 @@ class IssueSearch extends Component {
     }
   }
 
-  onChange(event, {newValue, method}) {
+  onChange(event, {newValue}) {
     this.setState({
       value: newValue,
       suggestions: this.state.suggestions === [] ? 'Create a new issue' : this.state.suggestions
@@ -66,9 +65,8 @@ class IssueSearch extends Component {
   suggestCreateIssue() {
     if (this.state.value !== '' && this.state.suggestions.length <= 0 && this.state.showAlert) {
       return (
-        <TransitionGroup>
-          <AlertShort text={this.state.value} openIssueForm={this.openIssueForm}/>
-        </TransitionGroup>
+        <AlertShort text={this.state.value}
+                    openIssueForm={this.openIssueForm}/>
       )
     }
   }
@@ -102,7 +100,6 @@ class IssueSearch extends Component {
 
   handleOpenSnackbar() {
     this.setState({
-      value: '',
       openSnackbar: true
     })
   }
@@ -136,7 +133,8 @@ class IssueSearch extends Component {
             const className = part.highlight ? 'highlight' : null;
 
             return (
-              <span className={className} key={index}>{part.text}</span>
+              <span className={className}
+                    key={index}>{part.text}</span>
             );
           })
         }
@@ -149,16 +147,11 @@ class IssueSearch extends Component {
     return browserHistory.push(`/issues/page?id=${suggestion.key}`)
   }
 
-  handleTouchTap() {
-    return browserHistory.push(`/issues/page?id=-Khr3IKNMrki6Psac-T9`)
-  }
-
   handleRequestClose() {
     return this.setState({
       openSnackbar: false
     })
   }
-
 
   render() {
     const {value, suggestions, showSearchInput, openSnackbar} = this.state;
@@ -190,7 +183,6 @@ class IssueSearch extends Component {
                   message={`Wish created with success`}
                   action="Open"
                   autoHideDuration={4000}
-                  onActionTouchTap={this.handleTouchTap}
                   onRequestClose={this.handleRequestClose}/>
       </div>
     );

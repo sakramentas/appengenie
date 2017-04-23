@@ -12,6 +12,7 @@ export function deepFlatten(arr) {
   );
 }
 
+// Default Regex
 export const escapeRegexCharacters = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
