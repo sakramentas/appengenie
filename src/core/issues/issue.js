@@ -1,10 +1,9 @@
-import { Record } from 'immutable';
+export const IssueModel = ({completed = false, key = null, title = null, details = null}) => {
+  return {
+    completed,
+    key,
+    title,
+    details
+  }
+};
 
-// Model class
-export const Issue = new Record({
-  completed: false,
-  key: null,
-  title: null,
-  details: null,
-  answers: null
-});

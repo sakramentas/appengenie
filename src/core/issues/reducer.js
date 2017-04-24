@@ -1,4 +1,4 @@
-import { List, Record } from 'immutable';
+import {List} from 'immutable';
 
 import {
   SIGN_OUT_SUCCESS
@@ -14,33 +14,33 @@ import {
 } from './action-types';
 
 
-export const IssuesState = new Record({
+export const IssuesState = {
   deleted: null,
   filter: '',
   filterSelected: '',
   list: new List(),
   previous: null
-});
+};
 
 
-export function issuesReducer(state = new IssuesState(), {payload, type}) {
+export function issuesReducer(state = IssuesState, {payload, type}) {
   switch (type) {
     case CREATE_ISSUE_SUCCESS:
-      return state.merge({
+      return {
+        ...state,
         deleted: null,
         previous: null,
         list: state.deleted && state.deleted.key === payload.key ?
-              state.previous :
-              state.list.unshift(payload)
-      });
-
+          state.previous :
+          state.list.unshift(payload)
+      };
     case DELETE_ISSUE_SUCCESS:
-      return state.merge({
+      return {
+        ...state,
         deleted: payload,
         previous: state.list,
         list: state.list.filter(issue => issue.key !== payload.key)
-      });
-
+      };
     case CREATE_ISSUE_ANSWER_SUCCESS:
       console.log('payload answers ', payload)
       return state.merge({
@@ -49,29 +49,32 @@ export function issuesReducer(state = new IssuesState(), {payload, type}) {
         list: state.list.map(issue => {
           return issue.key === payload.key ? {...state, payload} : issue;
         }),
-        // state.list.answers.unshift(payload)
-        // list: state.deleted && state.deleted.key === payload.key ?
-        //   state.previous :
-        //   state.list.answers.unshift(payload)
       });
 
     case FILTER_ISSUES:
-      return state.set('filter', payload.filterType || '');
+      return {
+        ...state,
+        filter: payload.filterType || ''
+      };
 
     case LOAD_ISSUES_SUCCESS:
-      return state.set('list', new List(payload.reverse()));
+      return {
+        ...state,
+        list: new List(payload.reverse())
+      };
 
     case UPDATE_ISSUE_SUCCESS:
-      return state.merge({
+      return {
+        ...state,
         deleted: null,
         previous: null,
         list: state.list.map(issue => {
           return issue.key === payload.key ? payload : issue;
         })
-      });
+      };
 
     case SIGN_OUT_SUCCESS:
-      return new IssuesState();
+      return IssuesState;
 
     default:
       return state;

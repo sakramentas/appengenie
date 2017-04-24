@@ -1,6 +1,6 @@
 import { FirebaseList } from 'src/core/firebase';
 import * as issueActions from './actions';
-import { Issue } from './issue';
+import { IssueModel } from './issue';
 
 
 export const issueList = new FirebaseList({
@@ -8,4 +8,4 @@ export const issueList = new FirebaseList({
   onChange: issueActions.updateIssueSuccess,
   onLoad: issueActions.loadIssuesSuccess,
   onRemove: issueActions.deleteIssueSuccess
-}, Issue);
+}, IssueModel);
