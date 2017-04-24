@@ -11,19 +11,19 @@ import { connect } from 'react-redux';
 export class IssuePageForum extends Component {
   constructor(props) {
     super(props)
-    this.generateAnswerId = ::this.generateAnswerId;
+
   }
 
   handleIssueAnswers(key) {
     // this.props.loadIssueAnswers(key)
   }
 
-  generateAnswerId() {
-    let answersNum = Object.keys(this.props.issue.answers).length;
-    let newId = this.props.issue.key.concat(answersNum)
-    // console.log('newid', newId, answersNum)
-    return newId
-  }
+  // generateAnswerId() {
+  //   let answersNum = Object.keys(this.props.issue.answers).length;
+  //   let newId = this.props.issue.key.concat(answersNum)
+  //   // console.log('newid', newId, answersNum)
+  //   return newId
+  // }
 
   render() {
     let {issue, createIssueAnswer, answerId} = this.props;
@@ -32,8 +32,8 @@ export class IssuePageForum extends Component {
     return (
       <div>
         <IssueQuestion issue={issue}/>
-        <IssueAnswerList issue={issue} answerKey={this.generateAnswerId()} />
-        <IssueAnswerForm createIssueAnswer={createIssueAnswer} issueKey={issue.key} answerKey={this.generateAnswerId()} />
+        <IssueAnswerList issue={issue} />
+        <IssueAnswerForm createIssueAnswer={createIssueAnswer} issueKey={issue.key}/>
       </div>
     );
   }

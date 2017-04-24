@@ -31,7 +31,6 @@ export class App extends Component {
   }
 
   render() {
-    // console.log('AUTH FROM APP ', this.props.auth) ---- is a record
     return (
       <div>
         <Header

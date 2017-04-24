@@ -32,6 +32,7 @@ if (module.hot) {
   });
 }
 
+// Init Firebase Authentication
 initAuth(store.dispatch)
   .then(() => render(Root))
   .catch(error => console.error(error)); // eslint-disable-line no-console
