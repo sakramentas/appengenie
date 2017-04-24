@@ -3,22 +3,26 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import { createLogger } from 'redux-logger';
 
-const logger = createLogger();
-
 export default (initialState = {}) => {
+
+  // Redux Logger
+  const logger = createLogger();
+
+  // Define Middlewares
   let middleware = applyMiddleware(thunk, logger);
 
+  // Activate Redux Devtools when on dev environment
   if (process.env.NODE_ENV !== 'production') {
-    // configure redux-devtools-extension
-    // @see https://github.com/zalmoxisus/redux-devtools-extension
     const devToolsExtension = window.devToolsExtension;
     if (typeof devToolsExtension === 'function') {
       middleware = compose(middleware, devToolsExtension());
     }
   }
 
+  // Create Store
   const store = createStore(reducers, initialState, middleware);
 
+  // Activate hot loader for reducers
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       store.replaceReducer(require('./reducers').default);

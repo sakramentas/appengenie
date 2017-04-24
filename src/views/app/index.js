@@ -26,11 +26,12 @@ export class App extends Component {
       router.replace(paths.SIGN_IN);
     }
     else if (!auth.authenticated && nextProps.auth.authenticated) {
-      router.replace(paths.TASKS);
+      router.replace(paths.ISSUES);
     }
   }
 
   render() {
+    // console.log('AUTH FROM APP ', this.props.auth) ---- is a record
     return (
       <div>
         <Header
@@ -59,7 +60,9 @@ const mapStateToProps = createSelector(
   auth => ({auth})
 );
 
+const mapDispatchToProps = (authActions);
+
 export default connect(
   mapStateToProps,
-  authActions
+  mapDispatchToProps
 )(App);
