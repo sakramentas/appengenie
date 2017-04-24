@@ -8,58 +8,58 @@ import {
 } from './action-types';
 
 
-function authenticate(provider) {
+const authenticate = provider => {
   return dispatch => {
     firebaseAuth.signInWithPopup(provider)
       .then(result => dispatch(signInSuccess(result)))
       .catch(error => dispatch(signInError(error)));
   };
-}
+};
 
-export function initAuth(user) {
+export const initAuth = user => {
   return {
     type: INIT_AUTH,
     payload: user
   };
-}
+};
 
-export function signInError(error) {
+export const signInError = error => {
   return {
     type: SIGN_IN_ERROR,
     payload: error
   };
-}
+};
 
-export function signInSuccess(result) {
+export const signInSuccess = result => {
   return {
     type: SIGN_IN_SUCCESS,
     payload: result.user
   };
-}
+};
 
-export function signInWithGithub() {
+export const signInWithGithub = () => {
   return authenticate(new firebase.auth.GithubAuthProvider());
-}
+};
 
 
-export function signInWithGoogle() {
+export const signInWithGoogle = () => {
   return authenticate(new firebase.auth.GoogleAuthProvider());
-}
+};
 
 
-export function signInWithTwitter() {
+export const signInWithTwitter = () => {
   return authenticate(new firebase.auth.TwitterAuthProvider());
-}
+};
 
-export function signOut() {
+export const signOut = () => {
   return dispatch => {
     firebaseAuth.signOut()
       .then(() => dispatch(signOutSuccess()));
   };
-}
+};
 
-export function signOutSuccess() {
+export const signOutSuccess = () => {
   return {
     type: SIGN_OUT_SUCCESS
   };
-}
+};
