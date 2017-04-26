@@ -44,12 +44,13 @@ class IssueItem extends Component {
   render() {
 
     const {issue} = this.props;
+    console.log(issue.key)
 
     return (
       <Card className={'issue-item'}>
         <CardHeader
-          title={issue.title}
-          subtitle={issue.details}
+          title={issue.body}
+          subtitle={issue.user.displayName}
           actAsExpander={true}
           showExpandableButton={true}
         />

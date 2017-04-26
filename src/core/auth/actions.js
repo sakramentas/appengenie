@@ -1,5 +1,6 @@
 import firebase from 'firebase';
-import { firebaseAuth } from 'src/core/firebase';
+import {firebaseAuth, firebaseDb} from 'src/core/firebase';
+
 import {
   INIT_AUTH,
   SIGN_IN_ERROR,
@@ -11,9 +12,36 @@ import {
 const authenticate = provider => {
   return dispatch => {
     firebaseAuth.signInWithPopup(provider)
-      .then(result => dispatch(signInSuccess(result)))
+      .then(result => {
+        dispatch(signInSuccess(result));
+        saveUserInfo(result)
+      })
       .catch(error => dispatch(signInError(error)));
   };
+};
+
+const saveUserInfo = ({user}) => {
+  if (user && user.uid) {
+    const {uid, providerId, displayName, photoURL, email} = user;
+    let userData = {
+      provider: providerId,
+      displayName,
+      profileImageURL: photoURL,
+      lastLoginAt: firebase.database.ServerValue.TIMESTAMP,
+      email: email,
+    };
+    try {
+      firebaseDb.ref(`users/${uid}`).set(userData);
+      firebaseDb.ref(`users/${uid}/registeredAt`).transaction((registeredAt) => {
+        if (!registeredAt) {
+          return firebase.database.ServerValue.TIMESTAMP
+        }
+      })
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
 };
 
 export const initAuth = user => {

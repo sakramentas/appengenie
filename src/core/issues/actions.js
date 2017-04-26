@@ -1,3 +1,6 @@
+import firebase from 'firebase';
+import {firebaseAuth, firebaseDb} from 'src/core/firebase';
+
 import { getDeletedIssue } from './selectors';
 import { issueList } from './issue-list';
 import {
@@ -9,16 +12,31 @@ import {
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
   LOAD_ISSUES_SUCCESS,
+  LOAD_ISSUES_ANSWER_SUCCESS,
   UNDELETE_ISSUE_ERROR,
   UNLOAD_ISSUES_SUCCESS,
+  UNLOAD_ISSUES_ANSWER_SUCCESS,
   UPDATE_ISSUE_ERROR,
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
 
 
-export function createIssue(title, details) {
+export function createIssue(title, details, userInfo) {
   return dispatch => {
-    issueList.push({completed: false, title, details})
+    var newIssueKey = firebaseDb.ref().child('issues').push().key;
+    let issueData = {
+      key: newIssueKey,
+      body: title,
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
+    };
+    let issueDataUser = {
+      displayName: userInfo.displayName,
+      id: userInfo.uid,
+      image: userInfo.photoURL
+    };
+    firebaseDb.ref(`issues/${newIssueKey}`).update(issueData)
+    firebaseDb.ref(`issues/${newIssueKey}`).child('user').update(issueDataUser)
+    // issueList.push({body: title})
       .catch(error => dispatch(createIssueError(error)));
   };
 }
@@ -134,6 +152,7 @@ export function updateIssueSuccess(issue) {
 }
 
 export function loadIssuesSuccess(issues) {
+  console.log('issue success ', issues)
   return {
     type: LOAD_ISSUES_SUCCESS,
     payload: issues
@@ -151,7 +170,7 @@ export function loadIssues() {
   return (dispatch, getState) => {
     const { auth } = getState();
     console.log('getstate', getState());
-    issueList.path = `issues/${auth.id}`;
+    issueList.path = `issues`;
     issueList.subscribe(dispatch);
   };
 }

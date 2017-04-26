@@ -117,16 +117,16 @@ class IssueSearch extends Component {
   }
 
   getSuggestionValue(suggestion) {
-    return `${suggestion.title}`;
+    return `${suggestion.body}`;
   }
 
   renderSuggestion(suggestion, {query}) {
-    const suggestionText = `${suggestion.title}`;
+    const suggestionText = `${suggestion.body}`;
     const matches = AutosuggestHighlightMatch(suggestionText, query);
     const parts = AutosuggestHighlightParse(suggestionText, matches);
 
     return (
-      <span className={'suggestion-content ' + suggestion.title}>
+      <span className={'suggestion-content ' + suggestion.body}>
       <span className="name">
         {
           parts.map((part, index) => {

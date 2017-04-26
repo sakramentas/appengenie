@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card} from 'material-ui/Card';
+import { firebaseAuth } from 'src/core/firebase';
 
 class IssueCreate extends Component {
 
@@ -48,7 +49,10 @@ class IssueCreate extends Component {
   onSubmit(event) {
     event.preventDefault();
     const {title, details} = this.state;
-    if (title.length) this.props.createIssue(title, details);
+    const {uid, photoURL, displayName} = firebaseAuth.currentUser;
+    if (title.length) {
+      this.props.createIssue(title, details, {uid, photoURL, displayName});
+    }
     this.clearInput();
     this.props.closeIssueForm();
   }

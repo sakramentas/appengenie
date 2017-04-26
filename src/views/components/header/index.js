@@ -24,20 +24,22 @@ class Header extends Component {
   }
 
   render() {
+    let {authenticated} = this.props;
     return (
       <AppBar
         onClick={this.handleToggle}
         className="header">
-
+        {authenticated &&
         <Drawer
           docked={false}
           width={200}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}>
-          <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
+          <img src={authenticated.photoURL} alt=""/>
+          <MenuItem onClick={this.handleClose}>{authenticated.displayName}</MenuItem>
           <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
         </Drawer>
-
+        }
         <Link to="/"><h1 className="header__title">LookApp</h1></Link>
 
       </AppBar>

@@ -18,6 +18,7 @@ export class FirebaseList {
 
   push(value) {
     return new Promise((resolve, reject) => {
+      console.log('PATH DIABO ---- ', this._path)
       firebaseDb.ref(this._path)
         .push(value, error => error ? reject(error) : resolve());
     });
@@ -46,10 +47,12 @@ export class FirebaseList {
 
   subscribe(emit) {
     let ref = firebaseDb.ref(this._path);
+    console.log('SUBSCRIBING ---> ', this._path)
     let initialized = false;
     let list = [];
 
-    ref.once('value', () => {
+    ref.once('value', (snapshot) => {
+      console.log('LIST ---> ', snapshot)
       initialized = true;
       emit(this._actions.onLoad(list));
     });
@@ -72,6 +75,7 @@ export class FirebaseList {
     });
 
     this._unsubscribe = () => ref.off();
+
   }
 
   unsubscribe() {

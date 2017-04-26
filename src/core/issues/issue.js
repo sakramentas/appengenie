@@ -1,9 +1,23 @@
-export const IssueModel = ({completed = false, key = null, title = null, details = null}) => {
+export const IssueModel =
+  ({
+    key = null,
+    body = null,
+    edited = false,
+    editedBy = null,
+    editedLast = null,
+    user = {},
+    likes = null,
+    createdAt = null
+  }) => {
   return {
-    completed,
     key,
-    title,
-    details
+    body,
+    edited,
+    editedBy,
+    editedLast,
+    user,
+    likes,
+    createdAt
   }
 };
 

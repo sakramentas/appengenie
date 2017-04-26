@@ -1,4 +1,3 @@
-import {List} from 'immutable';
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
@@ -10,7 +9,6 @@ import Notification from '../../components/notification';
 import IssueSearch from '../../components/issue/issue-search';
 
 import IssueList from '../../components/issue/issue-list';
-import IssuePage from '../../components/issue/issue-page';
 
 
 export class Issues extends Component {
@@ -48,6 +46,7 @@ export class Issues extends Component {
   }
 
   render() {
+    console.log('Issues from props ', this.props.issues)
     return (
       <div className="g-row">
         <div className="g-col">
