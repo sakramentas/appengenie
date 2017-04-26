@@ -1,0 +1,47 @@
+{
+  "adminUsers": {},
+  "categories": {
+    "productivity": {
+      "issues": {
+        "12324": ""
+      },
+      "apps": {
+        "21324241": ""
+      }
+    }
+  },
+  "issues": {
+    "0": {
+      "body": "find the cheapest cars",
+      "createdAt": "1457180850877",
+      "edited": false,
+      "editedLast": "1457180850877",
+      "likes": {
+        "2324": true
+      },
+      "user": {
+        "displayName": "Lucas S",
+        "id": "not-available",
+        "image": ""
+      }
+    }
+  },
+  "answers": {
+    "0": {
+      "body": "test test",
+      "issueId": "0",
+      "createdAt": "1457180850877",
+      "user": {
+        "displayName": "Lucas S",
+        "id": "not-available",
+        "image": ""
+      }
+    }
+  },
+  "settings": {
+    "DATE_FORMAT": "DD.MM.YYYY",
+    "ISSUES_PAGE_LIMIT": 5,
+    "ISSUES_PAGE_SIZE": 10
+  },
+  "users": {}
+}
