@@ -47,12 +47,10 @@ export class FirebaseList {
 
   subscribe(emit) {
     let ref = firebaseDb.ref(this._path);
-    console.log('SUBSCRIBING ---> ', this._path)
     let initialized = false;
     let list = [];
 
     ref.once('value', (snapshot) => {
-      console.log('LIST ---> ', snapshot)
       initialized = true;
       emit(this._actions.onLoad(list));
     });
