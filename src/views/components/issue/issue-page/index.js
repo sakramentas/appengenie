@@ -1,7 +1,7 @@
 import React from 'react';
 import {IssueQuestion} from './question';
-import {IssueAnswerList} from './answer-list';
-import IssueAnswerForm from './answer-form';
+import {IssueAnswerList} from '../issue-answer/answer-list';
+import IssueAnswerForm from '../issue-answer/answer-form';
 
 
 export const IssuePageForum = ({issue, createAnswer, answers}) => {
