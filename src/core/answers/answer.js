@@ -2,6 +2,7 @@ export const AnswerModel =
   ({
     key = null,
     body = null,
+    appName = null,
     edited = false,
     editedBy = null,
     editedLast = null,
@@ -13,6 +14,7 @@ export const AnswerModel =
   return {
     key,
     body,
+    appName,
     edited,
     editedBy,
     editedLast,

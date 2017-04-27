@@ -1,8 +1,8 @@
 import firebase from 'firebase';
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 
-import { getDeletedAnswer } from './selectors';
-import { answerList } from './answer-list';
+import {getDeletedAnswer} from './selectors';
+import {answerList} from './answer-list';
 import {
   CREATE_ANSWER_ERROR,
   CREATE_ANSWER_SUCCESS,
@@ -21,12 +21,13 @@ import {
 } from './action-types';
 
 
-export function createAnswer(issueKey, body, userInfo) {
+export function createAnswer(issueKey, appName, body, userInfo) {
   return dispatch => {
     var newAnswerKey = firebaseDb.ref().child('answers').push().key;
     let answerData = {
       key: newAnswerKey,
-      body: body,
+      appName,
+      body,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
     };
     let answerDataUser = {
@@ -42,6 +43,37 @@ export function createAnswer(issueKey, body, userInfo) {
       .catch(error => dispatch(createAnswerError(error)));
   };
 }
+
+// export const checkIfUserLiked = (answerId, type) => {
+//   let currentUserUid = firebaseAuth.currentUser.uid;
+//   let status = false;
+//   if (type === 'answer') {
+//     firebaseDb.ref(`users/${currentUserUid}/likes/onAnswer`).once('value', snapshot => {
+//       var likedbyUser = snapshot.val();
+//       // console.log('UHEUAEHUHHUAEHAEUH KCT', snapshot.val())
+//       if (likedbyUser[answerId]) {
+//         return status = true
+//       }
+//     })
+//     return status
+//   }
+// };
+
+export const likeAnswer = (answerId, issueKey) => {
+  let currentUserUid = firebaseAuth.currentUser.uid;
+  firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {console.log('THE SNAPSHOT ', snapshot.val())})
+  // Store userID on answers
+  firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').update({[currentUserUid]: true});
+  // Store answerID on user
+  firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onAnswer').update({[answerId]: true})
+    .catch(error => console.log(error));
+};
+
+export const dislikeAnswer = (answerId, issueKey) => {
+  let currentUserUid = firebaseAuth.currentUser.uid;
+  firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').remove(currentUserUid)
+    .catch(error => console.log(error));
+};
 
 export function createAnswerError(error) {
   return {
