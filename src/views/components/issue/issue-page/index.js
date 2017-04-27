@@ -9,7 +9,8 @@ export const IssuePageForum = ({issue, createAnswer, answers}) => {
   return (
     <div>
       <IssueQuestion issue={issue}/>
-      <IssueAnswerList answers={answers}/>
+      <IssueAnswerList answers={answers}
+                       issueKey={issue.key}/>
       <IssueAnswerForm createAnswer={createAnswer}
                        issueKey={issue.key}/>
     </div>

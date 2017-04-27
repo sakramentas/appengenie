@@ -10,33 +10,33 @@ class IssueAnswerForm extends Component {
     super(props);
 
     this.state = {
-      title: '',
-      details: ''
+      appName: '',
+      body: ''
     };
 
-    this.onChangeTitle = ::this.onChangeTitle;
-    this.onChangeDetails = ::this.onChangeDetails;
+    this.onChangeBody = ::this.onChangeBody;
+    this.onChangeAppName = ::this.onChangeAppName;
     this.onKeyUp = ::this.onKeyUp;
     this.onSubmit = ::this.onSubmit;
   }
 
   componentWillMount() {
-    this.setState({title: this.props.title})
+    this.setState({body: this.props.title})
   }
 
   clearInput() {
-    this.setState({title: ''});
+    this.setState({body: '', appName: ''});
   }
 
-  onChangeTitle(event) {
+  onChangeBody(event) {
     this.setState({
-      title: event.target.value
+      body: event.target.value
     });
   }
 
-  onChangeDetails(event) {
+  onChangeAppName(event) {
     this.setState({
-      details: event.target.value
+      appName: event.target.value
     });
   }
 
@@ -48,17 +48,17 @@ class IssueAnswerForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const {title, details} = this.state;
+    const {body, appName} = this.state;
     const {issueKey, createAnswer} = this.props;
     const {uid, photoURL, displayName} = firebaseAuth.currentUser;
-    if (title.length) {
-      createAnswer(issueKey, title, {uid, photoURL, displayName});
+    if (body.length) {
+      createAnswer(issueKey, appName, body, {uid, photoURL, displayName});
     }
     this.clearInput();
   }
 
   render() {
-    let {closeIssueForm, handleOpenSnackbar, issueKey} = this.props;
+    let {handleOpenSnackbar} = this.props;
     return (
       <Card>
         <form className="issue-create"
@@ -68,35 +68,29 @@ class IssueAnswerForm extends Component {
             autoComplete="on"
             className="issue-create__input issue-create__input--title"
             maxLength="100"
-            onChange={this.onChangeTitle}
+            onChange={this.onChangeAppName}
             onKeyUp={this.onKeyUp}
-            hintText="Wish title"
-            ref={c => this.titleInput = c}
+            hintText="App name"
             type="text"
-            value={this.state.title}
+            value={this.state.appName}
+            fullWidth={false}
+          />
+          <TextField
+            autoComplete="on"
+            className="issue-create__input issue-create__input--title"
+            maxLength="100"
+            onChange={this.onChangeBody}
+            onKeyUp={this.onKeyUp}
+            hintText="Details"
+            type="text"
+            value={this.state.body}
             fullWidth={true}
           />
-          {/*<TextField*/}
-            {/*autoComplete="off"*/}
-            {/*className="issue-create__input issue-create__input--details"*/}
-            {/*maxLength="240"*/}
-            {/*onChange={this.onChangeDetails}*/}
-            {/*onKeyUp={this.onKeyUp}*/}
-            {/*hintText="Wish details"*/}
-            {/*ref={c => this.detailsInput = c}*/}
-            {/*type="text"*/}
-            {/*value={this.state.details}*/}
-            {/*fullWidth={true}*/}
-          {/*/>*/}
           <div className="issue-create__input issue-create__input--cta">
             <RaisedButton type="submit"
                           label="Send"
                           primary={true}
                           onClick={handleOpenSnackbar}/>
-            <RaisedButton type="submit"
-                          label="Cancel"
-                          secondary={true}
-                          onClick={closeIssueForm}/>
           </div>
         </form>
       </Card>
