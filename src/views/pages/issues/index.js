@@ -46,7 +46,6 @@ export class Issues extends Component {
   }
 
   render() {
-    console.log('Issues from props ', this.props.issues)
     return (
       <div className="g-row">
         <div className="g-col">

@@ -51,7 +51,7 @@ class IssueCreate extends Component {
     const {title, details} = this.state;
     const {uid, photoURL, displayName} = firebaseAuth.currentUser;
     if (title.length) {
-      this.props.createIssue(title, details, {uid, photoURL, displayName});
+      this.props.createIssue(title, {uid, photoURL, displayName});
     }
     this.clearInput();
     this.props.closeIssueForm();

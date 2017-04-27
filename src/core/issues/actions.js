@@ -21,7 +21,7 @@ import {
 } from './action-types';
 
 
-export function createIssue(title, details, userInfo) {
+export function createIssue(title, userInfo) {
   return dispatch => {
     var newIssueKey = firebaseDb.ref().child('issues').push().key;
     let issueData = {

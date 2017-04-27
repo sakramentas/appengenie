@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card} from 'material-ui/Card';
+import { firebaseAuth } from 'src/core/firebase';
 
 class IssueAnswerForm extends Component {
 
@@ -48,10 +49,12 @@ class IssueAnswerForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     const {title, details} = this.state;
-    const {issueKey, answerKey} = this.props;
-    if (title.length) this.props.createIssueAnswer(issueKey, title, answerKey);
+    const {issueKey, createAnswer} = this.props;
+    const {uid, photoURL, displayName} = firebaseAuth.currentUser;
+    if (title.length) {
+      createAnswer(issueKey, title, {uid, photoURL, displayName});
+    }
     this.clearInput();
-    // this.props.closeIssueForm();
   }
 
   render() {
@@ -61,7 +64,6 @@ class IssueAnswerForm extends Component {
         <form className="issue-create"
               onSubmit={this.onSubmit}>
           <span>Answer this Issue</span>
-          <span>{issueKey}</span>
           <TextField
             autoComplete="on"
             className="issue-create__input issue-create__input--title"

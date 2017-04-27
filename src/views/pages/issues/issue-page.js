@@ -6,6 +6,7 @@ import { authActions, getAuth } from 'src/core/auth';
 
 import { getNotification, notificationActions } from 'src/core/notification';
 import { getIssueFilter, getVisibleIssues, issuesActions } from 'src/core/issues';
+import { getAnswerFilter, getVisibleAnswers, answersActions } from 'src/core/answers';
 import {IssuePageForum} from '../../components/issue/issue-page';
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -14,6 +15,12 @@ export class Issue extends Component {
 
   componentWillMount() {
     this.props.loadIssues();
+    // Load the answers for this specific issue
+    this.props.loadAnswers(this.props.location.query.id);
+  }
+
+  componentDidMount() {
+    console.log('THIS.PROPS', this.props.answers);
   }
 
   renderNotification() {
@@ -30,14 +37,14 @@ export class Issue extends Component {
   }
 
   loadSelectedIssue() {
-    let {createIssueAnswer, loadIssueAnswers, issues, location, auth} = this.props;
+    let {createAnswer, issues, location, answers} = this.props;
     return issues.map((issue, index) => { //TODO: get the selected issue with getVisibleIssues selector
       // console.log('Auth key', this.props.auth.id)
       if (issue.key === location.query.id) {
         return (<IssuePageForum issue={issue}
                                 key={index}
-                                createIssueAnswer={createIssueAnswer}
-                                answerId={auth.id}
+                                createAnswer={createAnswer}
+                                answers={answers}
         />)
       }
     })
@@ -65,18 +72,19 @@ const mapStateToProps = createSelector(
   getNotification,
   getIssueFilter,
   getVisibleIssues,
-  getAuth,
-  (notification, filterType, issues, auth) => ({
+  getVisibleAnswers,
+  (notification, filterType, issues, answers) => ({
     notification,
     filterType,
     issues,
-    auth
+    answers
   })
 );
 
 const mapDispatchToProps = Object.assign(
   {},
   issuesActions,
+  answersActions,
   notificationActions
 );
 

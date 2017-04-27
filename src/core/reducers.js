@@ -4,6 +4,7 @@ import { authReducer } from './auth';
 import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks';
 import { issuesReducer } from './issues';
+import { answersReducer } from './answers';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   notification: notificationReducer,
   routing: routerReducer,
   tasks: tasksReducer,
-  issues: issuesReducer
+  issues: issuesReducer,
+  answers: answersReducer
 });
