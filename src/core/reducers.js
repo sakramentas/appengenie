@@ -5,6 +5,7 @@ import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks';
 import { issuesReducer } from './issues';
 import { answersReducer } from './answers';
+import { likesReducer } from './likes';
 
 
 export default combineReducers({
@@ -13,5 +14,8 @@ export default combineReducers({
   routing: routerReducer,
   tasks: tasksReducer,
   issues: issuesReducer,
-  answers: answersReducer
+  answers: answersReducer,
+  likes: likesReducer
 });
+
+(() => console.log('UAEHAISSHFIUASFUASHFIUH 23', likesReducer))()
