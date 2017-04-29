@@ -1,7 +1,6 @@
 import {createSelector} from 'reselect';
 
 export function getIssues(state) {
-  console.log('getIssues ', state.issues)
   return state.issues;
 }
 

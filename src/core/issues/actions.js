@@ -169,7 +169,6 @@ export function filterIssues(filterType) {
 export function loadIssues() {
   return (dispatch, getState) => {
     const { auth } = getState();
-    console.log('getstate', getState());
     issueList.path = `issues`;
     issueList.subscribe(dispatch);
   };

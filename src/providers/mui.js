@@ -6,13 +6,13 @@ import {
   cyan900, cyan500, cyan700,
   pinkA200,
   grey100, grey400, grey500,
-  white, darkBlack, fullBlack
+  white, darkBlack, fullBlack, lightGreen800, deepOrange600
 } from 'material-ui/styles/colors';
 
 export const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: cyan900,
-    primary2Color: cyan700,
+    primary1Color: lightGreen800,
+    primary2Color: deepOrange600,
     primary3Color: grey400,
     accent1Color: pinkA200,
     accent2Color: grey100,
