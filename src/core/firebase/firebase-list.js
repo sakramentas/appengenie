@@ -18,7 +18,6 @@ export class FirebaseList {
 
   push(value) {
     return new Promise((resolve, reject) => {
-      console.log('PATH DIABO ---- ', this._path)
       firebaseDb.ref(this._path)
         .push(value, error => error ? reject(error) : resolve());
     });
@@ -45,19 +44,20 @@ export class FirebaseList {
     });
   }
 
-  subscribe(emit) {
+  subscribe(dispatch) {
+
     let ref = firebaseDb.ref(this._path);
     let initialized = false;
     let list = [];
 
     ref.once('value', (snapshot) => {
       initialized = true;
-      emit(this._actions.onLoad(list));
+      dispatch(this._actions.onLoad(list));
     });
 
     ref.on('child_added', snapshot => {
       if (initialized) {
-        emit(this._actions.onAdd(this.unwrapSnapshot(snapshot)));
+        dispatch(this._actions.onAdd(this.unwrapSnapshot(snapshot)));
       }
       else {
         list.push(this.unwrapSnapshot(snapshot));
@@ -65,11 +65,11 @@ export class FirebaseList {
     });
 
     ref.on('child_changed', snapshot => {
-      emit(this._actions.onChange(this.unwrapSnapshot(snapshot)));
+      dispatch(this._actions.onChange(this.unwrapSnapshot(snapshot)));
     });
 
     ref.on('child_removed', snapshot => {
-      emit(this._actions.onRemove(this.unwrapSnapshot(snapshot)));
+      dispatch(this._actions.onRemove(this.unwrapSnapshot(snapshot)));
     });
 
     this._unsubscribe = () => ref.off();
@@ -83,6 +83,7 @@ export class FirebaseList {
   unwrapSnapshot(snapshot) {
     let attrs = snapshot.val();
     attrs.key = snapshot.key;
+    // console.log('ATTRIBUTES ----> ', snapshot.key, attrs)
     return new this._modelClass(attrs);
   }
 }
