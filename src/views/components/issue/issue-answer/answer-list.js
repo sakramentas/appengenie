@@ -14,7 +14,7 @@ export class IssueAnswerList extends Component {
   }
 
   render() {
-    let {answers} = this.props;
+    let {answers, issueId} = this.props;
     return (
       <div>
         <Subheader>Answers</Subheader>
@@ -22,7 +22,8 @@ export class IssueAnswerList extends Component {
           answers.map((answer, index) => {
             return (
               <IssueAnswerItem key={index}
-                               answer={answer}/>
+                               answer={answer}
+                               issueId={issueId} />
             )
           })
           : <span>No answers available</span> }
