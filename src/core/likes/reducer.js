@@ -20,21 +20,30 @@ export function likesReducer(state = {}, {payload, type}) {
   switch (type) {
 
     case LOAD_LIKES_ANSWER_SUCCESS:
-      let currentUserUid = firebaseAuth.currentUser.uid;
-      // console.log('CHECKING UID AND LIKED UID ==== ', currentUserUid, Object.keys(payload))
-      if (currentUserUid == Object.keys(payload)) {
+      if (payload) {
         return {
           ...state,
           ...payload,
-          isLiked: true
-        }
+        };
       } else {
         return {
-          ...state,
-          ...payload,
-          isLiked: false
+          ...state
         }
       }
+    // console.log('CHECKING UID AND LIKED UID ==== ', currentUserUid, Object.keys(payload))
+    // if (currentUserUid == Object.keys(payload)) {
+    //   return {
+    //     ...state,
+    //     ...payload,
+    //     isLiked: true
+    //   }
+    // } else {
+    //   return {
+    //     ...state,
+    //     ...payload,
+    //     isLiked: false
+    //   }
+    // }
 
     // case CREATE_LIKES_ANSWER_SUCCESS:
     //   console.log('CREATE_LIKES_ANSWER_SUCCESS!!')
