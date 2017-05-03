@@ -8,10 +8,7 @@ import {answersActions} from 'src/core/answers';
 import LikeButton from 'src/views/components/like-button'
 
 export class IssueAnswerItem extends Component {
-  constructor(props) {
-    super();
 
-  }
 
   render() {
     let {answer, issueId} = this.props;
@@ -21,7 +18,7 @@ export class IssueAnswerItem extends Component {
                     avatar={answer.user.image}
                     subtitle={`by ${answer.user.displayName}`}/>
         <CardActions>
-          <LikeButton type="answers" answerId={answer.key} issueId={issueId} />
+          <LikeButton type="answers" answerId={answer.key} issueId={issueId}  />
         </CardActions>
       </Card>
     )

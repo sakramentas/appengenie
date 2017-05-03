@@ -9,16 +9,12 @@ import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 
 export class IssueAnswerList extends Component {
 
-  constructor(props) {
-    super();
-  }
-
   render() {
     let {answers, issueId} = this.props;
     return (
       <div>
         <Subheader>Answers</Subheader>
-        {answers.size > 0 ?
+        {answers.length ?
           answers.map((answer, index) => {
             return (
               <IssueAnswerItem key={index}
