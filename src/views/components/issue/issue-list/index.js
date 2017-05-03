@@ -20,8 +20,7 @@ class IssueList extends Component {
   }
 
   issueItems() {
-    // let {issues} = this.props;
-    // console.log('Issues from props itemsssss', this.props.issues)
+    console.log('Issues from props itemsssss', this.props.issues)
     return this.props.issues.map((issue, index) => {
       console.log('Issues on map', issue)
       return (
@@ -34,7 +33,7 @@ class IssueList extends Component {
   }
 
   render() {
-    console.log('Issues from props item', this.props.issues)
+    // console.log('Issues from props item', this.props.issues)
     return (
       <div className="issue-list">
         {this.state.loading === true ?

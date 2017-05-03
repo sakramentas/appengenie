@@ -5,7 +5,6 @@ import {createSelector} from 'reselect';
 import {getNotification, notificationActions} from 'src/core/notification';
 import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
 
-import Notification from '../../components/notification';
 import IssueSearch from '../../components/issue/issue-search';
 
 import IssueList from '../../components/issue/issue-list';
@@ -58,7 +57,6 @@ export class Issues extends Component {
           <IssueList issues={this.props.issues} />
         </div>
 
-        {this.props.notification.display ? this.renderNotification() : null}
       </div>
     );
   }
@@ -70,11 +68,9 @@ export class Issues extends Component {
 //-------------------------------------
 
 const mapStateToProps = createSelector(
-  getNotification,
   getIssueFilter,
   getVisibleIssues,
-  (notification, filterType, issues) => ({
-    notification,
+  (filterType, issues) => ({
     filterType,
     issues
   })
@@ -82,8 +78,7 @@ const mapStateToProps = createSelector(
 
 const mapDispatchToProps = Object.assign(
   {},
-  issuesActions,
-  notificationActions
+  issuesActions
 );
 
 export default connect(

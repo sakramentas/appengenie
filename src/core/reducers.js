@@ -10,12 +10,11 @@ import { likesReducer } from './likes';
 
 export default combineReducers({
   auth: authReducer,
-  notification: notificationReducer,
+  // notification: notificationReducer,
   routing: routerReducer,
-  tasks: tasksReducer,
+  // tasks: tasksReducer,
   issues: issuesReducer,
   answers: answersReducer,
   likes: likesReducer
 });
 
-(() => console.log('UAEHAISSHFIUASFUASHFIUH 23', likesReducer))()
