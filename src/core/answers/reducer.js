@@ -1,4 +1,4 @@
-import {List} from 'immutable';
+// import {List} from 'immutable';
 
 import {
   SIGN_OUT_SUCCESS
@@ -17,7 +17,7 @@ import {
 export const AnswersState = {
   deleted: null,
   filter: '',
-  list: new List(),
+  list: {},
   previous: null
 };
 
@@ -29,9 +29,7 @@ export function answersReducer(state = AnswersState, {payload, type}) {
         ...state,
         deleted: null,
         previous: null,
-        list: state.deleted && state.deleted.key === payload.key ?
-          state.previous :
-          state.list.unshift(payload)
+        list: {...payload}
       };
     case DELETE_ANSWER_SUCCESS:
       return {
@@ -40,15 +38,6 @@ export function answersReducer(state = AnswersState, {payload, type}) {
         previous: state.list,
         list: state.list.filter(answer => answer.key !== payload.key)
       };
-    case CREATE_ANSWER_ANSWER_SUCCESS:
-      console.log('payload answers ', payload)
-      return state.merge({
-        deleted: null,
-        previous: null,
-        list: state.list.map(answer => {
-          return answer.key === payload.key ? {...state, payload} : answer;
-        }),
-      });
 
     case FILTER_ANSWERS:
       return {
@@ -59,7 +48,7 @@ export function answersReducer(state = AnswersState, {payload, type}) {
     case LOAD_ANSWERS_SUCCESS:
       return {
         ...state,
-        list: new List(payload.reverse())
+        list: [...payload]
       };
 
     case UPDATE_ANSWER_SUCCESS:
