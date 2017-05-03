@@ -31,7 +31,7 @@ const saveUserInfo = ({user}) => {
       email: email,
     };
     try {
-      firebaseDb.ref(`users/${uid}`).set(userData);
+      firebaseDb.ref(`users/${uid}`).update(userData);
       firebaseDb.ref(`users/${uid}/registeredAt`).transaction((registeredAt) => {
         if (!registeredAt) {
           return firebase.database.ServerValue.TIMESTAMP
