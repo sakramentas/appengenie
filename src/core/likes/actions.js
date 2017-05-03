@@ -38,7 +38,6 @@ import {FirebaseList} from 'src/core/firebase';
 //   };
 
 export function loadLikesAnswer(issueId, answerId) {
-  console.log('TRIGERED on action!!!!!!!', issueId, answerId);
   // return (dispatch) => {
   // let currentUserUid = firebaseAuth.currentUser.uid;
   // console.log('getstate', getState());
@@ -47,64 +46,69 @@ export function loadLikesAnswer(issueId, answerId) {
   // likesList.subscribe(dispatch);
   // };
   return (dispatch) => {
-    firebaseDb.ref(`answers/${issueId}/${answerId}/likes`).once('value', snapshot => {
+    firebaseDb.ref(`answers/${issueId}/${answerId}`).child('likes').once('value', snapshot => {
       let listOfLikes = snapshot.val();
       console.log('getstate', listOfLikes);
-      dispatch(loadLikesAnswerSuccess(listOfLikes));
-      // if (listOfLikes[currentUserUid]) {
-      //   loadLikesAnswerSuccess()
-      // }
-      // console.log('LIST OF LIKES', listOfLikes)
+      if (listOfLikes) {
+        dispatch(loadLikesAnswerSuccess(listOfLikes));
+      }
     })
   }
 }
 
 export const likeAnswer = (answerId, issueId) => {
   let currentUserUid = firebaseAuth.currentUser.uid;
-  firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {console.log('THE SNAPSHOT ', snapshot.val())})
+  // firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {console.log('THE SNAPSHOT ', snapshot.val())})
   // Store userID on answers
-  firebaseDb.ref(`answers/${issueId}`).child(answerId).child('likes').update({[currentUserUid]: true});
+  firebaseDb.ref(`answers/${issueId}/${answerId}`).child('likes').update({[currentUserUid]: true});
   // Store answerID on user
   firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onAnswer').update({[answerId]: true})
     .catch(error => console.log(error));
 };
 
-// export const checkIfUserLiked = () => {
+// export const checkIfUserLiked = (answerId) => {
 //   let currentUserUid = firebaseAuth.currentUser.uid;
-//
+//   let isLiked = false;
+//   firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', snapshot => {
+//     // console.log('THE SNAPSHOT ', snapshot.val())
+//     if (snapshot[answerId]) {
+//       isLiked = true;
+//     }
+//   })
+//   return isLiked
 // };
 
 export function loadLikesAnswerSuccess(likes) {
-  console.log('loadLikesAnswerSuccess', likes)
+  // console.log('loadLikesAnswerSuccess', likes)
   return {
     type: LOAD_LIKES_ANSWER_SUCCESS,
     payload: likes
   };
 }
 
-export function createlikesAnswerSuccess(likes) {
-  console.log('createlikesAnswerSuccess', likes)
-  return {
-    type: CREATE_LIKES_ANSWER_SUCCESS,
-    payload: likes
-  };
-}
-
-export function updatelikesAnswerSuccess(likes) {
-  console.log('updatelikesAnswerSuccess', likes)
-  return {
-    type: UPDATE_LIKES_ANSWER_SUCCESS,
-    payload: likes
-  };
-}
-
-export function deletelikesAnswerSuccess(likes) {
-  console.log('deletelikesAnswerSuccess ', likes)
-  return {
-    type: DELETE_LIKES_ANSWER_SUCCESS,
-    payload: likes
-  };
-}
+// export function createlikesAnswerSuccess(likes) {
+//   console.log('createlikesAnswerSuccess', likes)
+//   return {
+//     type: CREATE_LIKES_ANSWER_SUCCESS,
+//     payload: likes
+//   };
+// }
+//
+// export function updatelikesAnswerSuccess(likes) {
+//   console.log('updatelikesAnswerSuccess', likes)
+//   return {
+//     type: UPDATE_LIKES_ANSWER_SUCCESS,
+//     payload: likes
+//   };
+// }
+//
+// export function deletelikesAnswerSuccess(likes) {
+//   console.log('deletelikesAnswerSuccess ', likes)
+//   return {
+//     type: DELETE_LIKES_ANSWER_SUCCESS,
+//     payload: likes
+//   };
+// }
 
 
 // export const likesList = new FirebaseList({

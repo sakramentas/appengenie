@@ -1,12 +1,10 @@
 import {createSelector} from 'reselect';
 
 export function getLikes(state) {
-  console.log('GET STATE GET LIKES ', state)
   return state;
 }
 
 export function getLikesValue(state) {
-  console.log('GET STATE GET LIKES getLikesValue', state)
   return getLikes(state).likes;
 }
 
