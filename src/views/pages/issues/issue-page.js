@@ -54,7 +54,6 @@ export class Issue extends Component {
     console.log('issue page', this.props.issues)
     return (
       <div className="issue-page">
-       ISSUE PAGE
         {this.loadSelectedIssue()}
       </div>
     );
