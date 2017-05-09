@@ -35,11 +35,11 @@ class IssueList extends Component {
   render() {
     // console.log('Issues from props item', this.props.issues)
     return (
-      <div className="issue-list">
+      <div>
         {this.state.loading === true ?
           <CircularProgress />
           :
-          <div>
+          <div className="issue-list">
             <span>Latest wishes</span>
             {this.issueItems()}
           </div>
