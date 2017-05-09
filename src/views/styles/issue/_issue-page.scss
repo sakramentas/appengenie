@@ -4,8 +4,48 @@
 
 .issue-page {
   padding: 16px;
-  //
-  .issue-box__question {
-    padding: 8px;
+
+  .issue-page_question--card {
+    border-radius: 6px !important;
+  }
+  .issue-page_question {
+    padding: 16px;
+    border-radius: 9px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &__avatar {
+      flex: 1;
+    }
+    &__bodyText {
+      h2 {
+        font-size: 22px;
+        font-weight: 500;
+        color: #1f599c;
+        text-align: center;
+      }
+      flex: 4;
+    }
+    &__userName {
+      font-size: 16px;
+      font-weight: bold;
+      flex: 5;
+      padding-left: 12px;
+    }
+
+    &__wish--text {
+      color: #838383;
+      display: block;
+      font-weight: 400;
+    }
+
+    &__bottom {
+      width: 100%;
+      border-top: 1px #efebeb solid;
+      margin-top: 16px;
+      padding: 13px 0;
+      display: flex;
+    }
   }
 }

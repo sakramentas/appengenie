@@ -162,9 +162,9 @@ class IssueSearch extends Component {
     };
     return (
       <div>
-        {showSearchInput ?
+        {showSearchInput &&
           <div className="issue-search">
-            <span>I wish there was an app to...</span>
+            <span>I <b>wish</b> there was an app to...</span>
             <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -175,7 +175,6 @@ class IssueSearch extends Component {
               inputProps={inputProps}
               ref="searchInput"/>
           </div>
-          : ''
         }
         {this.suggestCreateIssue()}
         {this.renderIssueForm()}

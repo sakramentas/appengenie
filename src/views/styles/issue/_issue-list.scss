@@ -3,8 +3,10 @@
 //---------------------------------------------------------
 
 .issue-list {
+  margin-top: 17px;
+  display: flex;
+  flex-direction: column;
   > span {
-    text-align: center;
-    display: block;
+    align-self: center;
   }
 }

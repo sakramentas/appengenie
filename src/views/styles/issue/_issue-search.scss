@@ -3,61 +3,23 @@
 //---------------------------------------------------------
 
 .issue-search {
-  height: 135px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   text-align: center;
   padding: 14px 10px;
   justify-content: center;
+  background: #1f599c;
+  height: 165px;
+  margin-left: -15px;
+  margin-right: -15px;
 
-  span {
+  > span {
     width: 100%;
-    color: #4a4a4a;
+    color: #fff;
   }
 
-  @include media-query(540) {
-    margin: 39px 0 20px;
-  }
 }
-
-//
-//.issue-search__input {
-//  outline: none;
-//  border: 1px solid #666;
-//  border-radius: 63px;
-//  padding: 0 0 5px 21px;
-//  background: white;
-//  width: 100%;
-//  height: 43px;
-//  font-family: inherit;
-//  font-size: 1.2rem;
-//  font-weight: 300;
-//  color: #666;
-//
-//  @include media-query(540) {
-//    height: 61px;
-//    font-size: rem(32px);
-//  }
-//
-//  &::placeholder {
-//    color: #999;
-//    opacity: 1; // firefox native placeholder style has opacity < 1
-//  }
-//
-//  &:focus::placeholder {
-//    color: #777;
-//    opacity: 1;
-//  }
-//
-//  // webkit input doesn't inherit font-smoothing from ancestors
-//  -webkit-font-smoothing: antialiased;
-//
-//  // remove `x`
-//  &::-ms-clear {
-//    display: none;
-//  }
-//}
 
 
 .react-autosuggest__container {
@@ -68,12 +30,12 @@
 
 .react-autosuggest__input {
   width: 100%;
-  height: 40px;
+  height: 50px;
   padding: 10px 20px;
   font-weight: 300;
   font-size: 16px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+  border: 3px solid rgb(191, 191, 191);
+  border-radius: 27px;
 }
 
 .react-autosuggest__input:focus {
@@ -99,8 +61,8 @@
   font-family: Helvetica, sans-serif;
   font-weight: 300;
   font-size: 16px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   z-index: 2;
 }
 
@@ -136,7 +98,7 @@
 }
 
 .highlight {
-  color: #ee0000;
+  color: #1f599c;
   font-weight: bold;
 }
 
