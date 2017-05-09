@@ -30,6 +30,7 @@
 
 html {
   overflow-y: scroll;
+  background: #f9f9f9;
 }
 
 body {
@@ -47,4 +48,8 @@ a {
 
 ::selection {
   background: rgba(200,200,255,.1);
+}
+
+.text_primary {
+  color: #7ED321;
 }
