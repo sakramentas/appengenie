@@ -1,7 +1,7 @@
 {
-  "database": {
-    "rules": "firebase.rules.json"
-  },
+//  "database": {
+//    "rules": "firebase.rules.json"
+//  },
 
   "hosting": {
     "public": "target",
