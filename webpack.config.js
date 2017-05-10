@@ -24,7 +24,8 @@ const PORT = 3000;
 //---------------------------------------------------------
 const loaders = {
   js: {test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
-  scss: {test: /\.scss$/, loader: 'style!css!postcss!sass'}
+  scss: {test: /\.scss$/, loader: 'style!css!postcss!sass'},
+  img:{test: /\.(jpe?g|png|gif|svg)$/i, loaders: [ 'file?hash=sha512&digest=hex&name=[hash].[ext]', 'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false']}
 };
 
 
@@ -100,7 +101,8 @@ if (ENV_DEVELOPMENT) {
   config.module = {
     loaders: [
       loaders.js,
-      loaders.scss
+      loaders.scss,
+      loaders.img
     ]
   };
 
@@ -143,7 +145,8 @@ if (ENV_PRODUCTION) {
   config.module = {
     loaders: [
       loaders.js,
-      {test: /\.scss$/, loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass')}
+      {test: /\.scss$/, loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass')},
+      loaders.img
     ]
   };
 
@@ -177,7 +180,8 @@ if (ENV_TEST) {
   config.module = {
     loaders: [
       loaders.js,
-      loaders.scss
+      loaders.scss,
+      loaders.img
     ]
   };
 }
