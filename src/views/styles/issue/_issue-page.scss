@@ -6,7 +6,10 @@
   padding: 16px;
 
   .issue-page_question--card {
-    border-radius: 6px !important;
+    //border-radius: 6px !important;
+    margin: 0 -16px;
+    overflow: hidden;
+    margin-top: -16px;
   }
   .issue-page_question {
     padding: 16px;
@@ -22,8 +25,11 @@
       h2 {
         font-size: 22px;
         font-weight: 500;
-        color: #1f599c;
+        color: #FFF;
         text-align: center;
+        background: $primary-color;
+        margin: -16px;
+        padding: 33px;
       }
       flex: 4;
     }
@@ -35,9 +41,10 @@
     }
 
     &__wish--text {
-      color: #838383;
+      color: #ffa013;
       display: block;
       font-weight: 400;
+      font-size: 17px;
     }
 
     &__bottom {
