@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-
+import logo from '../../../images/logo5.png'
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +40,7 @@ class Header extends Component {
       //
       // </AppBar>
       <div className="header">
-        <img src="/images/logo3.png" alt="Appengenie logo" />
+        <img src={logo} alt="Appengenie logo" />
       </div>
     );
 

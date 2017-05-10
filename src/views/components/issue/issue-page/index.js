@@ -7,7 +7,7 @@ import IssueAnswerForm from '../issue-answer/answer-form';
 export const IssuePageForum = ({issue, createAnswer, answers}) => {
 
   return (
-    <div>
+    <div className="g-row">
       <IssueQuestion issue={issue}/>
       <IssueAnswerList answers={answers}
                        issueId={issue.key}/>

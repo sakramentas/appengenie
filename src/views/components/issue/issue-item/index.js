@@ -6,6 +6,8 @@ import {Link} from 'react-router';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
+import appicon from '../../../../images/app-store-icon.png';
+
 class IssueItem extends Component {
 
   constructor(props, context) {
@@ -47,26 +49,21 @@ class IssueItem extends Component {
     console.log(issue.key)
 
     return (
-      <Card className={'issue-item'}>
-        <CardHeader
-          title={issue.body}
-          subtitle={issue.user.displayName}
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-        <CardActions>
-          <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
-            <FlatButton label="Open"/>
-          </Link>
-        </CardActions>
-        <CardText expandable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
-      </Card>
-
+      <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
+      <div className="issue-item">
+        <div className="issue-item-left">
+          <span className="issue-item-left--bodyText">
+            {issue.body}
+          </span>
+          <span className="issue-item-left--user">
+            {issue.user.displayName}
+          </span>
+        </div>
+        <div className="issue-item-right">
+          <img src={appicon} alt="Icon" />
+        </div>
+      </div>
+      </Link>
     );
   }
 }
