@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../../../images/logo5.png'
+
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +42,7 @@ class Header extends Component {
       //
       // </AppBar>
       <div className="header">
-        <img src={logo} alt="Appengenie logo" />
+        <img src={logo} alt="Appengenie logo"/>
       </div>
     );
 

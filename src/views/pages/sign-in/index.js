@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { authActions } from 'src/core/auth';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {authActions} from 'src/core/auth';
 
 
 export function SignIn({signInWithGithub, signInWithGoogle, signInWithTwitter}) {
@@ -11,17 +11,11 @@ export function SignIn({signInWithGithub, signInWithGoogle, signInWithTwitter}) 
         <button className="btn sign-in__button" onClick={signInWithGithub} type="button">GitHub</button>
         <button className="btn sign-in__button" onClick={signInWithGoogle} type="button">Google</button>
         <button className="btn sign-in__button" onClick={signInWithTwitter} type="button">Twitter</button>
+        <h6>2017 Appengenie</h6>
       </div>
     </div>
   );
 }
-
-SignIn.propTypes = {
-  signInWithGithub: PropTypes.func.isRequired,
-  signInWithGoogle: PropTypes.func.isRequired,
-  signInWithTwitter: PropTypes.func.isRequired
-};
-
 
 //=====================================
 //  CONNECT

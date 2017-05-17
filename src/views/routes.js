@@ -1,7 +1,6 @@
 import {isAuthenticated} from 'src/core/auth';
 import App from './app';
 import SignIn from './pages/sign-in';
-// import Tasks from './pages/tasks';
 import Issues from './pages/issues';
 import IssuePage from './pages/issues/issue-page';
 

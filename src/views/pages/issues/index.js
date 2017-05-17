@@ -5,7 +5,7 @@ import {createSelector} from 'reselect';
 import {getNotification, notificationActions} from 'src/core/notification';
 import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
 
-import IssueSearch from '../../components/issue/issue-search';
+import IssueSearch from '../../components/search';
 
 import IssueList from '../../components/issue/issue-list';
 
