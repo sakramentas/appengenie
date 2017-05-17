@@ -23,19 +23,6 @@ export class Issue extends Component {
     console.log('THIS.PROPS', this.props.answers);
   }
 
-  renderNotification() {
-    // const { notification } = this.props;
-    // return (
-    //   <Notification
-    //     action={this.props.undeleteIssue}
-    //     actionLabel={notification.actionLabel}
-    //     dismiss={this.props.dismissNotification}
-    //     display={notification.display}
-    //     message={notification.message}
-    //   />
-    // );
-  }
-
   loadSelectedIssue() {
     let {createAnswer, issues, location, answers} = this.props;
     return issues.map((issue, index) => { //TODO: get the selected issue with getVisibleIssues selector

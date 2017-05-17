@@ -5,7 +5,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {answersActions} from 'src/core/answers';
 
 
-import LikeButton from 'src/views/components/like-button'
+import LikeButton from 'src/views/components/like/like-button'
 
 export class IssueAnswerItem extends Component {
 
@@ -18,7 +18,7 @@ export class IssueAnswerItem extends Component {
                     avatar={answer.user.image}
                     subtitle={`by ${answer.user.displayName}`}/>
         <CardActions>
-          <LikeButton type="answers" answerId={answer.key} issueId={issueId}  />
+          {/*<LikeButton type="answers" answerId={answer.key} issueId={issueId}  />*/}
         </CardActions>
       </Card>
     )
