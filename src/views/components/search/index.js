@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router'
-import IssueCreate from '../issue-create';
-import AlertShort from '../../notification/alert-short';
+import IssueCreate from '../issue/issue-create';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
-import {escapeRegexCharacters} from '../../../../helpers'
+import {escapeRegexCharacters} from '../../../helpers'
 import Snackbar from 'material-ui/Snackbar';
+// import TrendingList from '../../trending/trending-list'
 
 import TransitionGroup from 'react-addons-transition-group'; //TODO: create a new component for message animations
 
@@ -174,6 +174,7 @@ class IssueSearch extends Component {
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
               ref="searchInput"/>
+            {/*<TrendingList/>*/}
           </div>
         }
         {this.suggestCreateIssue()}
