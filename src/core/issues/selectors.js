@@ -1,24 +1,11 @@
 import {createSelector} from 'reselect';
 
-export function getIssues(state) {
-  return state.issues;
-}
+export const getIssues = (state) => state.issues;
+export const getIssueList = (state) => getIssues(state).list;
+export const getIssueFilter = (state) => getIssues(state).filter;
+export const getIssueFilterSelected = (state) => getIssues(state).filterSelected;
+export const getDeletedIssue = (state) => getIssues(state).deleted;
 
-export function getIssueList(state) {
-  return getIssues(state).list;
-}
-
-export function getIssueFilter(state) {
-  return getIssues(state).filter;
-}
-
-export function getIssueFilterSelected(state) {
-  return getIssues(state).filterSelected;
-}
-
-export function getDeletedIssue(state) {
-  return getIssues(state).deleted;
-}
 
 
 //=====================================
@@ -37,17 +24,3 @@ export const getVisibleIssues = createSelector(
     }
   }
 );
-
-export const getVisibleIssueSelected = createSelector(
-  getIssueList,
-  getIssueFilterSelected,
-  (issues, filter) => {
-    if (filter) {
-      return issues.filter(issue => !issue.key.indexOf(filter));
-    }
-    else {
-      return issues;
-    }
-  }
-);
-
