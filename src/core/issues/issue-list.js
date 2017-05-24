@@ -1,6 +1,6 @@
 import { FirebaseList } from 'src/core/firebase';
 import * as issueActions from './actions';
-import { IssueModel } from './issue';
+import { IssueModel } from './issue-model';
 
 
 export const issueList = new FirebaseList({

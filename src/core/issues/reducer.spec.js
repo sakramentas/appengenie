@@ -9,7 +9,7 @@ import {
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
 
-import { Issue } from './issue';
+import { Issue } from './issue-model';
 import { issuesReducer, IssuesState } from './reducer';
 
 
