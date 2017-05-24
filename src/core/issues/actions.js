@@ -1,8 +1,8 @@
 import firebase from 'firebase';
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 
-import { getDeletedIssue } from './selectors';
-import { issueList } from './issue-list';
+import {getDeletedIssue} from './selectors';
+import {issueList} from './issue-list';
 import {
   CREATE_ISSUE_ERROR,
   CREATE_ISSUE_SUCCESS,
@@ -12,10 +12,8 @@ import {
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
   LOAD_ISSUES_SUCCESS,
-  LOAD_ISSUES_ANSWER_SUCCESS,
   UNDELETE_ISSUE_ERROR,
   UNLOAD_ISSUES_SUCCESS,
-  UNLOAD_ISSUES_ANSWER_SUCCESS,
   UPDATE_ISSUE_ERROR,
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
@@ -23,7 +21,7 @@ import {
 
 export function createIssue(title, userInfo) {
   return dispatch => {
-    var newIssueKey = firebaseDb.ref().child('issues').push().key;
+    let newIssueKey = firebaseDb.ref().child('issues').push().key;
     let issueData = {
       key: newIssueKey,
       body: title,
@@ -34,9 +32,8 @@ export function createIssue(title, userInfo) {
       id: userInfo.uid,
       image: userInfo.photoURL
     };
-    firebaseDb.ref(`issues/${newIssueKey}`).update(issueData)
+    firebaseDb.ref(`issues/${newIssueKey}`).update(issueData);
     firebaseDb.ref(`issues/${newIssueKey}`).child('user').update(issueDataUser)
-    // issueList.push({body: title})
       .catch(error => dispatch(createIssueError(error)));
   };
 }
@@ -60,7 +57,7 @@ export function createIssueAnswer(key, details, answerKey) {
     // let issueToUpdate = issueList[key];
     console.log('issuelist', issueList)
     console.log('issuekey', key)
-    const { auth } = getState();
+    const {auth} = getState();
     let answerPath = `${key}/answers/${answerKey}`;
     issueList.update(answerPath, {answer: details})
       .catch(error => dispatch(updateIssueError(error)));
@@ -168,7 +165,7 @@ export function filterIssues(filterType) {
 
 export function loadIssues() {
   return (dispatch, getState) => {
-    const { auth } = getState();
+    const {auth} = getState();
     issueList.path = `issues`;
     issueList.subscribe(dispatch);
   };

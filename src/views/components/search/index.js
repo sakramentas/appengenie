@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router'
 import IssueCreate from '../issue/issue-create';
+import AlertShort from '../notification/alert-short';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
