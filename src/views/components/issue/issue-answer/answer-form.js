@@ -60,7 +60,7 @@ class IssueAnswerForm extends Component {
   render() {
     let {handleOpenSnackbar} = this.props;
     return (
-      <Card>
+      <div className="aeg-card1">
         <form className="issue-create"
               onSubmit={this.onSubmit}>
           <span>Answer this Issue</span>
@@ -93,7 +93,7 @@ class IssueAnswerForm extends Component {
                           onClick={handleOpenSnackbar}/>
           </div>
         </form>
-      </Card>
+      </div>
     );
   }
 }

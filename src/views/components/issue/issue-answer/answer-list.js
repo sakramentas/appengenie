@@ -13,16 +13,18 @@ export class IssueAnswerList extends Component {
     let {answers, issueId} = this.props;
     return (
       <div>
-        <Subheader>Answers</Subheader>
         {answers.length ?
-          answers.map((answer, index) => {
-            return (
-              <IssueAnswerItem key={index}
-                               answer={answer}
-                               issueId={issueId} />
-            )
-          })
-          : <span>No answers available</span> }
+          <div>
+            <Subheader>Answers</Subheader>
+            {answers.map((answer, index) => {
+              return (
+                <IssueAnswerItem key={index}
+                                 answer={answer}
+                                 issueId={issueId}/>
+              )
+            })}
+          </div>
+          : <span className="aeg-alert1">No answers available. Be the first one to answer!</span> }
       </div>
     )
   }

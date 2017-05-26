@@ -31,7 +31,7 @@ class IssueItem extends Component {
     const {issue} = this.props;
     return (
       <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
-        <div className="issue-item">
+        <div className="issue-item aeg-card1">
           <div className="issue-item-left">
           <span className="issue-item-left--bodyText">
             {issue.body}
