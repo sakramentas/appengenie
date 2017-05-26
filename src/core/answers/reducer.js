@@ -10,7 +10,8 @@ import {
   FILTER_ANSWERS,
   CREATE_ANSWER_ANSWER_SUCCESS,
   LOAD_ANSWERS_SUCCESS,
-  UPDATE_ANSWER_SUCCESS
+  UPDATE_ANSWER_SUCCESS,
+  FETCH_APPRANK_SUCCESS
 } from './action-types';
 
 
@@ -18,7 +19,8 @@ export const AnswersState = {
   deleted: null,
   filter: '',
   list: {},
-  previous: null
+  previous: null,
+  mostLikedApp: ''
 };
 
 
@@ -43,6 +45,12 @@ export function answersReducer(state = AnswersState, {payload, type}) {
       return {
         ...state,
         filter: payload.filterType || ''
+      };
+
+    case FETCH_APPRANK_SUCCESS:
+      return {
+        ...state,
+        mostLikedApp: payload
       };
 
     case LOAD_ANSWERS_SUCCESS:

@@ -17,13 +17,32 @@ import {
   UNLOAD_ANSWERS_SUCCESS,
   UNLOAD_ANSWERS_ANSWER_SUCCESS,
   UPDATE_ANSWER_ERROR,
-  UPDATE_ANSWER_SUCCESS
+  UPDATE_ANSWER_SUCCESS,
+  FETCH_APPRANK_SUCCESS
 } from './action-types';
 
 
+export function listAppRank(issueKey) {
+  return dispatch => {
+    firebaseDb.ref(`answers`).child(issueKey).limitToFirst(1)
+      .once('value', (snap) => {
+        let snapshot = snap.val();
+        if (snapshot) {
+          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
+          dispatch(fetchAppRankSuccess(snapshotFinal[0].appName))
+        }
+      });
+  };
+}
+
+export const fetchAppRankSuccess = (data) => ({
+  type: FETCH_APPRANK_SUCCESS,
+  payload: data
+});
+
 export function createAnswer(issueKey, appName, body, userInfo) {
   return dispatch => {
-    var newAnswerKey = firebaseDb.ref().child('answers').push().key;
+    let newAnswerKey = firebaseDb.ref().child('answers').push().key;
     let answerData = {
       key: newAnswerKey,
       appName,
@@ -61,7 +80,9 @@ export function createAnswer(issueKey, appName, body, userInfo) {
 
 export const likeAnswer = (answerId, issueKey) => {
   let currentUserUid = firebaseAuth.currentUser.uid;
-  firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {console.log('THE SNAPSHOT ', snapshot.val())})
+  firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {
+    console.log('THE SNAPSHOT ', snapshot.val())
+  })
   // Store userID on answers
   firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').update({[currentUserUid]: true});
   // Store answerID on user
