@@ -1,0 +1,28 @@
+//=========================================================
+//  AppRank Component
+//---------------------------------------------------------
+
+.appRank-box {
+  margin-top: 15px;
+  padding: 16px;
+  .appRank-box-mostLiked {
+    text-align: center;
+    &--title {
+      font-size: 15px;
+      display: block;
+    }
+    &--app {
+      font-size: 25px;
+      color: $primary-color;
+    }
+    &--download {
+      img {
+        width: 45%;
+        display: inline-block;
+      }
+      .playStore-badge {
+        width: 51%;
+      }
+    }
+  }
+}
