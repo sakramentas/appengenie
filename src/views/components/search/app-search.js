@@ -20,7 +20,7 @@ class AppSearch extends Component {
     this.state = {
       searchTerm: '',
       searchResult: [],
-      selectedApp: []
+      selectedApp: {}
     }
   }
 
@@ -50,7 +50,10 @@ class AppSearch extends Component {
   }
 
   handleSelectApp(app) {
-    console.log(app)
+    console.log('AAAAAAPPP', app)
+    this.setState({selectedApp: {...app}})
+    this.props.handleAppData(app)
+    console.log('STATE APP', this.state.selectedApp)
   }
 
 
@@ -72,7 +75,7 @@ class AppSearch extends Component {
                   <div key={index}>
                     <ListItem primaryText={app.title}
                               leftIcon={<img src={app.icon} alt=""/>}
-                              onClick={this.handleSelectApp.bind(app, this)}/>
+                              onClick={this.handleSelectApp.bind(this, app)}/>
                     <Divider />
                   </div>
                 )

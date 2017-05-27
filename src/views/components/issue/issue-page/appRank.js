@@ -14,14 +14,15 @@ class AppRank extends Component {
   }
 
   render() {
-    let {mostLikedApp} = this.props;
+    let {mostLikedApp, appIcon} = this.props;
     return (
       <div>
         {mostLikedApp ?
           <div className='appRank-box aeg-card1'>
             <div className='appRank-box-mostLiked'>
               <span className="appRank-box-mostLiked--title">Most Recommended App</span>
-              <span className="appRank-box-mostLiked--app">{mostLikedApp}</span>
+              {appIcon && <img src={appIcon} className="" />}
+              <span className="appRank-box-mostLiked--app aeg-block">{mostLikedApp}</span>
               <div className="appRank-box-mostLiked--download">
                 <a href={`https://www.apple.com/ie/search/${mostLikedApp}?src=serp`} target="_blank"><img
                   src={appStoreBadge} className="appStore-badge"/></a>
@@ -41,7 +42,8 @@ const apprankStyles = {
 };
 
 const mapStateToProps = state => ({
-  mostLikedApp: state.answers.mostLikedApp
+  mostLikedApp: state.answers.mostLikedApp,
+  appIcon: state.answers.appIcon
 });
 
 const mapDispatchToProps = Object.assign(

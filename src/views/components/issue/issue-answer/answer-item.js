@@ -13,14 +13,14 @@ export class IssueAnswerItem extends Component {
   render() {
     let {answer, issueId} = this.props;
     return (
-      <Card className="issue-box__answerList">
+      <div className="issue-box__answerList aeg-card1">
         <CardHeader title={`${answer.appName || ''} - ${answer.body}`}
                     avatar={answer.user.image}
                     subtitle={`by ${answer.user.displayName}`}/>
         <CardActions>
           {/*<LikeButton type="answers" answerId={answer.key} issueId={issueId}  />*/}
         </CardActions>
-      </Card>
+      </div>
     )
   }
 }
