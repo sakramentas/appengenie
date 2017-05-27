@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card} from 'material-ui/Card';
+import AppSearch from '../../search/app-search'
 import { firebaseAuth } from 'src/core/firebase';
 
 class IssueAnswerForm extends Component {
@@ -18,6 +18,7 @@ class IssueAnswerForm extends Component {
     this.onChangeAppName = ::this.onChangeAppName;
     this.onKeyUp = ::this.onKeyUp;
     this.onSubmit = ::this.onSubmit;
+    this.handleAppName = ::this.handleAppName;
   }
 
   componentWillMount() {
@@ -57,10 +58,17 @@ class IssueAnswerForm extends Component {
     this.clearInput();
   }
 
+  handleAppName(appName) {
+    this.setState({
+      appName: appName
+    })
+  }
+
   render() {
     let {handleOpenSnackbar} = this.props;
     return (
       <div className="aeg-card1">
+        <AppSearch handleAppName={this.handleAppName} />
         <form className="issue-create"
               onSubmit={this.onSubmit}>
           <span>Answer this Issue</span>
