@@ -20,7 +20,8 @@ export const AnswersState = {
   filter: '',
   list: {},
   previous: null,
-  mostLikedApp: ''
+  mostLikedApp: '',
+  appIcon: ''
 };
 
 
@@ -50,7 +51,8 @@ export function answersReducer(state = AnswersState, {payload, type}) {
     case FETCH_APPRANK_SUCCESS:
       return {
         ...state,
-        mostLikedApp: payload
+        mostLikedApp: payload.name,
+        appIcon: payload.data ? payload.data.icon_72 : ''
       };
 
     case LOAD_ANSWERS_SUCCESS:

@@ -29,18 +29,21 @@ export function listAppRank(issueKey) {
         let snapshot = snap.val();
         if (snapshot) {
           let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
-          dispatch(fetchAppRankSuccess(snapshotFinal[0].appName))
+          dispatch(fetchAppRankSuccess(snapshotFinal[0].appName, snapshotFinal[0].appData))
         }
       });
   };
 }
 
-export const fetchAppRankSuccess = (data) => ({
+export const fetchAppRankSuccess = (name, data) => ({
   type: FETCH_APPRANK_SUCCESS,
-  payload: data
+  payload: {
+    name,
+    data
+  }
 });
 
-export function createAnswer(issueKey, appName, body, userInfo) {
+export function createAnswer(issueKey, appName, appData, body, userInfo) {
   return dispatch => {
     let newAnswerKey = firebaseDb.ref().child('answers').push().key;
     let answerData = {
@@ -55,6 +58,7 @@ export function createAnswer(issueKey, appName, body, userInfo) {
       image: userInfo.photoURL
     };
     console.log('CHECK IF HAS KEY --- ', issueKey)
+    firebaseDb.ref(`answers/${issueKey}`).child(newAnswerKey).child('appData').update(appData)
     firebaseDb.ref(`answers/${issueKey}`).child(newAnswerKey).update(answerData)
     firebaseDb.ref(`answers/${issueKey}`).child(newAnswerKey).child('user').update(answerDataUser)
     firebaseDb.ref(`issues/${issueKey}`).child('answers').update({[newAnswerKey]: true})
