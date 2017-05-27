@@ -17,41 +17,30 @@
         "active"
       ]
     },
+    "tasks": {
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        ".write": "auth !== null && auth.uid === $uid"
+      }
+    },
     "issues": {
       "$issueId": {
+        ".read": "true",
+        "answers": {
+          "$answerId": {
+            ".validate": "newData.isBoolean()",
+            ".write": "auth != null"
+          },
+          ".read": "true",
+          ".write": "auth != null"
+        },
+        "key": {
+          ".validate": "newData.isString()",
+          ".write": "auth != null && data.val() == data.parent().val()"
+        },
         "body": {
           ".validate": "newData.isString()",
           ".write": "auth != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
-        },
-        "createdAt": {
-          ".validate": "newData.isNumber() && newData.val() <= now"
-        },
-        "edited": {
-          ".validate": "newData.isBoolean()",
-          ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
-        },
-        "editedLast": {
-          ".validate": "newData.isNumber() && newData.val() <= now",
-          ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
-        },
-        "likes": {
-          "$uid": {
-            ".validate": "newData.isBoolean()",
-            ".write": "auth != null && auth.uid == $uid"
-          }
-        },
-        ".validate": "newData.hasChildren()"
-      }
-    },
-    "answers": {
-      "$answerId": {
-        "appName": {
-          ".validate": "newData.isString()",
-          ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
-        },
-        "body": {
-          ".validate": "newData.isString()",
-          ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
         },
         "edited": {
           ".validate": "newData.isBoolean()",
@@ -65,39 +54,105 @@
           ".validate": "newData.isNumber() && newData.val() <= now",
           ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
         },
+        "user": {
+          "displayName": {
+            ".validate": "newData.isString()",
+            ".write": "auth != null || auth != null && auth.uid == data.parent().child('id').val()"
+          },
+          "id": {
+            ".validate": "auth != null",
+            ".write": "auth != null"
+          },
+          "image": {
+            ".validate": "newData.isString()",
+            ".write": "auth != null || auth != null && auth.uid == data.parent().child('id').val()"
+          },
+        },
         "likes": {
           "$uid": {
             ".validate": "newData.isBoolean()",
             ".write": "auth != null && auth.uid == $uid"
           }
         },
-        ".validate": "newData.hasChildren()",
         "createdAt": {
-          ".validate": "newData.isNumber() && newData.val() <= now"
+          ".validate": "newData.isNumber() && newData.val() <= now",
+          ".write": "auth != null"
         },
-        "issueId": {
-          ".validate": "newData.isString()"
-        },
-        "user": {
-          ".validate": "newData.hasChildren()",
-          "displayName": {
+        ".validate": "newData.hasChildren()"
+      },
+      ".read": "true"
+    },
+    "answers": {
+      "$issueId": {
+        "$answerId": {
+          ".write": "auth != null",
+          "appName": {
+            ".validate": "newData.isString()",
+            ".read": "auth != null",
+            ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
+          },
+          "appData": {
+            ".read": "auth != null",
+            ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
+          },
+          "key": {
+            ".validate": "newData.isString()",
+            ".write": "auth != null && data.val() == data.parent().val()"
+          },
+          "body": {
+            ".validate": "newData.isString()",
+            ".write": "true"
+          },
+          "edited": {
+            ".validate": "newData.isBoolean()",
+            ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
+          },
+          "editedBy": {
+            ".validate": "newData.isString()",
+            ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
+          },
+          "editedLast": {
+            ".validate": "newData.isNumber() && newData.val() <= now",
+            ".write": "auth != null && root.child('adminUsers').child(auth.uid).val() != null || auth != null && auth.uid == data.parent().child('user').child('id').val()"
+          },
+          "likes": {
+            "$uid": {
+              ".validate": "newData.isBoolean()",
+              ".write": "auth != null",
+              ".read": "auth != null"
+            }
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber() && newData.val() <= now",
+            ".write": "auth != null"
+          },
+          "issueId": {
             ".validate": "newData.isString()"
           },
-          "id": {
-            ".validate": "auth != null && newData.val() == auth.uid"
-          },
-          "image": {
-            ".validate": "newData.isString()"
+          "user": {
+            "displayName": {
+              ".validate": "newData.isString()",
+              ".write": "auth != null || auth != null && auth.uid == data.parent().child('id').val()"
+            },
+            "id": {
+              ".validate": "auth != null",
+              ".write": "auth != null"
+            },
+            "image": {
+              ".validate": "newData.isString()",
+              ".write": "auth != null || auth != null && auth.uid == data.parent().child('id').val()"
+            },
           },
           "$other": {
             ".validate": "false"
-          }
+          },
+          ".read": "true"
         },
-        "$other": {
-          ".validate": "false"
-        },
-        ".write": "data.val() == null && auth != null && root.child('threads').child(newData.child('threadId').val()).child('locked').val() != true || data.val() != null && newData.val() == null && (auth != null && root.child('adminUsers').child(auth.uid).val() != null)"
-      }
+        ".write": "auth != null",
+        ".read": "true",
+      },
+      ".read": "true",
+      ".write": "auth != null"
     },
     "users": {
       "$uid": {
@@ -114,10 +169,18 @@
           }
         },
         "likes": {
-          "$postId": {
-            ".validate": "newData.isBoolean()",
-            ".write": "auth != null && auth.uid == $uid && root.child('posts').child($postId).val() != null"
-          }
+          "onIssue": {
+            "$postId": {
+              ".validate": "newData.isBoolean()",
+              ".write": "auth != null"
+            }
+          },
+          "onAnswer": {
+            "$postId": {
+              ".validate": "newData.isBoolean()",
+              ".write": "auth != null"
+            }
+          },
         },
         ".validate": "newData.hasChildren(['displayName', 'lastLoginAt', 'profileImageURL', 'provider'])",
         "displayName": {
@@ -151,7 +214,7 @@
           ".validate": "false"
         },
         ".read": "true",
-        ".write": "auth != null && auth.uid == $uid || auth != null && root.child('adminUsers').child(auth.uid).val() != null"
+        ".write": "true"
       }
     }
   }
