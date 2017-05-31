@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    color: $dark-color;
 
     &__avatar {
       flex: 1;
@@ -51,8 +52,9 @@
       width: 100%;
       border-top: 1px #efebeb solid;
       margin-top: 16px;
-      padding: 13px 0;
       display: flex;
+      align-items: center;
+      padding-top: 5px;
     }
   }
 }
