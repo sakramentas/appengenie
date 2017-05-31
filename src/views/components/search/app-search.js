@@ -3,11 +3,8 @@ import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
-import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
-import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
-import {escapeRegexCharacters} from '../../../helpers'
+import SearchIcon from 'material-ui/svg-icons/action/search';
 import axios from 'axios';
-import debounce from 'lodash/debounce'
 
 class AppSearch extends Component {
 
@@ -66,7 +63,7 @@ class AppSearch extends Component {
                    hintText="App name"
                    onChange={this.handleChange}
         />
-        <FlatButton label="Search" secondary={true} onClick={this.handleSearch}/>
+        <SearchIcon onClick={this.handleSearch}/>
         <List>
           {(searchResult.length && !this.state.selectedApp.size) ?
             <div>

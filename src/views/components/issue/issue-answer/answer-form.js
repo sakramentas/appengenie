@@ -61,7 +61,6 @@ class IssueAnswerForm extends Component {
   }
 
   handleAppData(appData) {
-    // firebaseDb.ref(`answers/${issueKey}`).child(newAnswerKey).update(answerData)
     this.setState({
       appData: appData,
       appName: appData.title
@@ -72,21 +71,11 @@ class IssueAnswerForm extends Component {
     let {handleOpenSnackbar} = this.props;
     return (
       <div className="aeg-card1">
-        <AppSearch handleAppData={this.handleAppData} />
+
         <form className="issue-create"
               onSubmit={this.onSubmit}>
           <span>Answer this Issue</span>
-          <TextField
-            autoComplete="on"
-            className="issue-create__input issue-create__input--title"
-            maxLength="100"
-            onChange={this.onChangeAppName}
-            onKeyUp={this.onKeyUp}
-            hintText="App name"
-            type="text"
-            value={this.state.appName}
-            fullWidth={false}
-          />
+          <AppSearch handleAppData={this.handleAppData} />
           <TextField
             autoComplete="on"
             className="issue-create__input issue-create__input--title"
