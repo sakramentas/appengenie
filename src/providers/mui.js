@@ -3,7 +3,7 @@ export MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
-  cyan900, cyan500, cyan700,
+  cyan900, cyan500, lightBlue900,
   pinkA200,
   grey100, grey400, grey500,
   white, darkBlack, fullBlack, lightGreen800, deepOrange600
@@ -11,7 +11,7 @@ import {
 
 export const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: lightGreen800,
+    primary1Color: lightBlue900,
     primary2Color: deepOrange600,
     primary3Color: grey400,
     accent1Color: pinkA200,
