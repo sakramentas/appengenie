@@ -1,6 +1,6 @@
 import React from 'react';
 import {IssueQuestion} from './question';
-import AppRank from './appRank';
+import AppRank from './app-rank/index';
 import {IssueAnswerList} from '../issue-answer/answer-list';
 import IssueAnswerForm from '../issue-answer/answer-form';
 
