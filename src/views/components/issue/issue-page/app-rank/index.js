@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {answersActions} from 'src/core/answers'
 
-import appStoreBadge from '../../../../images/appstore-download-img.svg';
-import playStoreBadge from '../../../../images/playstore-download-img.png';
+import appStoreBadge from '../../../../../images/appstore-download-img.svg';
+import playStoreBadge from '../../../../../images/playstore-download-img.png';
 
 class AppRank extends Component {
 
@@ -14,13 +14,14 @@ class AppRank extends Component {
   }
 
   render() {
-    let {mostLikedApp, appIcon} = this.props;
+    let {mostLikedApp, appIcon, genieUser} = this.props;
     return (
       <div>
         {mostLikedApp ?
           <div className='appRank-box aeg-card1'>
             <div className='appRank-box-mostLiked'>
               <span className="appRank-box-mostLiked--title">Most Recommended App</span>
+              <h4 className="appRank-box-mostLiked--title subheader">Genie: {genieUser}</h4>
               {appIcon && <img src={appIcon} className="" />}
               <span className="appRank-box-mostLiked--app aeg-block">{mostLikedApp}</span>
               <div className="appRank-box-mostLiked--download">
@@ -43,7 +44,8 @@ const apprankStyles = {
 
 const mapStateToProps = state => ({
   mostLikedApp: state.answers.mostLikedApp,
-  appIcon: state.answers.appIcon
+  appIcon: state.answers.appIcon,
+  genieUser: state.answers.list.user
 });
 
 const mapDispatchToProps = Object.assign(
