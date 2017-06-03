@@ -1,15 +1,12 @@
-import { List } from 'immutable';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { authActions, getAuth } from 'src/core/auth';
 
-import { getNotification, notificationActions } from 'src/core/notification';
 import { getIssueFilter, getVisibleIssues, issuesActions } from 'src/core/issues';
 import { getAnswerFilter, getVisibleAnswers, answersActions } from 'src/core/answers';
-import {IssuePageForum} from '../../components/issue/issue-page';
+import {IssueForum} from '../../components/issue/IssueForum';
 
-import RaisedButton from 'material-ui/RaisedButton';
 
 export class Issue extends Component {
 
@@ -28,7 +25,7 @@ export class Issue extends Component {
     return issues.map((issue, index) => { //TODO: get the selected issue with getVisibleIssues selector
       // console.log('Auth key', this.props.auth.id)
       if (issue.key === location.query.id) {
-        return (<IssuePageForum issue={issue}
+        return (<IssueForum issue={issue}
                                 key={index}
                                 createAnswer={createAnswer}
                                 answers={answers}
@@ -55,23 +52,26 @@ export class Issue extends Component {
 //-------------------------------------
 
 const mapStateToProps = createSelector(
-  getNotification,
   getIssueFilter,
   getVisibleIssues,
   getVisibleAnswers,
-  (notification, filterType, issues, answers) => ({
-    notification,
+  (filterType, issues, answers) => ({
     filterType,
     issues,
     answers
   })
 );
 
+// const mapStateToProps = state => ({ TODO FIX IT
+//   filterType: getIssueFilter,
+//   issues: getVisibleIssues,
+//   answers: getVisibleAnswers
+// });
+
 const mapDispatchToProps = Object.assign(
   {},
   issuesActions,
-  answersActions,
-  notificationActions
+  answersActions
 );
 
 export default connect(

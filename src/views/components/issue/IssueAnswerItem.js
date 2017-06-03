@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-
-
 import {answersActions} from 'src/core/answers';
+import Like from 'src/views/components/actions/Like'
 
-
-import LikeButton from 'src/views/components/like/like-button'
-
-export class IssueAnswerItem extends Component {
-
+class IssueAnswerItem extends Component {
 
   render() {
     let {answer, issueId} = this.props;
@@ -25,4 +20,4 @@ export class IssueAnswerItem extends Component {
   }
 }
 
-
+export default IssueAnswerItem

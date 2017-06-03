@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { authActions, getAuth } from 'src/core/auth';
 import { paths } from '../routes';
-import Header from '../components/header';
-import BottomNav from '../components/header/bottom-nav';
+import Header from '../components/partials/Header';
+import BottomNav from '../components/partials/BottomNav';
 
 
 export class App extends Component {

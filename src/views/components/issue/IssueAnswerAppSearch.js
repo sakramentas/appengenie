@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import FlatButton from 'material-ui/FlatButton';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import axios from 'axios';
 
-class AppSearch extends Component {
+class IssueAnswerAppSearch extends Component {
 
   constructor(props) {
     super(props);
@@ -94,4 +93,4 @@ class AppSearch extends Component {
   }
 }
 
-export default AppSearch;
+export default IssueAnswerAppSearch;

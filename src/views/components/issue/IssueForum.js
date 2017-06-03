@@ -1,16 +1,16 @@
 import React from 'react';
-import {IssueQuestion} from './question';
-import AppRank from './app-rank/index';
-import {IssueAnswerList} from '../issue-answer/answer-list';
-import IssueAnswerForm from '../issue-answer/answer-form';
+import {IssueQuestion} from './IssueQuestion';
+import IssueAppRank from './IssueAppRank';
+import IssueAnswerList from './IssueAnswerList';
+import IssueAnswerForm from './IssueAnswerForm';
 
 
-export const IssuePageForum = ({issue, createAnswer, answers}) => {
+export const IssueForum = ({issue, createAnswer, answers}) => {
 console.log('ANSWERS SIZE', answers.length)
   return (
     <div className="g-row">
       <IssueQuestion issue={issue}/>
-      <AppRank issue={issue} />
+      <IssueAppRank issue={issue} />
       <IssueAnswerList answers={answers}
                         issueId={issue.key}/>
       <IssueAnswerForm createAnswer={createAnswer}

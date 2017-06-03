@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import AppSearch from '../../search/app-search'
+import AppSearch from './IssueAnswerAppSearch'
 import { firebaseAuth, firebaseDb } from 'src/core/firebase';
-
 
 class IssueAnswerForm extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       appData: '',
       appName: '',

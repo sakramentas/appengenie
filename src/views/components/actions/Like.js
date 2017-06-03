@@ -7,7 +7,7 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 import {red500} from 'material-ui/styles/colors';
 
-export class LikeButton extends Component {
+export class Like extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -139,7 +139,7 @@ export class LikeButton extends Component {
     return (
       <div>
         {/*{this.props.issueId}*/}
-        {/*{this.state.isLiked === true ? 'You like it' : 'You dont like it'}*/}
+        {/*{this.state.isLiked === true ? 'You actions it' : 'You dont actions it'}*/}
         {/*{this.checkIfIsLiked()}*/}
 
         <LikeButtonElement liked={this.checkIfIsLiked()}
@@ -173,7 +173,7 @@ const mapStateToProps = createSelector(
 
 const mapDispatchToProps = (likesActions)
 
-export default connect(mapStateToProps, mapDispatchToProps)(LikeButton)
+export default connect(mapStateToProps, mapDispatchToProps)(Like)
 
 
 const LikeButtonElement = ({liked, handleLikeAnswer, numLikes}) => {

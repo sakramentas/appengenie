@@ -10,23 +10,22 @@
 
 @import
 "grid",
-'button',
-"header",
-"sign-in",
+'ui/button',
+"components/partials/Header",
+"pages/sign-in",
 "ui/ui",
-"issue/issue-filters",
-"search/search",
-"answers/appRank",
-"issue/issue-create",
-"issue/issue-item",
-"issue/issue-page",
-"issue/issue-list",
-"task/task-filters",
-"task/task-form",
-"task/task-item",
-"task/task-list",
-"trending/trending-list",
-"trending/trending-item";
+"components/issue/IssueSearch",
+"components/issue/IssueAppRank",
+"components/issue/IssueCreate",
+"components/issue/IssueItem",
+"pages/issue-page",
+"components/issue/IssueList",
+"components/task/task-filters",
+"components/task/task-form",
+"components/task/task-item",
+"components/task/task-list",
+"components/trending/TrendingList",
+"components/trending/TrendingItem";
 
 
 html {

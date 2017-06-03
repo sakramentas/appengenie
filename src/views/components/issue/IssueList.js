@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import IssueItem from '../issue-item';
+import IssueItem from './IssueItem';
 
 class IssueList extends Component {
   constructor(props) {

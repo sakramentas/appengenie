@@ -3,11 +3,12 @@ import React, {Component} from 'react';
 import Subheader from 'material-ui/Subheader';
 
 import {answersActions} from 'src/core/answers';
-import {IssueAnswerItem} from './answer-item';
+import IssueAnswerItem from './IssueAnswerItem';
 
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 
-export class IssueAnswerList extends Component {
+
+class IssueAnswerList extends Component {
 
   render() {
     let {answers, issueId} = this.props;
@@ -30,3 +31,4 @@ export class IssueAnswerList extends Component {
   }
 }
 
+export default IssueAnswerList

@@ -5,9 +5,8 @@ import {createSelector} from 'reselect';
 import {getNotification, notificationActions} from 'src/core/notification';
 import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
 
-import IssueSearch from '../../components/search';
-
-import IssueList from '../../components/issue/issue-list';
+import IssueSearch from '../../components/issue/IssueSearch';
+import IssueList from '../../components/issue/IssueList';
 
 
 export class Issues extends Component {

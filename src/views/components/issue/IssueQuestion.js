@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
 import {dateSimple} from 'src/util/date-formatter';
 
 export const IssueQuestion = ({issue}) => {
