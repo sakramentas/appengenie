@@ -31,6 +31,7 @@
     "babel-polyfill": "~6.13.0",
     "classnames": "~2.2.5",
     "immutable": "~3.8.1",
+    "prop-types": "^15.5.10",
     "react": "~15.5.0",
     "react-autosuggest": "^9.0.0",
     "react-dom": "~15.5.0",
