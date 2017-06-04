@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
-
+import axios from 'axios';
 import {getDeletedAnswer} from './selectors';
+import {buildFetchAppsfromApi} from '../engine/endpoints'
 import {answerList} from './answer-list';
 import {
   CREATE_ANSWER_ERROR,
@@ -12,15 +13,71 @@ import {
   DELETE_ANSWER_SUCCESS,
   FILTER_ANSWERS,
   LOAD_ANSWERS_SUCCESS,
-  LOAD_ANSWERS_ANSWER_SUCCESS,
+  FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS,
+  FETCH_APP_ICON_SUCCESS,
+  FETCH_APPS_FROM_API_SUCCESS,
   UNDELETE_ANSWER_ERROR,
   UNLOAD_ANSWERS_SUCCESS,
-  UNLOAD_ANSWERS_ANSWER_SUCCESS,
   UPDATE_ANSWER_ERROR,
   UPDATE_ANSWER_SUCCESS,
   FETCH_APPRANK_SUCCESS
 } from './action-types';
 
+export const fetchAppsFromApi = (searchTerm) => dispatch => {
+  axios(buildFetchAppsfromApi(searchTerm))
+    .then(response => {
+      dispatch(fetchAppsFromApiSuccess(response.data));
+      // this.setState({searchResult: response.data.results});
+      // console.log('RESPONSE AXIOS', searchTerm, this.state.searchResult)
+    })
+    .catch(err => console.log(err))
+};
+
+export const fetchAppsFromApiSuccess = (data) => ({
+  type: FETCH_APPS_FROM_API_SUCCESS,
+  payload: data
+});
+
+export const fetchMostRecommendedAppData = issueKey => {
+  return dispatch => {
+    firebaseDb.ref(`answers`).child(issueKey).limitToFirst(1)
+      .once('value', (snap) => {
+        let snapshot = snap.val();
+        if (snapshot) {
+          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
+          let appData = snapshotFinal[0].appData ? snapshotFinal[0].appData : null;
+          dispatch(fetchMostRecommendedAppDataSuccess(appData))
+        }
+      });
+  }
+};
+
+export const fetchMostRecommendedAppDataSuccess = (appData) => {
+  return {
+    type: FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS,
+    payload: appData
+  }
+};
+
+export const fetchAppIcon = issueKey => {
+  return (dispatch) => {
+    firebaseDb.ref(`answers`).child(issueKey).limitToFirst(1)
+      .once('value', (snap) => {
+        let snapshot = snap.val();
+        if (snapshot) {
+          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
+          let appIcon = snapshotFinal[0].appData ? snapshotFinal[0].appData.icon_72 : null;
+          dispatch(fetchAppIconSuccess(appIcon))
+        }
+      })
+      .catch(err => console.error(err));
+  }
+};
+
+export const fetchAppIconSuccess = (icon) => ({
+  type: FETCH_APP_ICON_SUCCESS,
+  payload: icon
+});
 
 export function listAppRank(issueKey) {
   return dispatch => {

@@ -1,34 +1,26 @@
 import React, {Component} from 'react';
-
 import Subheader from 'material-ui/Subheader';
-
-import {answersActions} from 'src/core/answers';
 import IssueAnswerItem from './IssueAnswerItem';
 
-import {firebaseAuth, firebaseDb} from 'src/core/firebase';
+const IssueAnswerList = (props) => {
 
-
-class IssueAnswerList extends Component {
-
-  render() {
-    let {answers, issueId} = this.props;
-    return (
-      <div>
-        {answers.length ?
-          <div>
-            <Subheader>Answers</Subheader>
-            {answers.map((answer, index) => {
-              return (
-                <IssueAnswerItem key={index}
-                                 answer={answer}
-                                 issueId={issueId}/>
-              )
-            })}
-          </div>
-          : <span className="aeg-alert1">No answers available. Be the first one to answer!</span> }
-      </div>
-    )
-  }
+  let {answers, issueId} = props;
+  return (
+    <div>
+      {answers.length ?
+        <div>
+          <Subheader>Answers</Subheader>
+          {answers.map((answer, index) => {
+            return (
+              <IssueAnswerItem key={index}
+                               answer={answer}
+                               issueId={issueId}/>
+            )
+          })}
+        </div>
+        : <span className="aeg-alert1">No answers available. Be the first one to answer!</span> }
+    </div>
+  )
 }
 
 export default IssueAnswerList

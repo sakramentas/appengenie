@@ -8,7 +8,7 @@ import {
   CREATE_ANSWER_SUCCESS,
   DELETE_ANSWER_SUCCESS,
   FILTER_ANSWERS,
-  CREATE_ANSWER_ANSWER_SUCCESS,
+  FETCH_APPS_FROM_API_SUCCESS,
   LOAD_ANSWERS_SUCCESS,
   UPDATE_ANSWER_SUCCESS,
   FETCH_APPRANK_SUCCESS
@@ -21,7 +21,8 @@ export const AnswersState = {
   list: {},
   previous: null,
   mostLikedApp: '',
-  appIcon: ''
+  appIcon: '',
+  appsFromApi: {}
 };
 
 
@@ -53,6 +54,12 @@ export function answersReducer(state = AnswersState, {payload, type}) {
         ...state,
         mostLikedApp: payload.name,
         appIcon: payload.data ? payload.data.icon_72 : ''
+      };
+
+    case FETCH_APPS_FROM_API_SUCCESS:
+      return {
+        ...state,
+        appsFromApi: payload
       };
 
     case LOAD_ANSWERS_SUCCESS:
