@@ -1,28 +1,25 @@
-import { Record } from 'immutable';
-import { DELETE_TASK_SUCCESS } from 'src/core/tasks';
+import { CREATE_ISSUE_SUCCESS } from 'src/core/tasks';
 import { DISMISS_NOTIFICATION } from './action-types';
 
 
-export const NotificationState = new Record({
-  actionLabel: '',
+export const initialState = {
   display: false,
   message: ''
-});
+};
 
 
-export function notificationReducer(state = new NotificationState(), action) {
+export function notificationReducer(state = initialState, action) {
   switch (action.type) {
-    case DELETE_TASK_SUCCESS:
-      return state.merge({
-        actionLabel: 'Undo',
+    case CREATE_ISSUE_SUCCESS:
+      return state = {
         display: true,
-        message: 'Task deleted'
-      });
+        message: 'Issue Created'
+      };
 
     case DISMISS_NOTIFICATION:
-      return new NotificationState();
+      return state;
 
     default:
-      return new NotificationState();
+      return state;
   }
 }

@@ -1,3 +1,1 @@
-export function getNotification(state) {
-  return state.notification;
-}
+export const getNotification = state => state.notification;
