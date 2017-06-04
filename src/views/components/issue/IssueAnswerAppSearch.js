@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import SearchIcon from 'material-ui/svg-icons/action/search';
-import axios from 'axios';
+import {answersActions} from 'src/core/answers'
+import Q from 'q';
 
 class IssueAnswerAppSearch extends Component {
 
@@ -20,41 +22,24 @@ class IssueAnswerAppSearch extends Component {
     }
   }
 
-  componentWillMount() {
-
-  }
-
   handleChange(event) {
     this.setState({searchTerm: event.target.value})
   }
 
   handleSearch() {
     let {searchTerm} = this.state;
-    axios.get('https://data.42matters.com/api/v2.0/android/apps/search.json', {
-      params: {
-        access_token: '447c10686ce94632d921e9c5f015c42974b2e792',
-        q: searchTerm,
-        lang: 'en',
-        limit: 5
-      }
-    })
-      .then(response => {
-        this.setState({searchResult: response.data.results});
-        console.log('RESPONSE AXIOS', searchTerm, this.state.searchResult)
-      })
-      .catch(err => console.log(err))
+    let {fetchAppsFromApi, appsFromApi} = this.props;
+    Q.fcall(fetchAppsFromApi(searchTerm))
+      .then(data => this.setState({searchResult: appsFromApi}));
   }
 
   handleSelectApp(app) {
-    console.log('AAAAAAPPP', app)
-    this.setState({selectedApp: {...app}})
-    this.props.handleAppData(app)
-    console.log('STATE APP', this.state.selectedApp)
+    this.setState({selectedApp: {...app}});
+    this.props.handleAppData(app);
   }
 
-
   render() {
-    const {searchResult, selectedApp} = this.state;
+    let {appsFromApi} = this.props;
     return (
       <div>
         <TextField maxLength="100"
@@ -64,9 +49,9 @@ class IssueAnswerAppSearch extends Component {
         />
         <SearchIcon onClick={this.handleSearch}/>
         <List>
-          {(searchResult.length && !this.state.selectedApp.size) ?
+          {(appsFromApi && !this.state.selectedApp.size > 0) ?
             <div>
-              {searchResult.map((app, index) => {
+              {appsFromApi.map((app, index) => {
                 return (
                   <div key={index}>
                     <ListItem primaryText={app.title}
@@ -93,4 +78,14 @@ class IssueAnswerAppSearch extends Component {
   }
 }
 
-export default IssueAnswerAppSearch;
+const mapStateToProps = state => ({
+  appsFromApi: state.answers.appsFromApi.results
+});
+
+const mapDispatchToProps = {...answersActions};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IssueAnswerAppSearch);
+

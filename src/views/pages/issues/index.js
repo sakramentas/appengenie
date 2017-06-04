@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
 
@@ -7,23 +8,21 @@ import {getIssueFilter, getVisibleIssues, issuesActions} from 'src/core/issues';
 
 import IssueSearch from '../../components/issue/IssueSearch';
 import IssueList from '../../components/issue/IssueList';
+import Notification from '../../components/notification';
 
 
 export class Issues extends Component {
+  static propTypes = {
+    issues: PropTypes.object.isRequired,
+    createIssue: PropTypes.func.isRequired
+  };
 
   constructor(props) {
     super(props);
-    this.state = {
-    };
   }
 
   componentWillMount() {
-    this.setState({loading: true});
     this.props.loadIssues();
-  }
-
-  componentDidMount() {
-    this.setState({loading: false});
   }
 
   componentWillUnmount() {
@@ -34,7 +33,6 @@ export class Issues extends Component {
     const {notification} = this.props;
     return (
       <Notification
-        action={this.props.undeleteIssue}
         actionLabel={notification.actionLabel}
         dismiss={this.props.dismissNotification}
         display={notification.display}
@@ -47,8 +45,7 @@ export class Issues extends Component {
     return (
       <div className="g-row">
         <div className="g-col">
-          <IssueSearch showIssueCreateForm={this.showIssueCreateForm}
-                       createIssue={this.props.createIssue}
+          <IssueSearch createIssue={this.props.createIssue}
                        issues={this.props.issues}/>
         </div>
 
@@ -61,11 +58,6 @@ export class Issues extends Component {
   }
 }
 
-
-//=====================================
-//  CONNECT
-//-------------------------------------
-
 const mapStateToProps = createSelector(
   getIssueFilter,
   getVisibleIssues,
@@ -75,10 +67,7 @@ const mapStateToProps = createSelector(
   })
 );
 
-const mapDispatchToProps = Object.assign(
-  {},
-  issuesActions
-);
+const mapDispatchToProps = {...issuesActions};
 
 export default connect(
   mapStateToProps,
