@@ -1,17 +1,17 @@
-import React, {Component, PropTypes} from 'react';
-import {Issue} from 'src/core/issues';
+import React, {Component} from 'react';
+// import {connect} from 'react-redux';
+import {Issue, fetchMostRecommendedAppData, issuesActions} from 'src/core/issues';
 import {Link} from 'react-router';
 import appIcon from '../../../images/app-store-icon.png';
 import LikeBtn from 'material-ui/svg-icons/action/favorite';
 import {red500} from 'material-ui/styles/colors';
-import PersonIcon from 'material-ui/svg-icons/social/person';
 import {dateSimple} from 'src/util/date-formatter';
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 
 class IssueItem extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       appIcon: ''
     };
@@ -28,18 +28,9 @@ class IssueItem extends Component {
           this.setState({appIcon})
         }
       });
-  }
-
-  renderTitle(issue) {
-    return (
-      <div className="issue-item__title">
-      <span
-        ref={c => this.titleText = c}
-        tabIndex="0">{issue.title}
-      </span>
-        <span className="issue-item__details">{issue.details}</span>
-      </div>
-    );
+    // let {fetchMostRecommendedAppData, issue} = this.props; TODO: MOVE APP DATA TO REDUX STATE
+    // fetchMostRecommendedAppData(issue.key)
+    // this.props.fetchAppIcon(this.props.issue.key)
   }
 
   handleIssueClick() {
@@ -56,7 +47,7 @@ class IssueItem extends Component {
             {issue.body}
           </span>
             <span className="issue-item-left--user">
-            {issue.user.displayName} • {dateSimple(issue.createdtAt)}
+            {issue.user.displayName} • {dateSimple(issue.createdAt)}
           </span>
           </div>
           <div className="issue-item-right row">
@@ -72,9 +63,6 @@ class IssueItem extends Component {
                 <LikeBtn color={red500}/>
                 <span className="">50</span>
               </div>
-              {/*<div className="">*/}
-                {/*<PersonIcon />*/}
-              {/*</div>*/}
             </div>
           </div>
         </div>
@@ -83,4 +71,20 @@ class IssueItem extends Component {
   }
 }
 
-export default IssueItem;
+// const mapStateToProps = state => ({
+//   appDataCompacted: state.issues.list.appDataCompacted,
+//   appIcon72: state.issues.appIcon72
+// });
+//
+// const mapDispatchToProps = Object.assign(
+//   {},
+//   issuesActions
+// );
+//
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(IssueItem);
+
+export default IssueItem
+

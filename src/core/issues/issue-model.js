@@ -7,7 +7,8 @@ export const IssueModel =
     editedLast = null,
     user = {},
     likes = null,
-    createdAt = null
+    createdAt = null,
+    appData = {}
   }) => {
   return {
     key,
@@ -17,7 +18,8 @@ export const IssueModel =
     editedLast,
     user,
     likes,
-    createdAt
+    createdAt,
+    appData
   }
 };
 

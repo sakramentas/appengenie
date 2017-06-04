@@ -8,6 +8,8 @@ import {
   CREATE_ISSUE_SUCCESS,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
+  FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS,
+  FETCH_APP_ICON_SUCCESS,
   CREATE_ISSUE_ANSWER_SUCCESS,
   LOAD_ISSUES_SUCCESS,
   UPDATE_ISSUE_SUCCESS
@@ -42,7 +44,6 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
         list: state.list.filter(issue => issue.key !== payload.key)
       };
     case CREATE_ISSUE_ANSWER_SUCCESS:
-      console.log('payload answers ', payload)
       return state.merge({
         deleted: null,
         previous: null,
@@ -57,10 +58,23 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
         filter: payload.filterType || ''
       };
 
+    case FETCH_APP_ICON_SUCCESS:
+      return {
+        ...state,
+        appIcon72: payload || ''
+      };
+
     case LOAD_ISSUES_SUCCESS:
       return {
         ...state,
         list: new List(payload.reverse())
+      };
+
+    case FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS:
+      console.log('_SUCCESS', payload)
+      return {
+        ...state,
+
       };
 
     case UPDATE_ISSUE_SUCCESS:

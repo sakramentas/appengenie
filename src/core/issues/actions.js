@@ -1,8 +1,7 @@
-import firebase from 'firebase';
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
-
 import {getDeletedIssue} from './selectors';
 import {issueList} from './issue-list';
+import {buildCreateIssue, buildCreateIssueAnswer} from './firebasebuild'
 import {
   CREATE_ISSUE_ERROR,
   CREATE_ISSUE_SUCCESS,
@@ -12,68 +11,51 @@ import {
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
   LOAD_ISSUES_SUCCESS,
-  UNDELETE_ISSUE_ERROR,
   UNLOAD_ISSUES_SUCCESS,
   UPDATE_ISSUE_ERROR,
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
 
-
-export function createIssue(title, userInfo) {
+export const loadIssues = () => {
   return dispatch => {
-    let newIssueKey = firebaseDb.ref().child('issues').push().key;
-    let issueData = {
-      key: newIssueKey,
-      body: title,
-      createdAt: firebase.database.ServerValue.TIMESTAMP,
-    };
-    let issueDataUser = {
-      displayName: userInfo.displayName,
-      id: userInfo.uid,
-      image: userInfo.photoURL
-    };
-    firebaseDb.ref(`issues/${newIssueKey}`).update(issueData);
-    firebaseDb.ref(`issues/${newIssueKey}`).child('user').update(issueDataUser)
-      .catch(error => dispatch(createIssueError(error)));
+    issueList.path = `issues`;
+    issueList.subscribe(dispatch);
+  };
+};
+
+export function loadIssuesSuccess(issues) {
+  return {
+    type: LOAD_ISSUES_SUCCESS,
+    payload: issues
   };
 }
 
-export function createIssueError(error) {
-  return {
-    type: CREATE_ISSUE_ERROR,
-    payload: error
-  };
-}
+export const createIssue = (body, userInfo) => {
+  buildCreateIssue({body, userInfo});
+};
+
+export const createIssueError = (error) => ({
+  type: CREATE_ISSUE_ERROR,
+  payload: error
+});
 
 export function createIssueSuccess(issue) {
   return {
     type: CREATE_ISSUE_SUCCESS,
     payload: issue
-  };
+  }
 }
 
 export function createIssueAnswer(key, details, answerKey) {
-  return (dispatch, getState) => {
-    // let issueToUpdate = issueList[key];
-    console.log('issuelist', issueList)
-    console.log('issuekey', key)
-    const {auth} = getState();
-    let answerPath = `${key}/answers/${answerKey}`;
-    issueList.update(answerPath, {answer: details})
-      .catch(error => dispatch(updateIssueError(error)));
-    // issueList.push({key : {answers: {title, details}}})
-    //   .catch(error => dispatch(createIssueAnswerError(error)));
+  return dispatch => {
+    try {
+      buildCreateIssueAnswer(key, details, answerKey)
+    }
+    catch (err) {
+      dispatch(createIssueAnswerError(err));
+    }
   };
 }
-
-// export const loadIssueAnswers = (key) => {
-//   return (dispatch, getState) => {
-//     const { auth } = getState();
-//     console.log('getstate', getState());
-//     issueList.path = `issues/${auth.id}/${key}/answers/${auth.id}`;
-//     issueList.subscribe(dispatch);
-//   }
-// };
 
 export function createIssueAnswerError(error) {
   return {
@@ -82,10 +64,10 @@ export function createIssueAnswerError(error) {
   };
 }
 
-export function createIssueAnswerSuccess(issue) {
+export function createIssueAnswerSuccess(issueAnswer) {
   return {
     type: CREATE_ISSUE_ANSWER_SUCCESS,
-    payload: issue
+    payload: issueAnswer
   };
 }
 
@@ -148,29 +130,12 @@ export function updateIssueSuccess(issue) {
   };
 }
 
-export function loadIssuesSuccess(issues) {
-  console.log('issue success ', issues)
-  return {
-    type: LOAD_ISSUES_SUCCESS,
-    payload: issues
-  };
-}
-
 export function filterIssues(filterType) {
   return {
     type: FILTER_ISSUES,
     payload: {filterType}
   };
 }
-
-export function loadIssues() {
-  return (dispatch, getState) => {
-    const {auth} = getState();
-    issueList.path = `issues`;
-    issueList.subscribe(dispatch);
-  };
-}
-
 
 export function unloadIssues() {
   issueList.unsubscribe();

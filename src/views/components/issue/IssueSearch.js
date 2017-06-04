@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {browserHistory} from 'react-router'
 import IssueCreate from './IssueCreate';
 import AlertShort from '../notification/alert-short';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
-import {escapeRegexCharacters} from '../../../helpers'
 import Snackbar from 'material-ui/Snackbar';
-// import TrendingList from '../../trending/trending-list'
+import {getSuggestions, getSuggestionValue} from 'src/core/engine/search';
 
-import TransitionGroup from 'react-addons-transition-group'; //TODO: create a new component for message animations
 
 class IssueSearch extends Component {
+  static propTypes = {
+    issues: PropTypes.object.isRequired,
+    createIssue: PropTypes.func.isRequired
+  };
 
   constructor(props) {
     super(props);
@@ -22,7 +25,6 @@ class IssueSearch extends Component {
     this.onSuggestionsClearRequested = ::this.onSuggestionsClearRequested;
     this.onSuggestionSelected = ::this.onSuggestionSelected;
     this.openIssueForm = ::this.openIssueForm;
-    this.renderIssueForm = ::this.renderIssueForm;
     this.closeIssueForm = ::this.closeIssueForm;
     this.handleOpenSnackbar = ::this.handleOpenSnackbar;
     this.handleRequestClose = ::this.handleRequestClose;
@@ -44,13 +46,13 @@ class IssueSearch extends Component {
     });
   }
 
-  onSuggestionsFetchRequested = ({value}) => {
+  onSuggestionsFetchRequested({value}) {
     this.setState({
-      suggestions: this.getSuggestions(value)
+      suggestions: getSuggestions(value, [...this.props.issues])
     });
   };
 
-  onSuggestionsClearRequested = () => {
+  onSuggestionsClearRequested() {
     this.setState({
       suggestions: []
     });
@@ -64,16 +66,17 @@ class IssueSearch extends Component {
   }
 
   suggestCreateIssue() {
-    if (this.state.value !== '' && this.state.suggestions.length <= 0 && this.state.showAlert) {
+    let {value, suggestions, showAlert} = this.state;
+    if (value !== '' && suggestions.length <= 0 && showAlert) {
       return (
-        <AlertShort text={this.state.value}
+        <AlertShort text={value}
                     openIssueForm={this.openIssueForm}/>
       )
     }
   }
 
   openIssueForm() {
-    return this.setState({
+    this.setState({
       issueFormOpened: true,
       showAlert: false,
       showSearchInput: false
@@ -81,44 +84,17 @@ class IssueSearch extends Component {
   }
 
   closeIssueForm() {
-    return this.setState({
+    this.setState({
       issueFormOpened: false,
       showAlert: true,
       showSearchInput: true
     })
   }
 
-  renderIssueForm() {
-    if (this.state.issueFormOpened === true) {
-      return (
-        <IssueCreate createIssue={this.props.createIssue}
-                     closeIssueForm={this.closeIssueForm}
-                     handleOpenSnackbar={this.handleOpenSnackbar}
-                     title={this.state.value}/>
-      )
-    }
-  }
-
   handleOpenSnackbar() {
     this.setState({
       openSnackbar: true
     })
-  }
-
-  getSuggestions(value) {
-    const escapedValue = escapeRegexCharacters(value.trim());
-    if (escapedValue === '') {
-      return [];
-    }
-    const regex = new RegExp('\\b' + escapedValue, 'i');
-
-    return [...this.props.issues]
-      .map(issue => issue)
-      .filter(issue => regex.test(this.getSuggestionValue(issue)));
-  }
-
-  getSuggestionValue(suggestion) {
-    return `${suggestion.body}`;
   }
 
   renderSuggestion(suggestion, {query}) {
@@ -132,7 +108,6 @@ class IssueSearch extends Component {
         {
           parts.map((part, index) => {
             const className = part.highlight ? 'highlight' : null;
-
             return (
               <span className={className}
                     key={index}>{part.text}</span>
@@ -163,7 +138,7 @@ class IssueSearch extends Component {
     };
     return (
       <div>
-        {showSearchInput &&
+        {showSearchInput ?
           <div className="issue-search">
             <span>I <b>wish</b> there was an app to...</span>
             <Autosuggest
@@ -171,15 +146,21 @@ class IssueSearch extends Component {
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               onSuggestionSelected={this.onSuggestionSelected}
-              getSuggestionValue={this.getSuggestionValue}
+              getSuggestionValue={getSuggestionValue}
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
               ref="searchInput"/>
-            {/*<TrendingList/>*/}
           </div>
+          : null
         }
         {this.suggestCreateIssue()}
-        {this.renderIssueForm()}
+        {this.state.issueFormOpened === true ?
+          <IssueCreate createIssue={this.props.createIssue}
+                       closeIssueForm={this.closeIssueForm}
+                       handleOpenSnackbar={this.handleOpenSnackbar}
+                       title={this.state.value}/>
+          : null
+        }
         <Snackbar open={openSnackbar}
                   message={`Wish created with success`}
                   action="Open"

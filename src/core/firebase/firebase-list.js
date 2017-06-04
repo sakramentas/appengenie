@@ -83,7 +83,6 @@ export class FirebaseList {
   unwrapSnapshot(snapshot) {
     let attrs = snapshot.val();
     attrs.key = snapshot.key;
-    // console.log('ATTRIBUTES ----> ', snapshot.key, attrs)
     return new this._modelClass(attrs);
   }
 }
