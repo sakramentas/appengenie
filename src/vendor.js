@@ -16,3 +16,4 @@ import 'classnames';
 import 'firebase';
 import 'immutable';
 import 'reselect';
+import 'semantic-ui-react';
