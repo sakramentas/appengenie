@@ -2,86 +2,11 @@
 //  Header
 //---------------------------------------------------------
 
-.header {
+.site-header {
   background: white;
   height: 59px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   > img {
     width: auto;
     height: 29px;
-  }
-}
-
-.link--issues {
-  flex: inherit !important;
-}
-
-
-.header__title {
-  @include fa-icon(circle-o);
-  font-size: 1.175rem;
-  font-weight: 400;
-  text-rendering: auto;
-  transform: translate(0,0);
-  color: #fff;
-
-  &:before {
-    padding-right: 5px;
-    color: #fff;
-    font-family: 'FontAwesome';
-    line-height: 20px;
-  }
-}
-
-
-.header__actions {
-  @include clearfix;
-  float: right;
-  padding: 8px 0;
-  line-height: 24px;
-
-  li {
-    float: left;
-    list-style: none;
-
-    &:last-child {
-      margin-left: 12px;
-      padding-left: 12px;
-      border-left: 1px solid #333;
-    }
-
-    &:first-child {
-      border: none;
-    }
-  }
-
-  .btn {
-    display: block;
-    margin: 0;
-    color: #999;
-    font-size: rem(14px);
-    line-height: 24px;
-  }
-
-  .link {
-    display: block;
-    color: inherit;
-    font-size: rem(14px);
-    text-decoration: none;
-    text-rendering: auto;
-    transform: translate(0,0);
-  }
-
-
-  .link--github {
-    @include fa-icon(github);
-    font-size: rem(24px);
-
-    &:before {
-      font-family: 'FontAwesome';
-      line-height: 24px;
-    }
   }
 }

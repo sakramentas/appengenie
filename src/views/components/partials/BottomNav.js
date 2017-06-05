@@ -33,7 +33,7 @@ const BottomNav = ({authenticated, signOut}) => {
           </Link>
           <Link to="/issues" className="link--issues">
             <BottomNavigationItem
-              label="Issues"
+              label="Wishes"
               icon={iconList}
             />
           </Link>

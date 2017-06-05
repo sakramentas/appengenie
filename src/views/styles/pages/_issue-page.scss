@@ -6,7 +6,6 @@
   padding: 16px;
 
   .issue-page_question--card {
-    //border-radius: 6px !important;
     margin: 0 -16px;
     overflow: hidden;
     margin-top: -16px;
@@ -14,14 +13,8 @@
   .issue-page_question {
     padding: 16px;
     border-radius: 9px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     color: $dark-color;
 
-    &__avatar {
-      flex: 1;
-    }
     &__bodyText {
       h2 {
         font-size: 22px;
@@ -32,12 +25,10 @@
         margin: -16px;
         padding: 33px;
       }
-      flex: 4;
     }
     &__userName {
       font-size: 16px;
       font-weight: bold;
-      flex: 5;
       padding-left: 12px;
     }
 
@@ -52,9 +43,15 @@
       width: 100%;
       border-top: 1px #efebeb solid;
       margin-top: 16px;
-      display: flex;
-      align-items: center;
       padding-top: 5px;
     }
+  }
+}
+
+.aeg-card-group {
+  font-size: 14px;
+  margin: 16px 0 !important;
+  > .card {
+    margin: 14px 0 0 0 !important;
   }
 }

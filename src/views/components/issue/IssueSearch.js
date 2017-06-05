@@ -137,10 +137,10 @@ class IssueSearch extends Component {
       onChange: this.onChange
     };
     return (
-      <div>
+      <div className="row">
         {showSearchInput ?
-          <div className="issue-search">
-            <span>I <b>wish</b> there was an app to...</span>
+          <div className="issue-search row align-center align-middle">
+            <h3>I <b>wish</b> there was an app to...</h3>
             <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

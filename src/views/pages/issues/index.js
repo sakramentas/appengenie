@@ -43,13 +43,13 @@ export class Issues extends Component {
 
   render() {
     return (
-      <div className="g-row">
-        <div className="g-col">
+      <div>
+        <div className="small-12 column">
           <IssueSearch createIssue={this.props.createIssue}
                        issues={this.props.issues}/>
         </div>
 
-        <div className="g-col">
+        <div className="small-12 column">
           <IssueList issues={this.props.issues} />
         </div>
 

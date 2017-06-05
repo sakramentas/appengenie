@@ -1,17 +1,10 @@
 @import
 "settings";
 
-@import
-"~minx/src/settings",
-"~minx/src/functions",
-"~minx/src/mixins",
-"~minx/src/reset",
-"~minx/src/elements";
 
 @import
-"grid",
-'ui/button',
 "components/partials/Header",
+"../../vendor/css/foundation.min",
 "pages/sign-in",
 "ui/ui",
 "components/issue/IssueSearch",
@@ -20,10 +13,6 @@
 "components/issue/IssueItem",
 "pages/issue-page",
 "components/issue/IssueList",
-"components/task/task-filters",
-"components/task/task-form",
-"components/task/task-item",
-"components/task/task-list",
 "components/trending/TrendingList",
 "components/trending/TrendingItem";
 

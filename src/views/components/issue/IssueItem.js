@@ -41,27 +41,29 @@ class IssueItem extends Component {
     const {issue} = this.props;
     return (
       <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
-        <div className="issue-item aeg-card1 align-top">
-          <div className="issue-item-left ">
-          <span className="issue-item-left--bodyText">
-            {issue.body}
-          </span>
-            <span className="issue-item-left--user">
-            {issue.user.displayName} • {dateSimple(issue.createdAt)}
-          </span>
+        <div className="issue-item aeg-card1 align-top row">
+          <div className="issue-item-left small-9 column">
+            <span className="issue-item-left--bodyText row">
+              {issue.body}
+            </span>
+            <span className="issue-item-left--user row">
+              {issue.user.displayName} • {dateSimple(issue.createdAt)}
+            </span>
           </div>
-          <div className="issue-item-right row">
-            <div className="small-12 column">
-              {this.state.appIcon ?
-                <img src={this.state.appIcon} alt="Icon"/>
-                :
-                <img src={appIcon} alt="Icon"/>
-              }
-            </div>
-            <div className="row align-middle info-icons">
-              <div className="like-icon row">
-                <LikeBtn color={red500}/>
-                <span className="">50</span>
+          <div className="issue-item-right small-3 column">
+            <div className="row align-center">
+              <div className="small-10 column">
+                {this.state.appIcon ?
+                  <img src={this.state.appIcon} alt="Icon"/>
+                  :
+                  <img src={appIcon} alt="Icon"/>
+                }
+              </div>
+              <div className="info-icons small-12 column">
+                <div className="like-icon align-middle row align-center">
+                  <LikeBtn color={red500}/>
+                  <span className="">50</span>
+                </div>
               </div>
             </div>
           </div>

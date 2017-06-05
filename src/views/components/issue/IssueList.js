@@ -25,12 +25,12 @@ class IssueList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="row">
         {(this.props.issues.length < 1) ?
           <CircularProgress />
           :
-          <div className="issue-list">
-            <span>Latest wishes</span>
+          <div className="issue-list small-12 column align-center">
+            <h5 className="align-center subheader row">Latest wishes</h5>
             {this.renderIssueItems()}
           </div>
         }
