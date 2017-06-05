@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppSearch from './IssueAnswerAppSearch'
+import { Form, TextArea, Button } from 'semantic-ui-react'
 import { firebaseAuth, firebaseDb } from 'src/core/firebase';
 
 class IssueAnswerForm extends Component {
@@ -70,28 +71,20 @@ class IssueAnswerForm extends Component {
     return (
       <div className="aeg-card1">
 
-        <form className="issue-create"
+        <Form className="row"
               onSubmit={this.onSubmit}>
-          <span>Answer this Issue</span>
+          <span className="subheader aeg-p-color">Answer this Issue</span>
           <AppSearch handleAppData={this.handleAppData} />
-          <TextField
-            autoComplete="on"
-            className="issue-create__input issue-create__input--title"
-            maxLength="100"
+          <TextArea
+            placeholder="Would you like to give more details?"
             onChange={this.onChangeBody}
             onKeyUp={this.onKeyUp}
-            hintText="Details"
-            type="text"
             value={this.state.body}
-            fullWidth={true}
           />
-          <div className="issue-create__input issue-create__input--cta">
-            <RaisedButton type="submit"
-                          label="Send"
-                          primary={true}
-                          onClick={handleOpenSnackbar}/>
+          <div className="issue-create__cta aeg-m-top">
+            <Button onClick={handleOpenSnackbar} primary>Send</Button>
           </div>
-        </form>
+        </Form>
       </div>
     );
   }

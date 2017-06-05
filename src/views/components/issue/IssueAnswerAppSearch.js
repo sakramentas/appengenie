@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import SearchIcon from 'material-ui/svg-icons/action/search';
+import {Input, Button, Card, Image} from 'semantic-ui-react'
 import {answersActions} from 'src/core/answers'
 import Q from 'q';
 
@@ -41,36 +41,47 @@ class IssueAnswerAppSearch extends Component {
   render() {
     let {appsFromApi} = this.props;
     return (
-      <div>
-        <TextField maxLength="100"
-                   type="text"
-                   hintText="App name"
+      <div className="small-12 column">
+        <div className="row small-collapse">
+          <div className="small-10 column">
+            <Input maxLength="150"
+                   focus
+                   placeholder="App name"
                    onChange={this.handleChange}
-        />
-        <SearchIcon onClick={this.handleSearch}/>
-        <List>
-          {(appsFromApi && !this.state.selectedApp.size > 0) ?
-            <div>
-              {appsFromApi.map((app, index) => {
-                return (
-                  <div key={index}>
-                    <ListItem primaryText={app.title}
-                              leftIcon={<img src={app.icon} alt=""/>}
-                              onClick={this.handleSelectApp.bind(this, app)}/>
-                    <Divider />
-                  </div>
-                )
-              })}
-            </div>
-            : null
-          }
+                   fluid
+            />
+          </div>
+          <div className="small-2 column text-center">
+            <Button circular primary icon='search' onClick={this.handleSearch}/>
+          </div>
+        </div>
+        {(appsFromApi && !this.state.selectedApp.size > 0) ?
+          <Card.Group className="aeg-card-group">
+            {appsFromApi.map((app, index) => {
+              return (
+                <Card onClick={this.handleSelectApp.bind(this, app)}
+                      key={index}
+                      fluid>
+                  <Card.Content>
+                    <Image floated='right' size='mini' src={app.icon_72}/>
+                    <Card.Header>{app.title}</Card.Header>
+                    <Card.Meta>{app.downloads} downloads</Card.Meta>
+                    <Card.Description>{app.short_desc}</Card.Description>
+                  </Card.Content>
+                </Card>
+              )
+            })}
+          </Card.Group>
+          : null
+        }
 
-        </List>
         {this.state.selectedApp.size ?
-          <div className="aeg-center">
-            <span className="aeg-block">App selected</span>
-            <img src={this.state.selectedApp.icon_72} alt=""/>
-            <span className="aeg-block">{this.state.selectedApp.title}</span>
+          <div className="text-center row align-center">
+            <span className="small-12 column subheader">App selected</span>
+            <div className="small-12 column">
+              <img src={this.state.selectedApp.icon_72} alt=""/>
+            </div>
+            <h1 className="aeg-p-color">{this.state.selectedApp.title}</h1>
           </div>
           : null}
       </div>

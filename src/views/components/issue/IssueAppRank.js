@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {answersActions} from 'src/core/answers'
 
 import appStoreBadge from '../../../images/appstore-download-img.svg';
@@ -22,7 +21,10 @@ class IssueAppRank extends Component {
             <div className='appRank-box-mostLiked'>
               <span className="appRank-box-mostLiked--title">Most Recommended App</span>
               <h4 className="appRank-box-mostLiked--title subheader">Genie: {genieUser}</h4>
-              {appIcon && <img src={appIcon} className="" />}
+              {appIcon ?
+                <img src={appIcon} className=""/>
+                : null
+              }
               <span className="appRank-box-mostLiked--app aeg-block">{mostLikedApp}</span>
               <div className="appRank-box-mostLiked--download">
                 <a href={`https://www.apple.com/ie/search/${mostLikedApp}?src=serp`} target="_blank"><img
