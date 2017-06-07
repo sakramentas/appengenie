@@ -1,6 +1,6 @@
 {
-  "name": "todo-react-redux",
-  "version": "0.6.0",
+  "name": "Appengenie",
+  "version": "0.1.0",
   "description": "Search engine for mobile applications",
   "homepage": "https://github.com/sakramentas",
   "repository": {
@@ -73,6 +73,7 @@
     "karma-jasmine": "~1.0.2",
     "karma-sourcemap-loader": "~0.3.7",
     "karma-webpack": "~1.8.0",
+    "lodash": "^4.17.4",
     "material-ui": "^0.17.4",
     "minx": "r-park/minx.git",
     "morgan": "~1.7.0",
@@ -80,6 +81,8 @@
     "nodemon": "~1.10.2",
     "npm-run-all": "~3.1.0",
     "postcss-loader": "~0.13.0",
+    "prop-types": "^15.5.10",
+    "q": "^1.5.0",
     "react-addons-test-utils": "~15.3.2",
     "react-addons-transition-group": "^15.5.2",
     "react-hot-loader": "3.0.0-beta.5",
