@@ -8,11 +8,9 @@ import {
   CREATE_ISSUE_SUCCESS,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
-  FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS,
-  FETCH_APP_ICON_SUCCESS,
+  // FETCH_APP_ICON_SUCCESS,
   CREATE_ISSUE_ANSWER_SUCCESS,
-  LOAD_ISSUES_SUCCESS,
-  UPDATE_ISSUE_SUCCESS
+  LOAD_ISSUES_SUCCESS
 } from './action-types';
 
 
@@ -20,7 +18,7 @@ export const IssuesState = {
   deleted: null,
   filter: '',
   filterSelected: '',
-  list: new List(),
+  list: [],
   previous: null
 };
 
@@ -32,9 +30,7 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
         ...state,
         deleted: null,
         previous: null,
-        list: state.deleted && state.deleted.key === payload.key ?
-          state.previous :
-          state.list.unshift(payload)
+        list: [...payload]
       };
     case DELETE_ISSUE_SUCCESS:
       return {
@@ -58,33 +54,20 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
         filter: payload.filterType || ''
       };
 
-    case FETCH_APP_ICON_SUCCESS:
-      return {
-        ...state,
-        appIcon72: payload || ''
-      };
+    // case FETCH_APP_ICON_SUCCESS:
+    //   return {
+    //     ...state,
+    //     appIcon72: payload || ''
+    //   };
 
     case LOAD_ISSUES_SUCCESS:
+      const issueObject = {};
+      payload.forEach(obj => {
+        issueObject[obj.key] = obj;
+      });
       return {
         ...state,
-        list: new List(payload.reverse())
-      };
-
-    case FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS:
-      console.log('_SUCCESS', payload)
-      return {
-        ...state,
-
-      };
-
-    case UPDATE_ISSUE_SUCCESS:
-      return {
-        ...state,
-        deleted: null,
-        previous: null,
-        list: state.list.map(issue => {
-          return issue.key === payload.key ? payload : issue;
-        })
+        list: issueObject
       };
 
     case SIGN_OUT_SUCCESS:
