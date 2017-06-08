@@ -11,7 +11,8 @@ import {
   FETCH_APPS_FROM_API_SUCCESS,
   LOAD_ANSWERS_SUCCESS,
   UPDATE_ANSWER_SUCCESS,
-  FETCH_APPRANK_SUCCESS
+  FETCH_APPRANK_SUCCESS,
+  FETCH_ANSWERS_SUCCESS
 } from './action-types';
 
 
@@ -26,7 +27,7 @@ export const AnswersState = {
 };
 
 
-export function answersReducer(state = AnswersState, {payload, type}) {
+export function answersReducer(state = {}, {payload, type}) {
   switch (type) {
     case CREATE_ANSWER_SUCCESS:
       return {
@@ -62,11 +63,17 @@ export function answersReducer(state = AnswersState, {payload, type}) {
         appsFromApi: payload
       };
 
-    case LOAD_ANSWERS_SUCCESS:
+    case FETCH_ANSWERS_SUCCESS:
+      // const answerObject = {};
+      // if (payload.data) {
+      //   Object.keys(payload.data).forEach(key => {
+      //     answerObject[payload.issueKey] = payload.data[key];
+      //   });
       return {
         ...state,
-        list: [...payload]
+        list: {...payload.data}
       };
+
 
     case UPDATE_ANSWER_SUCCESS:
       return {

@@ -4,6 +4,7 @@ import axios from 'axios';
 import {getDeletedAnswer} from './selectors';
 import {buildFetchAppsfromApi} from '../engine/endpoints'
 import {answerList} from './answer-list';
+import {buildFetchAnswers} from './firebasebuild'
 import {
   CREATE_ANSWER_ERROR,
   CREATE_ANSWER_SUCCESS,
@@ -16,6 +17,7 @@ import {
   FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS,
   FETCH_APP_ICON_SUCCESS,
   FETCH_APPS_FROM_API_SUCCESS,
+  FETCH_ANSWERS_SUCCESS,
   UNDELETE_ANSWER_ERROR,
   UNLOAD_ANSWERS_SUCCESS,
   UPDATE_ANSWER_ERROR,
@@ -23,13 +25,24 @@ import {
   FETCH_APPRANK_SUCCESS
 } from './action-types';
 
+
+export const fetchAnswers = (issueKey) => {
+  let fetchAnswers = buildFetchAnswers(issueKey);
+  return dispatch => fetchAnswers(dispatch)
+};
+
+export const fetchAnswersSuccess = (issueKey, data) => ({
+  type: FETCH_ANSWERS_SUCCESS,
+  payload: {
+    issueKey,
+    data
+  }
+});
+
+
 export const fetchAppsFromApi = (searchTerm) => dispatch => {
   axios(buildFetchAppsfromApi(searchTerm))
-    .then(response => {
-      dispatch(fetchAppsFromApiSuccess(response.data));
-      // this.setState({searchResult: response.data.results});
-      // console.log('RESPONSE AXIOS', searchTerm, this.state.searchResult)
-    })
+    .then(response => dispatch(fetchAppsFromApiSuccess(response.data)))
     .catch(err => console.log(err))
 };
 
