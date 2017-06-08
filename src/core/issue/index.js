@@ -1,8 +1,7 @@
-import * as issuesActions from './actions';
+import * as issueActions from './actions';
 
 
-export { issuesActions };
+export { issueActions };
 export * from './action-types';
-export { issuesReducer } from './reducer';
-export { getIssueFilter, getVisibleIssues, getIssueFilterSelected } from './selectors';
-export { Issue } from './issue-model';
+export { issueReducer } from './reducer';
+// export { getIssueFilter, getVisibleIssue, getIssueFilterSelected } from './selectors';
