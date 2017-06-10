@@ -8,7 +8,6 @@ import IssuePage from './pages/issues/issue-page';
 export const paths = {
   ROOT: '/',
   SIGN_IN: '/sign-in',
-  TASKS: '/',
   ISSUES: '/issues',
   ISSUE_PAGE: '/issues/page'
 };
