@@ -13,8 +13,8 @@ import Notification from '../../components/notification';
 
 export class Issues extends Component {
   static propTypes = {
-    issues: PropTypes.object.isRequired,
-    createIssue: PropTypes.func.isRequired
+    // issues: PropTypes.obj.isRequired,
+    // createIssue: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -22,11 +22,11 @@ export class Issues extends Component {
   }
 
   componentWillMount() {
-    this.props.loadIssues();
+    this.props.fetchIssues();
   }
 
   componentWillUnmount() {
-    this.props.unloadIssues();
+    // this.props.unloadIssues();
   }
 
   renderNotification() {
