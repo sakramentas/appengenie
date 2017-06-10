@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import TextField from 'material-ui/TextField';
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import {Input, Button, Card, Image} from 'semantic-ui-react'
 import {answersActions} from 'src/core/answers'
 import Q from 'q';

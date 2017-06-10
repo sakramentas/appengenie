@@ -9,9 +9,8 @@ import {
   DELETE_ANSWER_SUCCESS,
   FILTER_ANSWERS,
   FETCH_APPS_FROM_API_SUCCESS,
-  LOAD_ANSWERS_SUCCESS,
   UPDATE_ANSWER_SUCCESS,
-  FETCH_APPRANK_SUCCESS,
+  UNLOAD_ANSWERS_SUCCESS,
   FETCH_ANSWERS_SUCCESS
 } from './action-types';
 
@@ -50,13 +49,6 @@ export function answersReducer(state = {}, {payload, type}) {
         filter: payload.filterType || ''
       };
 
-    case FETCH_APPRANK_SUCCESS:
-      return {
-        ...state,
-        mostLikedApp: payload.name,
-        appIcon: payload.data ? payload.data.icon_72 : ''
-      };
-
     case FETCH_APPS_FROM_API_SUCCESS:
       return {
         ...state,
@@ -64,16 +56,10 @@ export function answersReducer(state = {}, {payload, type}) {
       };
 
     case FETCH_ANSWERS_SUCCESS:
-      // const answerObject = {};
-      // if (payload.data) {
-      //   Object.keys(payload.data).forEach(key => {
-      //     answerObject[payload.issueKey] = payload.data[key];
-      //   });
       return {
         ...state,
         list: {...payload.data}
       };
-
 
     case UPDATE_ANSWER_SUCCESS:
       return {
@@ -86,6 +72,9 @@ export function answersReducer(state = {}, {payload, type}) {
       };
 
     case SIGN_OUT_SUCCESS:
+      return AnswersState;
+
+    case UNLOAD_ANSWERS_SUCCESS:
       return AnswersState;
 
     default:

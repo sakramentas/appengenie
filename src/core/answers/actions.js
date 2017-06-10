@@ -39,7 +39,6 @@ export const fetchAnswersSuccess = (issueKey, data) => ({
   }
 });
 
-
 export const fetchAppsFromApi = (searchTerm) => dispatch => {
   axios(buildFetchAppsfromApi(searchTerm))
     .then(response => dispatch(fetchAppsFromApiSuccess(response.data)))
@@ -49,47 +48,6 @@ export const fetchAppsFromApi = (searchTerm) => dispatch => {
 export const fetchAppsFromApiSuccess = (data) => ({
   type: FETCH_APPS_FROM_API_SUCCESS,
   payload: data
-});
-
-export const fetchMostRecommendedAppData = issueKey => {
-  return dispatch => {
-    firebaseDb.ref(`answers`).child(issueKey).limitToFirst(1)
-      .once('value', (snap) => {
-        let snapshot = snap.val();
-        if (snapshot) {
-          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
-          let appData = snapshotFinal[0].appData ? snapshotFinal[0].appData : null;
-          dispatch(fetchMostRecommendedAppDataSuccess(appData))
-        }
-      });
-  }
-};
-
-export const fetchMostRecommendedAppDataSuccess = (appData) => {
-  return {
-    type: FETCH_MOST_RECOMMENDED_APP_DATA_SUCCESS,
-    payload: appData
-  }
-};
-
-export const fetchAppIcon = issueKey => {
-  return (dispatch) => {
-    firebaseDb.ref(`answers`).child(issueKey).limitToFirst(1)
-      .once('value', (snap) => {
-        let snapshot = snap.val();
-        if (snapshot) {
-          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
-          let appIcon = snapshotFinal[0].appData ? snapshotFinal[0].appData.icon_72 : null;
-          dispatch(fetchAppIconSuccess(appIcon))
-        }
-      })
-      .catch(err => console.error(err));
-  }
-};
-
-export const fetchAppIconSuccess = (icon) => ({
-  type: FETCH_APP_ICON_SUCCESS,
-  payload: icon
 });
 
 export function listAppRank(issueKey) {
@@ -152,23 +110,23 @@ export function createAnswer(issueKey, appName, appData, body, userInfo) {
 //   }
 // };
 
-export const likeAnswer = (answerId, issueKey) => {
-  let currentUserUid = firebaseAuth.currentUser.uid;
-  firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {
-    console.log('THE SNAPSHOT ', snapshot.val())
-  })
-  // Store userID on answers
-  firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').update({[currentUserUid]: true});
-  // Store answerID on user
-  firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onAnswer').update({[answerId]: true})
-    .catch(error => console.log(error));
-};
-
-export const dislikeAnswer = (answerId, issueKey) => {
-  let currentUserUid = firebaseAuth.currentUser.uid;
-  firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').remove(currentUserUid)
-    .catch(error => console.log(error));
-};
+// export const likeAnswer = (answerId, issueKey) => {
+//   let currentUserUid = firebaseAuth.currentUser.uid;
+//   firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {
+//     console.log('THE SNAPSHOT ', snapshot.val())
+//   })
+//   // Store userID on answers
+//   firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').update({[currentUserUid]: true});
+//   // Store answerID on user
+//   firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onAnswer').update({[answerId]: true})
+//     .catch(error => console.log(error));
+// };
+//
+// export const dislikeAnswer = (answerId, issueKey) => {
+//   let currentUserUid = firebaseAuth.currentUser.uid;
+//   firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').remove(currentUserUid)
+//     .catch(error => console.log(error));
+// };
 
 export function createAnswerError(error) {
   return {
@@ -281,7 +239,6 @@ export function loadAnswers(issueId) {
 
 
 export function unloadAnswers() {
-  answerList.unsubscribe();
   return {
     type: UNLOAD_ANSWERS_SUCCESS
   };

@@ -1,35 +1,33 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {answersActions} from 'src/core/answers'
+import {issueActions} from 'src/core/issue'
 
 import appStoreBadge from '../../../images/appstore-download-img.svg';
 import playStoreBadge from '../../../images/playstore-download-img.png';
 
 class IssueAppRank extends Component {
 
-
   componentWillMount() {
-    this.props.listAppRank(this.props.issue.key);
+    const {fetchIssueAppRank, issueKey} = this.props;
+    fetchIssueAppRank(issueKey)
   }
 
   render() {
-    let {mostLikedApp, appIcon, genieUser} = this.props;
+    const {mostRecommendedApp, genieData} = this.props;
+    let mostRecommendedAppData = mostRecommendedApp && mostRecommendedApp.appData;
     return (
       <div>
-        {mostLikedApp ?
+        {mostRecommendedAppData ?
           <div className='appRank-box aeg-card1'>
             <div className='appRank-box-mostLiked'>
               <span className="appRank-box-mostLiked--title">Most Recommended App</span>
-              <h4 className="appRank-box-mostLiked--title subheader">Genie: {genieUser}</h4>
-              {appIcon ?
-                <img src={appIcon} className=""/>
-                : null
-              }
-              <span className="appRank-box-mostLiked--app aeg-block">{mostLikedApp}</span>
+              <h4 className="appRank-box-mostLiked--title subheader">Genie: {genieData.displayName}</h4>
+              <img src={mostRecommendedAppData.icon_72} className=""/>
+              <span className="appRank-box-mostLiked--app aeg-block">{mostRecommendedAppData.title}</span>
               <div className="appRank-box-mostLiked--download">
-                <a href={`https://www.apple.com/ie/search/${mostLikedApp}?src=serp`} target="_blank"><img
+                <a href={`https://www.apple.com/ie/search/${mostRecommendedAppData.title}?src=serp`} target="_blank"><img
                   src={appStoreBadge} className="appStore-badge"/></a>
-                <a href={`https://play.google.com/store/search?q=${mostLikedApp}`} target="_blank"><img
+                <a href={`https://play.google.com/store/search?q=${mostRecommendedAppData.title}`} target="_blank"><img
                   src={playStoreBadge} className="playStore-badge"/></a>
               </div>
             </div>
@@ -45,15 +43,13 @@ const apprankStyles = {
 };
 
 const mapStateToProps = state => ({
-  mostLikedApp: state.answers.mostLikedApp,
-  appIcon: state.answers.appIcon,
-  genieUser: state.answers.list.user
+  mostRecommendedApp: state.issue.mostRecommendedApp,
+  genieData: state.issue.user
 });
 
-const mapDispatchToProps = Object.assign(
-  {},
-  answersActions
-);
+const mapDispatchToProps = {
+  ...issueActions
+};
 
 export default connect(
   mapStateToProps,
