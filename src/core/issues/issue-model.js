@@ -5,7 +5,7 @@ export const IssueModel =
     edited = false,
     editedBy = null,
     editedLast = null,
-    user = {},
+    userId = null,
     likes = null,
     createdAt = null,
     appData = {}
@@ -16,7 +16,7 @@ export const IssueModel =
     edited,
     editedBy,
     editedLast,
-    user,
+    userId,
     likes,
     createdAt,
     appData

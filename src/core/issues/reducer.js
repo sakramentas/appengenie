@@ -1,5 +1,3 @@
-import {List} from 'immutable';
-
 import {
   SIGN_OUT_SUCCESS
 } from 'src/core/auth';
@@ -8,18 +6,15 @@ import {
   CREATE_ISSUE_SUCCESS,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
-  // FETCH_APP_ICON_SUCCESS,
   CREATE_ISSUE_ANSWER_SUCCESS,
-  LOAD_ISSUES_SUCCESS
+  FETCH_ISSUES_SUCCESS,
+  GET_MOST_RECOMMENDED_APP_ICON_SUCCESS
 } from './action-types';
 
 
 export const IssuesState = {
-  deleted: null,
   filter: '',
-  filterSelected: '',
-  list: [],
-  previous: null
+  list: {},
 };
 
 
@@ -28,21 +23,15 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
     case CREATE_ISSUE_SUCCESS:
       return {
         ...state,
-        deleted: null,
-        previous: null,
-        list: [...payload]
+        list: payload
       };
     case DELETE_ISSUE_SUCCESS:
       return {
         ...state,
-        deleted: payload,
-        previous: state.list,
         list: state.list.filter(issue => issue.key !== payload.key)
       };
     case CREATE_ISSUE_ANSWER_SUCCESS:
       return state.merge({
-        deleted: null,
-        previous: null,
         list: state.list.map(issue => {
           return issue.key === payload.key ? {...state, payload} : issue;
         }),
@@ -54,21 +43,38 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
         filter: payload.filterType || ''
       };
 
-    // case FETCH_APP_ICON_SUCCESS:
-    //   return {
-    //     ...state,
-    //     appIcon72: payload || ''
-    //   };
-
-    case LOAD_ISSUES_SUCCESS:
-      const issueObject = {};
-      payload.forEach(obj => {
-        issueObject[obj.key] = obj;
-      });
+    case FETCH_ISSUES_SUCCESS:
       return {
         ...state,
-        list: issueObject
+        list: payload
       };
+
+    case GET_MOST_RECOMMENDED_APP_ICON_SUCCESS:
+      // return state.merge({
+      //   list: Object.keys(state.list).map(key => {
+      //     return state.list[key] === payload.issueKey ? {...state, mostRecommendedAppIcon: payload.appIcon} : state.list;
+      //   }),
+      // });
+      // let issueObj = {
+      //   [payload.issueKey]: {
+      //     ...state.payload.issueKey,
+      //     mostRecommendedAppIcon: payload.appIcon
+      //   }
+      // };
+
+      if (payload.issueKey) {
+        return {
+          ...state,
+          list: {
+            ...state.list,
+            [payload.issueKey]: {
+              ...state.list[payload.issueKey],
+              mostRecommendedAppIcon: payload.appIcon
+            }
+          }
+        }
+      }
+      return state;
 
     case SIGN_OUT_SUCCESS:
       return IssuesState;

@@ -1,7 +1,12 @@
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
 import {getDeletedIssue} from './selectors';
 import {issueList} from './issue-list';
-import {buildCreateIssue, buildCreateIssueAnswer} from './firebasebuild'
+import {
+  buildCreateIssue,
+  buildCreateIssueAnswer,
+  buildFetchIssues,
+  buildGetMostRecommendedAppIcon
+} from './firebasebuild'
 import {
   CREATE_ISSUE_ERROR,
   CREATE_ISSUE_SUCCESS,
@@ -10,28 +15,47 @@ import {
   DELETE_ISSUE_ERROR,
   DELETE_ISSUE_SUCCESS,
   FILTER_ISSUES,
-  LOAD_ISSUES_SUCCESS,
+  FETCH_ISSUES_SUCCESS,
+  GET_MOST_RECOMMENDED_APP_ICON_SUCCESS,
   UNLOAD_ISSUES_SUCCESS,
   UPDATE_ISSUE_ERROR,
   UPDATE_ISSUE_SUCCESS
 } from './action-types';
 
-export const loadIssues = () => {
-  return dispatch => {
-    issueList.path = `issues`;
-    issueList.subscribe(dispatch);
+export const fetchIssues = () => {
+  const fetchIssuesFromFirebase = buildFetchIssues();
+  return dispatch => fetchIssuesFromFirebase(dispatch);
+};
+
+export const fetchIssuesSuccess = (issues) => {
+  return {
+    type: FETCH_ISSUES_SUCCESS,
+    payload: issues
   };
 };
 
-export function loadIssuesSuccess(issues) {
+export const fetchIssuesError = (error) => {
   return {
-    type: LOAD_ISSUES_SUCCESS,
-    payload: issues
+    type: FETCH_ISSUES_SUCCESS,
+    payload: error
   };
-}
+};
 
-export const createIssue = (body, userInfo) => {
-  buildCreateIssue({body, userInfo});
+export const getMostRecommendedAppIcon = issueKey => {
+  const getApp = buildGetMostRecommendedAppIcon(issueKey);
+  return dispatch => getApp(dispatch)
+};
+
+export const getMostRecommendedAppIconSuccess = (issueKey, appIcon) => ({
+  type: GET_MOST_RECOMMENDED_APP_ICON_SUCCESS,
+  payload: {
+    appIcon,
+    issueKey
+  }
+});
+
+export const createIssue = (body, uid) => {
+  buildCreateIssue(body, uid);
 };
 
 export const createIssueError = (error) => ({
