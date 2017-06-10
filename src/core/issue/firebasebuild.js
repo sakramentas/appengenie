@@ -1,21 +1,6 @@
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
-import {getMostRecommendedAppIconSuccess, fetchIssueSuccess} from './actions'
+import {fetchIssueSuccess, fetchIssueAppRankSuccess} from './actions'
 
-
-export const buildgetMostRecommendedAppIcon = issueKey => {
-  return dispatch => {
-    firebaseDb.ref(`answers`).child(issueKey).limitToFirst(1)
-      .once('value', (snap) => {
-        let snapshot = snap.val();
-        if (snapshot) {
-          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
-          let appIcon = snapshotFinal[0].appData ? snapshotFinal[0].appData.icon_72 : null;
-          dispatch(getMostRecommendedAppIconSuccess(issueKey, appIcon));
-        }
-      })
-      .catch(err => console.error(err))
-  }
-};
 
 export const buildFetchIssue = issueKey => {
   return dispatch => {
@@ -24,6 +9,19 @@ export const buildFetchIssue = issueKey => {
         let snapshot = snap.val();
         if (snapshot) {
           dispatch(fetchIssueSuccess(snapshot));
+        }
+      })
+      .catch(err => console.error(err))
+  }
+};
+
+export const buildFetchIssueAppRank = issueKey => {
+  return dispatch => {
+    firebaseDb.ref(`answers/${issueKey}`)
+      .once('value', (snap) => {
+        const snapshot = snap.val();
+        if (snapshot) {
+          dispatch(fetchIssueAppRankSuccess(snapshot[Object.keys(snapshot)[0]])); //TODO: CHANGE TO APP RANK LATER, FOR NOW LET'S WORK WITH THE FIRST APP IN THE LIST
         }
       })
       .catch(err => console.error(err))

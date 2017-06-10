@@ -5,19 +5,16 @@ import IssueItem from './IssueItem';
 
 class IssueList extends Component {
   static propTypes = {
-    issues: PropTypes.object.isRequired
+    // issues: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   renderIssueItems() {
-    return this.props.issues.map((issue, index) => {
+    const {issues} = this.props;
+    return Object.keys(issues).map((index) => {
       return (
         <IssueItem
           key={index}
-          issue={issue}
+          issue={issues[index]}
         />
       );
     });
@@ -26,12 +23,12 @@ class IssueList extends Component {
   render() {
     return (
       <div className="row">
-        {(this.props.issues.length < 1) ?
+        {(false) ?
           <CircularProgress />
           :
           <div className="issue-list small-12 column align-center">
             <h5 className="align-center subheader row">Latest wishes</h5>
-            {this.renderIssueItems()}
+            {this.renderIssueItems().reverse()}
           </div>
         }
       </div>

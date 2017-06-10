@@ -12,8 +12,8 @@ import {getSuggestions, getSuggestionValue} from 'src/core/engine/search';
 
 class IssueSearch extends Component {
   static propTypes = {
-    issues: PropTypes.object.isRequired,
-    createIssue: PropTypes.func.isRequired
+    // issues: PropTypes.obj.isRequired,
+    // createIssue: PropTypes.func.isRequired
   };
 
   constructor(props) {

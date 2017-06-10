@@ -1,36 +1,25 @@
 import React, {Component} from 'react';
-// import {connect} from 'react-redux';
-import {Issue, fetchMostRecommendedAppData, issuesActions} from 'src/core/issues';
+import {connect} from 'react-redux';
+import {issuesActions} from 'src/core/issues';
+import {userActions} from 'src/core/user';
 import {Link} from 'react-router';
 import appIcon from '../../../images/app-store-icon.png';
 import LikeBtn from 'material-ui/svg-icons/action/favorite';
 import {red500} from 'material-ui/styles/colors';
 import {dateSimple} from 'src/util/date-formatter';
-import {firebaseAuth, firebaseDb} from 'src/core/firebase';
+import get from 'lodash/get';
 
 class IssueItem extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      appIcon: ''
-    };
     this.handleIssueClick = ::this.handleIssueClick;
   }
 
   componentWillMount() {
-    firebaseDb.ref(`answers`).child(this.props.issue.key).limitToFirst(1)
-      .once('value', (snap) => {
-        let snapshot = snap.val();
-        if (snapshot) {
-          let snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
-          let appIcon = snapshotFinal[0].appData ? snapshotFinal[0].appData.icon_72 : null;
-          this.setState({appIcon})
-        }
-      });
-    // let {fetchMostRecommendedAppData, issue} = this.props; TODO: MOVE APP DATA TO REDUX STATE
-    // fetchMostRecommendedAppData(issue.key)
-    // this.props.fetchAppIcon(this.props.issue.key)
+    let {getMostRecommendedAppIcon, fetchUserInfo, issue} = this.props;
+    issue.key ? getMostRecommendedAppIcon(issue.key) : null;
+    issue.userId ? fetchUserInfo(issue.userId, issue.key) : null;
   }
 
   handleIssueClick() {
@@ -38,23 +27,23 @@ class IssueItem extends Component {
   }
 
   render() {
-    const {issue} = this.props;
+    const {issue, userInfo} = this.props;
     return (
-      <Link activeClassName="active" to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
+      <Link to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
         <div className="issue-item aeg-card1 align-top row">
           <div className="issue-item-left small-9 column">
             <span className="issue-item-left--bodyText row">
               {issue.body}
             </span>
             <span className="issue-item-left--user row">
-              {issue.user.displayName} • {dateSimple(issue.createdAt)}
+              {userInfo ? userInfo.displayName : 'no user data'} • {dateSimple(issue.createdAt)}
             </span>
           </div>
           <div className="issue-item-right small-3 column">
             <div className="row align-center">
               <div className="small-10 column">
-                {this.state.appIcon ?
-                  <img src={this.state.appIcon} alt="Icon"/>
+                {this.props.mostRecommendedAppIcon ?
+                  <img src={this.props.mostRecommendedAppIcon} alt="Icon"/>
                   :
                   <img src={appIcon} alt="Icon"/>
                 }
@@ -73,20 +62,19 @@ class IssueItem extends Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   appDataCompacted: state.issues.list.appDataCompacted,
-//   appIcon72: state.issues.appIcon72
-// });
-//
-// const mapDispatchToProps = Object.assign(
-//   {},
-//   issuesActions
-// );
-//
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(IssueItem);
+const mapStateToProps = (state, ownProps) => ({
+  mostRecommendedAppIcon: get(state, `issues.list.${ownProps.issue.key}.mostRecommendedAppIcon`),
+  userInfo: get(state, `user.${ownProps.issue.key}`)
+});
 
-export default IssueItem
+const mapDispatchToProps = {
+  ...issuesActions,
+  ...userActions
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IssueItem);
+
 

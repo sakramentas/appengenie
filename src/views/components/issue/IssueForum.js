@@ -1,19 +1,69 @@
-import React from 'react';
-import {IssueQuestion} from './IssueQuestion';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import IssueQuestion from './IssueQuestion';
 import IssueAppRank from './IssueAppRank';
 import IssueAnswerList from './IssueAnswerList';
 import IssueAnswerForm from './IssueAnswerForm';
+import {issueActions} from 'src/core/issue';
+import {getAnswerFilter, getVisibleAnswers, answersActions} from 'src/core/answers';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
+import {Message} from 'semantic-ui-react'
 
+class IssueForum extends Component {
 
-export const IssueForum = ({issue, createAnswer, answers}) => {
-  return (
-    <div className="g-row">
-      <IssueQuestion issue={issue}/>
-      <IssueAppRank issue={issue}/>
-      <IssueAnswerList answers={answers}
-                       issueId={issue.key}/>
-      <IssueAnswerForm createAnswer={createAnswer}
-                       issueKey={issue.key}/>
-    </div>
-  );
+  componentWillMount() {
+    const {fetchIssue, fetchAnswers, issueKey} = this.props;
+    fetchIssue(issueKey);
+    fetchAnswers(issueKey);
+  }
+
+  componentWillUnmount() {
+    this.props.unloadIssue();
+    this.props.unloadAnswers();
+  }
+
+  render() {
+    const {issue, issueKey, createAnswer, answers} = this.props;
+    return (
+      <div className="row">
+        {!isEmpty(issue) ?
+          <div>
+            <IssueQuestion issue={issue}/>
+            {!isEmpty(answers) ?
+              <div>
+                <IssueAppRank issueKey={issueKey}/>
+                <IssueAnswerList answers={answers}
+                                  issueId={issueKey}/>
+                {/*<IssueAnswerForm createAnswer={createAnswer}*/}
+                {/*issueKey={issueKey}/>*/}
+              </div>
+              :
+              <div className="small-12 column">
+                <Message color='red'>No answers available. Be the first one to answer!</Message>
+              </div>
+            }
+          </div>
+          : null
+        }
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    issue: get(state, 'issue', {}),
+    answers: get(state, `answers.list`, {})
+  };
 };
+
+const mapDispatchToProps = {
+  ...issueActions,
+  ...answersActions
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IssueForum);
