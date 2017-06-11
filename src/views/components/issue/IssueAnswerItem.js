@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import connect from 'react-redux';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {answersActions} from 'src/core/answers';
 import Like from 'src/views/components/actions/Like'
@@ -19,4 +20,17 @@ const IssueAnswerItem = (props) => {
 
 };
 
-export default IssueAnswerItem
+const mapStateToProps = (state, ownProps) => {
+  return {
+    likes: get(state, `answers.list.${ownProps.answer.key}.likes`, {})
+  };
+};
+
+const mapDispatchToProps = {
+  ...answersActions
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IssueAnswerItem);

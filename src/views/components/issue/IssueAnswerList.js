@@ -20,6 +20,6 @@ const IssueAnswerList = (props) => {
 
     </div>
   )
-}
+};
 
 export default IssueAnswerList

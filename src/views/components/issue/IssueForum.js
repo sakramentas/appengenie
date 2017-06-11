@@ -5,7 +5,7 @@ import IssueAppRank from './IssueAppRank';
 import IssueAnswerList from './IssueAnswerList';
 import IssueAnswerForm from './IssueAnswerForm';
 import {issueActions} from 'src/core/issue';
-import {getAnswerFilter, getVisibleAnswers, answersActions} from 'src/core/answers';
+import {answersActions} from 'src/core/answers';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import {Message} from 'semantic-ui-react'
