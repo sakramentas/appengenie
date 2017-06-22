@@ -5,7 +5,9 @@ import {
   fetchLikesAnswerSuccess,
   createAnswerSuccess,
   createAnswerKeyOnUserRef,
-  createAnswerKeyOnUserRefSuccess
+  createAnswerKeyOnUserRefSuccess,
+  likeAnswerSuccess,
+  dislikeAnswerSuccess
 } from './actions'
 import {
   buildCreateAnswerDataPayload,
@@ -31,9 +33,9 @@ export const buildCreateAnswer = (issueKey, appName, appData, body, userInfo) =>
     try {
       const newAnswerKey = firebaseDb.ref().child('answers').push().key;
       const answerRef = firebaseDb.ref(`answers/${issueKey}`).child(newAnswerKey);
-      answerRef.child('appData').update(appData);
       answerRef.update(buildCreateAnswerDataPayload(newAnswerKey, appName, body));
       answerRef.child('user').update(buildCreateAnswerUserPayload(userInfo));
+      firebaseDb.ref(`apps/${appData.title}`).update(appData);
       dispatch(createAnswerSuccess());
       createAnswerKeyOnUserRef(issueKey, newAnswerKey)
     }
@@ -56,7 +58,7 @@ export const buildFetchLikesAnswer = (answerKey, issueKey) => {
       .once('value', (snap) => {
         const snapshot = snap.val();
         const likesObj = get(snapshot, 'likes', {});
-        if (Object.keys(likesObj).length) {
+        if (likesObj) {
           dispatch(fetchLikesAnswerSuccess(answerKey, likesObj));
         }
       })
@@ -69,7 +71,17 @@ export const buildLikeAnswer = (answerKey, issueKey) => {
     let currentUserUid = firebaseAuth.currentUser.uid;
     firebaseDb.ref(`answers/${issueKey}`).child(answerKey).child('likes').update({[currentUserUid]: true});
     firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onAnswer').update({[answerKey]: true});
+    dispatch(likeAnswerSuccess());
   }
 };
 
+export const buildDislikeAnswer = (answerKey, issueKey) => {
+  return dispatch => {
+    console.log(answerKey, issueKey)
+    let currentUserUid = firebaseAuth.currentUser.uid;
+    firebaseDb.ref(`answers/${issueKey}`).child(`${answerKey}/likes/${currentUserUid}`).remove();
+    firebaseDb.ref(`users/${currentUserUid}`).child(`likes/onAnswer/${answerKey}`).remove();
+    dispatch(dislikeAnswerSuccess());
+  }
+};
 

@@ -6,7 +6,8 @@ import {
   buildCreateAnswer,
   buildCreateAnswerKeyOnUserRef,
   buildFetchLikesAnswer,
-  buildLikeAnswer
+  buildLikeAnswer,
+  buildDislikeAnswer
 } from './firebasebuild'
 import {
   CREATE_ANSWER_ERROR,
@@ -16,7 +17,10 @@ import {
   FETCH_LIKES_ANSWER_SUCCESS,
   FETCH_APPS_FROM_API_SUCCESS,
   FETCH_ANSWERS_SUCCESS,
+  LIKE_ANSWER_SUCCESS,
+  DISLIKE_ANSWER_SUCCESS,
   UNLOAD_ANSWERS_SUCCESS,
+  FETCH_APP_DATA_ANSWER_SUCCESS
 } from './action-types';
 
 
@@ -75,50 +79,60 @@ export const fetchLikesAnswerSuccess = (answerKey, likesObj) => ({
   }
 });
 
-
 export const likeAnswer = (answerKey, issueKey) => {
   const createBuildLikeAnswer = buildLikeAnswer(answerKey, issueKey);
   return dispatch => createBuildLikeAnswer(dispatch)
 };
 
 export const likeAnswerSuccess = () => ({
-  type: CREATE_ANSWER_KEY_ON_USER_REF_SUCCESS
+  type: LIKE_ANSWER_SUCCESS
+});
+
+export const dislikeAnswer = (answerKey, issueKey) => {
+  const createBuildDislikeAnswer = buildDislikeAnswer(answerKey, issueKey);
+  return dispatch => createBuildDislikeAnswer(dispatch)
+};
+
+export const dislikeAnswerSuccess = () => ({
+  type: DISLIKE_ANSWER_SUCCESS
 });
 
 
+export const fetchAppDataAnswer = (answerKey, appName) => {
+  const createBuildfetchAppDataAnswer = buildfetchAppDataAnswer(answerKey, appName);
+  return dispatch => createBuildfetchAppDataAnswer(dispatch)
+};
 
-// export const checkIfUserLiked = (answerId, type) => {
-//   let currentUserUid = firebaseAuth.currentUser.uid;
-//   let status = false;
-//   if (type === 'answer') {
-//     firebaseDb.ref(`users/${currentUserUid}/likes/onAnswer`).once('value', snapshot => {
-//       var likedbyUser = snapshot.val();
-//       // console.log('UHEUAEHUHHUAEHAEUH KCT', snapshot.val())
-//       if (likedbyUser[answerId]) {
-//         return status = true
-//       }
-//     })
-//     return status
-//   }
-// };
 
-// export const likeAnswer = (answerId, issueKey) => {
-//   let currentUserUid = firebaseAuth.currentUser.uid;
-//   firebaseDb.ref(`users/${currentUserUid}/likes`).once('value', (snapshot) => {
-//     console.log('THE SNAPSHOT ', snapshot.val())
-//   })
-//   // Store userID on answers
-//   firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').update({[currentUserUid]: true});
-//   // Store answerID on user
-//   firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onAnswer').update({[answerId]: true})
-//     .catch(error => console.log(error));
-// };
-//
-// export const dislikeAnswer = (answerId, issueKey) => {
-//   let currentUserUid = firebaseAuth.currentUser.uid;
-//   firebaseDb.ref(`answers/${issueKey}`).child(answerId).child('likes').remove(currentUserUid)
-//     .catch(error => console.log(error));
-// };
+
+
+export const buildfetchAppDataAnswer = (answerKey, appName) => {
+  return dispatch => {
+    firebaseDb.ref(`apps`).child(appName)
+      .once('value', (snap) => {
+        let snapshot = snap.val();
+        if (snapshot) {
+          dispatch(fetchAppDataAnswerSuccess(answerKey, snapshot));
+        }
+      })
+      .catch(err => console.error(err))
+  }
+};
+
+export function fetchAppDataAnswerSuccess(answerKey, appData) {
+  return {
+    type: FETCH_APP_DATA_ANSWER_SUCCESS,
+    payload: {
+      answerKey,
+      appData
+    }
+  };
+}
+
+
+
+
+
 
 export function createAnswerError(error) {
   return {

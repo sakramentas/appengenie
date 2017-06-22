@@ -8,8 +8,11 @@ import {
   FILTER_ANSWERS,
   FETCH_LIKES_ANSWER_SUCCESS,
   FETCH_APPS_FROM_API_SUCCESS,
+  LIKE_ANSWER_SUCCESS,
+  DISLIKE_ANSWER_SUCCESS,
   UNLOAD_ANSWERS_SUCCESS,
-  FETCH_ANSWERS_SUCCESS
+  FETCH_ANSWERS_SUCCESS,
+  FETCH_APP_DATA_ANSWER_SUCCESS
 } from './action-types';
 
 
@@ -20,7 +23,7 @@ export const AnswersState = {
 };
 
 
-export function answersReducer(state = AnswersState, {payload, type}) {
+export function answersReducer(state = {}, {payload, type}) {
   switch (type) {
     case CREATE_ANSWER_SUCCESS:
       return state;
@@ -43,6 +46,12 @@ export function answersReducer(state = AnswersState, {payload, type}) {
         list: payload.data
       };
 
+    case LIKE_ANSWER_SUCCESS:
+      return state;
+
+    case DISLIKE_ANSWER_SUCCESS:
+      return state;
+
     case FETCH_LIKES_ANSWER_SUCCESS:
       return {
         ...state,
@@ -55,6 +64,18 @@ export function answersReducer(state = AnswersState, {payload, type}) {
         }
       };
 
+    case FETCH_APP_DATA_ANSWER_SUCCESS:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          [payload.answerKey]: {
+            ...state.list[payload.answerKey],
+            appData2: payload.appData
+          }
+        }
+      };
+
     case SIGN_OUT_SUCCESS:
       return state;
 
@@ -62,7 +83,7 @@ export function answersReducer(state = AnswersState, {payload, type}) {
       return state;
 
     case UNLOAD_ANSWERS_SUCCESS:
-      return state;
+      return state = {};
 
     default:
       return state;
