@@ -4,17 +4,26 @@ import {Card} from 'material-ui/Card';
 import {Image} from 'semantic-ui-react'
 import {dateSimple} from 'src/util/date-formatter';
 import {userActions} from 'src/core/user';
-import get from 'lodash/get';
+import {issueActions} from 'src/core/issue';
+import {LikeBtn} from 'src/views/components/actions/LikeBtn';
+import {get, has, size} from 'lodash';
 
 class IssueQuestion extends Component {
 
   componentWillMount() {
-    const {issue, fetchUserInfo} = this.props;
-    issue.userId ? fetchUserInfo(issue.userId, issue.key) : null
+    const {issue, fetchUserInfo, fetchLikesQuestion} = this.props;
+    // issue.userId ? fetchUserInfo(issue.userId, issue.key) : null;
+    fetchLikesQuestion(issue.key);
+  }
+
+  handleLikeQuestion() {
+    const {issue, likeQuestion, dislikeQuestion, fetchLikesQuestion, youLiked} = this.props;
+    youLiked === true ? dislikeQuestion(issue.key) : likeQuestion(issue.key);
+    fetchLikesQuestion(issue.key);
   }
 
   render() {
-    const {issue, userInfo} = this.props;
+    const {issue, userInfo, likes, youLiked} = this.props;
     return (
       <Card className="issue-page_question--card">
 
@@ -32,6 +41,9 @@ class IssueQuestion extends Component {
               <span className="subheader">{dateSimple(issue.createdAt)}</span>
             </div>
           </div>
+          <LikeBtn handleLikeAnswer={this.handleLikeQuestion.bind(this)}
+                   likesQt={size(likes)}
+                   youLiked={youLiked}/>
         </div>
       </Card>
     )
@@ -39,11 +51,14 @@ class IssueQuestion extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => ({
+  likes: get(state, `issue.likes`, {}),
   userInfo: get(state, `user.${ownProps.issue.key}`),
+  youLiked: has(state, `issue.likes.${state.auth.id}`)
 });
 
 const mapDispatchToProps = {
   ...userActions,
+  ...issueActions,
 };
 
 export default connect(

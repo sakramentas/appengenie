@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from 'material-ui/CircularProgress';
 import IssueItem from './IssueItem';
+import {map, size} from 'lodash';
 
 class IssueList extends Component {
   static propTypes = {
@@ -10,11 +11,11 @@ class IssueList extends Component {
 
   renderIssueItems() {
     const {issues} = this.props;
-    return Object.keys(issues).map((index) => {
+    return map(issues, (issue, index) => {
       return (
         <IssueItem
           key={index}
-          issue={issues[index]}
+          issue={issue}
         />
       );
     });
@@ -23,14 +24,10 @@ class IssueList extends Component {
   render() {
     return (
       <div className="row">
-        {(false) ?
-          <CircularProgress />
-          :
-          <div className="issue-list small-12 column align-center">
-            <h5 className="align-center subheader row">Latest wishes</h5>
-            {this.renderIssueItems().reverse()}
-          </div>
-        }
+        <div className="issue-list small-12 column align-center">
+          <h5 className="align-center subheader row">Latest wishes</h5>
+          {this.renderIssueItems().reverse()}
+        </div>
       </div>
     )
   }
