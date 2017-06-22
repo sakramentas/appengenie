@@ -48,7 +48,7 @@ class IssueSearch extends Component {
 
   onSuggestionsFetchRequested({value}) {
     this.setState({
-      suggestions: getSuggestions(value, [...this.props.issues])
+      suggestions: getSuggestions(value, this.props.issues)
     });
   };
 
