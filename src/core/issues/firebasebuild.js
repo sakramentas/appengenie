@@ -3,12 +3,14 @@ import {issueList} from './issue-list';
 import {
   fetchIssuesSuccess,
   fetchIssuesError,
-  getMostRecommendedAppIconSuccess
+  getMostRecommendedAppIconSuccess,
+  fetchLikesQuestionSuccess,
 } from './actions';
 import {
   buildCreateIssueDataPayload,
   buildCreateIssueAnswerPayload
-} from './payload'
+} from './payload';
+import get from 'lodash/get';
 
 
 export const buildFetchIssues = () => {
@@ -49,4 +51,18 @@ export const buildCreateIssue = (body, uid) => {
 export const buildCreateIssueAnswer = (key, details, answerKey) => {
   let answerPath = `${key}/answers/${answerKey}`;
   issueList.update(answerPath, buildCreateIssueAnswerPayload(details))
+};
+
+export const buildFetchLikesQuestion = (issueKey) => {
+  return dispatch => {
+    firebaseDb.ref(`issues/${issueKey}/likes`)
+      .once('value', (snap) => {
+        const snapshot = snap.val();
+        // const likesObj = get(snapshot, 'likes', {});
+        // if (likesObj) {
+          dispatch(fetchLikesQuestionSuccess(issueKey, snapshot));
+        // }
+      })
+      .catch(err => console.error(err))
+  }
 };

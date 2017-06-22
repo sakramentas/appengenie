@@ -8,7 +8,8 @@ import {
   FILTER_ISSUES,
   CREATE_ISSUE_ANSWER_SUCCESS,
   FETCH_ISSUES_SUCCESS,
-  GET_MOST_RECOMMENDED_APP_ICON_SUCCESS
+  GET_MOST_RECOMMENDED_APP_ICON_SUCCESS,
+  FETCH_LIKES_QUANTITY_QUESTION_SUCCESS
 } from './action-types';
 
 
@@ -50,18 +51,6 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
       };
 
     case GET_MOST_RECOMMENDED_APP_ICON_SUCCESS:
-      // return state.merge({
-      //   list: Object.keys(state.list).map(key => {
-      //     return state.list[key] === payload.issueKey ? {...state, mostRecommendedAppIcon: payload.appIcon} : state.list;
-      //   }),
-      // });
-      // let issueObj = {
-      //   [payload.issueKey]: {
-      //     ...state.payload.issueKey,
-      //     mostRecommendedAppIcon: payload.appIcon
-      //   }
-      // };
-
       if (payload.issueKey) {
         return {
           ...state,
@@ -75,6 +64,18 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
         }
       }
       return state;
+
+    case FETCH_LIKES_QUANTITY_QUESTION_SUCCESS:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          [payload.issueKey]: {
+            ...state.list[payload.issueKey],
+            likes: payload.likesObj
+          }
+        }
+      };
 
     case SIGN_OUT_SUCCESS:
       return IssuesState;

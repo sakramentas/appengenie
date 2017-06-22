@@ -5,7 +5,8 @@ import {
   buildCreateIssue,
   buildCreateIssueAnswer,
   buildFetchIssues,
-  buildGetMostRecommendedAppIcon
+  buildGetMostRecommendedAppIcon,
+  buildFetchLikesQuestion
 } from './firebasebuild'
 import {
   CREATE_ISSUE_ERROR,
@@ -19,7 +20,8 @@ import {
   GET_MOST_RECOMMENDED_APP_ICON_SUCCESS,
   UNLOAD_ISSUES_SUCCESS,
   UPDATE_ISSUE_ERROR,
-  UPDATE_ISSUE_SUCCESS
+  UPDATE_ISSUE_SUCCESS,
+  FETCH_LIKES_QUANTITY_QUESTION_SUCCESS
 } from './action-types';
 
 export const fetchIssues = () => {
@@ -167,3 +169,17 @@ export function unloadIssues() {
     type: UNLOAD_ISSUES_SUCCESS
   };
 }
+
+
+export const fetchLikesQuestion = (issueKey) => {
+  const createBuildFetchLikesQuestion = buildFetchLikesQuestion(issueKey);
+  return dispatch => createBuildFetchLikesQuestion(dispatch)
+};
+
+export const fetchLikesQuestionSuccess = (issueKey, likesObj) => ({
+  type: FETCH_LIKES_QUANTITY_QUESTION_SUCCESS,
+  payload: {
+    issueKey,
+    likesObj
+  }
+});
