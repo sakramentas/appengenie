@@ -22,9 +22,9 @@ class IssueAnswerForm extends Component {
     this.handleAppData = ::this.handleAppData;
   }
 
-  componentWillMount() {
-    this.setState({body: this.props.title})
-  }
+  // componentWillMount() {
+  //   this.setState({body: this.props.title})
+  // }
 
   clearInput() {
     this.setState({body: '', appName: ''});
@@ -51,15 +51,17 @@ class IssueAnswerForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     const {body, appName, appData} = this.state;
-    const {issueKey, createAnswer} = this.props;
+    const {issueKey, createAnswer, reloadAnswers} = this.props;
     const {uid, photoURL, displayName} = firebaseAuth.currentUser;
     if (body.length) {
       createAnswer(issueKey, appName, appData, body, {uid, photoURL, displayName});
+      reloadAnswers();
     }
     this.clearInput();
   }
 
   handleAppData(appData) {
+    console.log(appData)
     this.setState({
       appData: appData,
       appName: appData.title
@@ -70,9 +72,6 @@ class IssueAnswerForm extends Component {
     let {handleOpenSnackbar} = this.props;
     return (
       <div className="aeg-card1">
-
-        <Form className="row"
-              onSubmit={this.onSubmit}>
           <span className="subheader aeg-p-color">Answer this Issue</span>
           <AppSearch handleAppData={this.handleAppData} />
           <TextArea
@@ -82,9 +81,8 @@ class IssueAnswerForm extends Component {
             value={this.state.body}
           />
           <div className="issue-create__cta aeg-m-top">
-            <Button onClick={handleOpenSnackbar} primary>Send</Button>
+            <Button onClick={this.onSubmit} primary>Send</Button>
           </div>
-        </Form>
       </div>
     );
   }

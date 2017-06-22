@@ -23,6 +23,11 @@ class IssueForum extends Component {
     this.props.unloadAnswers();
   }
 
+  handleReloadAnswers() {
+    const {fetchAnswers, issueKey} = this.props;
+    fetchAnswers(issueKey);
+  }
+
   render() {
     const {issue, issueKey, createAnswer, answers} = this.props;
     return (
@@ -34,15 +39,15 @@ class IssueForum extends Component {
               <div>
                 <IssueAppRank issueKey={issueKey}/>
                 <IssueAnswerList answers={answers}
-                                  issueId={issueKey}/>
-                {/*<IssueAnswerForm createAnswer={createAnswer}*/}
-                {/*issueKey={issueKey}/>*/}
+                                 issueId={issueKey}/>
               </div>
               :
               <div className="small-12 column">
                 <Message color='red'>No answers available. Be the first one to answer!</Message>
               </div>
             }
+            <IssueAnswerForm createAnswer={createAnswer}
+                             issueKey={issueKey} reloadAnswers={this.handleReloadAnswers.bind(this)}/>
           </div>
           : null
         }

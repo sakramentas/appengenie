@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Input, Button, Card, Image} from 'semantic-ui-react'
 import {answersActions} from 'src/core/answers'
 import Q from 'q';
+import {get, isEmpty} from 'lodash';
 
 class IssueAnswerAppSearch extends Component {
 
@@ -24,8 +25,8 @@ class IssueAnswerAppSearch extends Component {
   }
 
   handleSearch() {
-    let {searchTerm} = this.state;
-    let {fetchAppsFromApi, appsFromApi} = this.props;
+    const {searchTerm} = this.state;
+    const {fetchAppsFromApi, appsFromApi} = this.props;
     Q.fcall(fetchAppsFromApi(searchTerm))
       .then(data => this.setState({searchResult: appsFromApi}));
   }
@@ -36,7 +37,7 @@ class IssueAnswerAppSearch extends Component {
   }
 
   render() {
-    let {appsFromApi} = this.props;
+    const {appsFromApi} = this.props;
     return (
       <div className="small-12 column">
         <div className="row small-collapse">
@@ -52,18 +53,18 @@ class IssueAnswerAppSearch extends Component {
             <Button circular primary icon='search' onClick={this.handleSearch}/>
           </div>
         </div>
-        {(appsFromApi && !this.state.selectedApp.size > 0) ?
+        {(!isEmpty(appsFromApi) && !this.state.selectedApp.size > 0) ?
           <Card.Group className="aeg-card-group">
-            {appsFromApi.map((app, index) => {
+            {Object.keys(appsFromApi).map((index) => {
               return (
-                <Card onClick={this.handleSelectApp.bind(this, app)}
+                <Card onClick={this.handleSelectApp.bind(this, appsFromApi[index])}
                       key={index}
                       fluid>
                   <Card.Content>
-                    <Image floated='right' size='mini' src={app.icon_72}/>
-                    <Card.Header>{app.title}</Card.Header>
-                    <Card.Meta>{app.downloads} downloads</Card.Meta>
-                    <Card.Description>{app.short_desc}</Card.Description>
+                    <Image floated='right' size='mini' src={appsFromApi[index].icon_72}/>
+                    <Card.Header>{appsFromApi[index].title}</Card.Header>
+                    <Card.Meta>{appsFromApi[index].downloads} downloads</Card.Meta>
+                    <Card.Description>{appsFromApi[index].short_desc}</Card.Description>
                   </Card.Content>
                 </Card>
               )
@@ -87,7 +88,7 @@ class IssueAnswerAppSearch extends Component {
 }
 
 const mapStateToProps = state => ({
-  appsFromApi: state.answers.appsFromApi.results
+  appsFromApi: get(state, 'answers.appsFromApi.results', {})
 });
 
 const mapDispatchToProps = {...answersActions};
