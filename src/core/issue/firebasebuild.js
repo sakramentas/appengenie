@@ -1,12 +1,19 @@
 import {firebaseAuth, firebaseDb} from 'src/core/firebase';
-import {fetchIssueSuccess, fetchIssueAppRankSuccess} from './actions'
+import {
+  fetchIssueSuccess,
+  fetchIssueAppRankSuccess,
+  fetchLikesQuestionSuccess,
+  likeQuestionSuccess,
+  dislikeQuestionSuccess
+} from './actions'
+import get from 'lodash/get';
 
 
 export const buildFetchIssue = issueKey => {
   return dispatch => {
     firebaseDb.ref(`issues`).child(issueKey)
       .once('value', (snap) => {
-        let snapshot = snap.val();
+        const snapshot = snap.val();
         if (snapshot) {
           dispatch(fetchIssueSuccess(snapshot));
         }
@@ -25,5 +32,37 @@ export const buildFetchIssueAppRank = issueKey => {
         }
       })
       .catch(err => console.error(err))
+  }
+};
+
+export const buildFetchLikesQuestion = (issueKey) => {
+  return dispatch => {
+    firebaseDb.ref(`issues/${issueKey}`)
+      .once('value', (snap) => {
+        const snapshot = snap.val();
+        const likesObj = get(snapshot, 'likes', {});
+        if (likesObj) {
+          dispatch(fetchLikesQuestionSuccess(likesObj));
+        }
+      })
+      .catch(err => console.error(err))
+  }
+};
+
+export const buildLikeQuestion = (issueKey) => {
+  return dispatch => {
+    const currentUserUid = firebaseAuth.currentUser.uid;
+    firebaseDb.ref(`issues/${issueKey}`).child('likes').update({[currentUserUid]: true});
+    firebaseDb.ref(`users/${currentUserUid}`).child('likes').child('onQuestion').update({[issueKey]: true});
+    dispatch(likeQuestionSuccess());
+  }
+};
+
+export const buildDislikeQuestion = (issueKey) => {
+  return dispatch => {
+    const currentUserUid = firebaseAuth.currentUser.uid;
+    firebaseDb.ref(`issues/${issueKey}`).child(`likes/${currentUserUid}`).remove();
+    firebaseDb.ref(`users/${currentUserUid}`).child(`likes/onQuestion/${issueKey}`).remove();
+    dispatch(dislikeQuestionSuccess());
   }
 };
