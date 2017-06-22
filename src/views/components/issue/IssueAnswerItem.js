@@ -1,28 +1,48 @@
 import React, {Component} from 'react';
-import connect from 'react-redux';
+import {connect} from 'react-redux';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {answersActions} from 'src/core/answers';
-import Like from 'src/views/components/actions/Like'
+import {LikeBtn} from 'src/views/components/actions/LikeBtn';
+import {get, has, size} from 'lodash';
 
-const IssueAnswerItem = (props) => {
+class IssueAnswerItem extends Component {
 
-  let {answer} = props;
-  return (
-    <div className="issue-box__answerList aeg-card1">
-      <CardHeader title={`${answer.appName || ''} - ${answer.body}`}
-                  avatar={answer.user.image}
-                  subtitle={`by ${answer.user.displayName}`}/>
-      <CardActions>
-        {/*<LikeButton type="answers" answerId={answer.key} issueId={issueId}  />*/}
-      </CardActions>
-    </div>
-  )
+  componentWillMount() {
+    const {answer, issueId, fetchLikesAnswer, fetchAppDataAnswer} = this.props;
+    fetchLikesAnswer(answer.key, issueId);
+    // console.log(answer.key, answer.appName)
+    (answer.key && answer.appName) ? fetchAppDataAnswer(answer.key, answer.appName) : null;
+  }
 
-};
+  handleLikeAnswer() {
+    const {answer, issueId, likeAnswer, dislikeAnswer, fetchLikesAnswer, youLiked} = this.props;
+    youLiked === true ? dislikeAnswer(answer.key, issueId) : likeAnswer(answer.key, issueId);
+    fetchLikesAnswer(answer.key, issueId);
+  }
+
+  render() {
+    let {answer, likes, youLiked, appData} = this.props;
+    return (
+      <div className="issue-box__answerList aeg-card1">
+        <CardHeader title={`${answer.appName || ''} - ${answer.body}`}
+                    avatar={appData.icon_72}
+                    subtitle={`by ${answer.user.displayName}`}/>
+        <CardActions>
+          <LikeBtn handleLikeAnswer={this.handleLikeAnswer.bind(this)}
+                   likesQt={size(likes)}
+                   youLiked={youLiked}/>
+        </CardActions>
+      </div>
+    )
+  }
+}
+
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    likes: get(state, `answers.list.${ownProps.answer.key}.likes`, {})
+    likes: get(state, `answers.list.${ownProps.answer.key}.likesObj`, {}),
+    youLiked: has(state, `answers.list.${ownProps.answer.key}.likesObj.${state.auth.id}`, false),
+    appData: get(state, `answers.list.${ownProps.answer.key}.appData2`, {})
   };
 };
 

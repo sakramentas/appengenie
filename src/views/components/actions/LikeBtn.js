@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'semantic-ui-react'
 
 export const LikeBtn = (props) => {
   return (
@@ -9,7 +10,6 @@ export const LikeBtn = (props) => {
         <Icon onClick={props.handleLikeAnswer} name='heart outline' color='red' size="large" />
       }
       <h4>{props.likesQt} likes</h4>
-      <h4>{props.youLiked.toString()}</h4>
     </div>
   )
 };
