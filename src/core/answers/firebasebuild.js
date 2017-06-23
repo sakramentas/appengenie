@@ -7,7 +7,8 @@ import {
   createAnswerKeyOnUserRef,
   createAnswerKeyOnUserRefSuccess,
   likeAnswerSuccess,
-  dislikeAnswerSuccess
+  dislikeAnswerSuccess,
+  fetchAppDataAnswerSuccess
 } from './actions'
 import {
   buildCreateAnswerDataPayload,
@@ -77,7 +78,6 @@ export const buildLikeAnswer = (answerKey, issueKey) => {
 
 export const buildDislikeAnswer = (answerKey, issueKey) => {
   return dispatch => {
-    console.log(answerKey, issueKey)
     let currentUserUid = firebaseAuth.currentUser.uid;
     firebaseDb.ref(`answers/${issueKey}`).child(`${answerKey}/likes/${currentUserUid}`).remove();
     firebaseDb.ref(`users/${currentUserUid}`).child(`likes/onAnswer/${answerKey}`).remove();
@@ -85,3 +85,15 @@ export const buildDislikeAnswer = (answerKey, issueKey) => {
   }
 };
 
+export const buildfetchAppDataAnswer = (answerKey, appName) => {
+  return dispatch => {
+    firebaseDb.ref(`apps`).child(appName)
+      .once('value', (snap) => {
+        let snapshot = snap.val();
+        if (snapshot) {
+          dispatch(fetchAppDataAnswerSuccess(answerKey, snapshot));
+        }
+      })
+      .catch(err => console.error(err))
+  }
+};

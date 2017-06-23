@@ -7,7 +7,8 @@ import {
   buildCreateAnswerKeyOnUserRef,
   buildFetchLikesAnswer,
   buildLikeAnswer,
-  buildDislikeAnswer
+  buildDislikeAnswer,
+  buildfetchAppDataAnswer
 } from './firebasebuild'
 import {
   CREATE_ANSWER_ERROR,
@@ -103,23 +104,7 @@ export const fetchAppDataAnswer = (answerKey, appName) => {
   return dispatch => createBuildfetchAppDataAnswer(dispatch)
 };
 
-
-
-
-export const buildfetchAppDataAnswer = (answerKey, appName) => {
-  return dispatch => {
-    firebaseDb.ref(`apps`).child(appName)
-      .once('value', (snap) => {
-        let snapshot = snap.val();
-        if (snapshot) {
-          dispatch(fetchAppDataAnswerSuccess(answerKey, snapshot));
-        }
-      })
-      .catch(err => console.error(err))
-  }
-};
-
-export function fetchAppDataAnswerSuccess(answerKey, appData) {
+export const fetchAppDataAnswerSuccess = (answerKey, appData) => {
   return {
     type: FETCH_APP_DATA_ANSWER_SUCCESS,
     payload: {
@@ -127,12 +112,7 @@ export function fetchAppDataAnswerSuccess(answerKey, appData) {
       appData
     }
   };
-}
-
-
-
-
-
+};
 
 export function createAnswerError(error) {
   return {
