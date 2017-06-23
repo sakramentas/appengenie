@@ -4,7 +4,8 @@ import {
   UNLOAD_ISSUE_SUCCESS,
   LIKE_QUESTION_SUCCESS,
   DISLIKE_QUESTION_SUCCESS,
-  FETCH_LIKES_QUESTION_SUCCESS
+  FETCH_LIKES_QUESTION_SUCCESS,
+  FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS
 } from './action-types';
 
 export const issueReducer = (state = {}, {payload, type}) => {
@@ -17,9 +18,12 @@ export const issueReducer = (state = {}, {payload, type}) => {
       };
 
     case FETCH_ISSUE_APP_RANK_SUCCESS:
+      return state;
+
+    case FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS:
       return {
         ...state,
-        mostRecommendedApp: payload
+        mostRecommendedApp: payload.appData
       };
 
     case LIKE_QUESTION_SUCCESS:

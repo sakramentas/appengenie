@@ -4,7 +4,9 @@ import {
   fetchIssueAppRankSuccess,
   fetchLikesQuestionSuccess,
   likeQuestionSuccess,
-  dislikeQuestionSuccess
+  dislikeQuestionSuccess,
+  fetchAppDataIssueAppRankSuccess,
+  fetchAppDataIssueAppRank
 } from './actions'
 import get from 'lodash/get';
 
@@ -28,7 +30,9 @@ export const buildFetchIssueAppRank = issueKey => {
       .once('value', (snap) => {
         const snapshot = snap.val();
         if (snapshot) {
-          dispatch(fetchIssueAppRankSuccess(snapshot[Object.keys(snapshot)[0]])); //TODO: CHANGE TO APP RANK LATER, FOR NOW LET'S WORK WITH THE FIRST APP IN THE LIST
+          const firstApp = snapshot[Object.keys(snapshot)[0]];
+          dispatch(fetchIssueAppRankSuccess(firstApp)); //TODO: CHANGE TO APP RANK LATER, FOR NOW LET'S WORK WITH THE FIRST APP IN THE LIST
+          dispatch(fetchAppDataIssueAppRank(issueKey, firstApp.appName));
         }
       })
       .catch(err => console.error(err))
@@ -64,5 +68,18 @@ export const buildDislikeQuestion = (issueKey) => {
     firebaseDb.ref(`issues/${issueKey}`).child(`likes/${currentUserUid}`).remove();
     firebaseDb.ref(`users/${currentUserUid}`).child(`likes/onQuestion/${issueKey}`).remove();
     dispatch(dislikeQuestionSuccess());
+  }
+};
+
+export const buildfetchAppDataIssueAppRank = (issueKey, appName) => {
+  return dispatch => {
+    firebaseDb.ref(`apps`).child(appName)
+      .once('value', (snap) => {
+        let snapshot = snap.val();
+        if (snapshot) {
+          dispatch(fetchAppDataIssueAppRankSuccess(snapshot));
+        }
+      })
+      .catch(err => console.error(err))
   }
 };

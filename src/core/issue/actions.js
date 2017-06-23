@@ -4,14 +4,16 @@ import {
   UNLOAD_ISSUE_SUCCESS,
   FETCH_LIKES_QUESTION_SUCCESS,
   LIKE_QUESTION_SUCCESS,
-  DISLIKE_QUESTION_SUCCESS
+  DISLIKE_QUESTION_SUCCESS,
+  FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS
 } from './action-types';
 import {
   buildFetchIssue,
   buildFetchIssueAppRank,
   buildFetchLikesQuestion,
   buildLikeQuestion,
-  buildDislikeQuestion
+  buildDislikeQuestion,
+  buildfetchAppDataIssueAppRank
 } from './firebasebuild';
 
 export const fetchIssue = issueKey => {
@@ -25,7 +27,6 @@ export const fetchIssueSuccess = (data) => ({
 });
 
 export const fetchIssueAppRank = issueKey => {
-  console.log('FETCH APP RANK', issueKey)
   const getIssueAppRank = buildFetchIssueAppRank(issueKey);
   return dispatch => getIssueAppRank(dispatch)
 };
@@ -69,3 +70,18 @@ export const dislikeQuestion = (issueKey) => {
 export const dislikeQuestionSuccess = () => ({
   type: DISLIKE_QUESTION_SUCCESS
 });
+
+export const fetchAppDataIssueAppRank = (issueKey, appName) => {
+  console.log('CALLED fetchAppDataIssueAppRank', issueKey, appName)
+  const createBuildFetchAppDataIssueAppRank = buildfetchAppDataIssueAppRank(issueKey, appName);
+  return dispatch => createBuildFetchAppDataIssueAppRank(dispatch)
+};
+
+export const fetchAppDataIssueAppRankSuccess = (appData) => {
+  return {
+    type: FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS,
+    payload: {
+      appData
+    }
+  };
+};
