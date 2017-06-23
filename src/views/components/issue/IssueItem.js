@@ -32,23 +32,27 @@ class IssueItem extends Component {
     return (
       <Link to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
         <div className="issue-item aeg-card1 align-top row">
-          <div className="issue-item-left small-9 column">
+          <div className="small-9 column">
+            <div className="issue-item-left small-9 column">
             <span className="issue-item-left--bodyText row">
               {issue.body}
             </span>
-            <span className="issue-item-left--user row">
+              <span className="issue-item-left--user row">
               {userInfo ? userInfo.displayName : 'no user data'} • {dateSimple(issue.createdAt)}
             </span>
-          </div>
-          <div className="issue-item-right small-3 column">
-            <div className="row align-center">
-              <div className="small-10 column">
-                  <img src={mostRecommendedAppIcon} alt="Icon"/>
+            </div>
+            <div className="info-icons small-12 column">
+              <div className="like-icon align-middle row align-left aeg-m-top">
+                <LikeBtn color={red500}/>
+                <span className="">{size(likesOnQuestion)} likes</span>
               </div>
-              <div className="info-icons small-12 column">
-                <div className="like-icon align-middle row align-center">
-                  <LikeBtn color={red500}/>
-                  <span className="">{size(likesOnQuestion)}</span>
+            </div>
+          </div>
+          <div className="small-3 column">
+            <div className="issue-item-right">
+              <div className="row align-center">
+                <div className="small-10 column">
+                  <img src={mostRecommendedAppIcon} alt="Icon"/>
                 </div>
               </div>
             </div>

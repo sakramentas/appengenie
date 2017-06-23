@@ -25,7 +25,7 @@ class IssueList extends Component {
     return (
       <div className="row">
         <div className="issue-list small-12 column align-center">
-          <h5 className="align-center subheader row">Latest wishes</h5>
+          <h6 className="align-center subheader row aeg-p-color">Latest wishes</h6>
           {this.renderIssueItems().reverse()}
         </div>
       </div>

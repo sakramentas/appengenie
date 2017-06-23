@@ -38,10 +38,10 @@ export class App extends Component {
           signOut={this.props.signOut}
         />
 
-        <BottomNav
-          authenticated={this.props.auth.authenticated}
-          signOut={this.props.signOut}
-        />
+        {/*<BottomNav*/}
+          {/*authenticated={this.props.auth.authenticated}*/}
+          {/*signOut={this.props.signOut}*/}
+        {/*/>*/}
 
         <main className="main">{this.props.children}</main>
       </div>

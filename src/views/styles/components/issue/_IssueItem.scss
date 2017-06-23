@@ -3,6 +3,19 @@
 //---------------------------------------------------------
 
 .issue-item {
+  .info-icons {
+    padding-top: 5px;
+    .like-icon {
+      svg {
+        width: 16px !important;
+        height: 16px !important;
+      }
+      span {
+        font-size: 14px;
+        color: red;
+      }
+    }
+  }
   &-left {
     &--bodyText {
       font-size: 14px;
@@ -17,19 +30,6 @@
     > img {
       max-width: 32px;
       max-height: 32px;
-    }
-    .info-icons {
-      padding-top: 5px;
-      .like-icon {
-        svg {
-          width: 16px !important;
-          height: 16px !important;
-        }
-        span {
-          font-size: 14px;
-          color: red;
-        }
-      }
     }
   }
 }

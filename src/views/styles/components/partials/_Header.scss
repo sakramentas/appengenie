@@ -5,8 +5,9 @@
 .site-header {
   background: white;
   height: 59px;
-  > img {
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.17);
+  img {
     width: auto;
-    height: 29px;
+    height: 26px;
   }
 }
