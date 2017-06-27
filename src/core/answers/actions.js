@@ -5,6 +5,7 @@ import {
   buildFetchAnswers,
   buildCreateAnswer,
   buildCreateAnswerKeyOnUserRef,
+  buildCreateAnswerKeyOnIssuesRef,
   buildFetchLikesAnswer,
   buildLikeAnswer,
   buildDislikeAnswer,
@@ -14,6 +15,7 @@ import {
   CREATE_ANSWER_ERROR,
   CREATE_ANSWER_SUCCESS,
   CREATE_ANSWER_KEY_ON_USER_REF_SUCCESS,
+  CREATE_ANSWER_KEY_ON_ISSUES_REF_SUCCESS,
   FILTER_ANSWERS,
   FETCH_LIKES_ANSWER_SUCCESS,
   FETCH_APPS_FROM_API_SUCCESS,
@@ -25,6 +27,8 @@ import {
 } from './action-types';
 
 
+
+// Fetch Answers
 export const fetchAnswers = (issueKey) => {
   const fetchAnswers = buildFetchAnswers(issueKey);
   return dispatch => fetchAnswers(dispatch)
@@ -38,6 +42,8 @@ export const fetchAnswersSuccess = (issueKey, data) => ({
   }
 });
 
+
+// Fetch Apps from API
 export const fetchAppsFromApi = (searchTerm) => dispatch => {
   axios(buildFetchAppsfromApi(searchTerm))
     .then(response => dispatch(fetchAppsFromApiSuccess(response.data)))
@@ -49,6 +55,8 @@ export const fetchAppsFromApiSuccess = (data) => ({
   payload: data
 });
 
+
+// Answer Actions
 export const createAnswer = (issueKey, appName, appData, body, userInfo) => {
   const createBuildCreateAnswer = buildCreateAnswer(issueKey, appName, appData, body, userInfo);
   return dispatch => createBuildCreateAnswer(dispatch)
@@ -58,8 +66,17 @@ export const createAnswerSuccess = () => ({ //TODO: REINTEGRATE THE APPS COMING 
   type: CREATE_ANSWER_SUCCESS
 });
 
-export const createAnswerKeyOnUserRef = (issueKey, newAnswerKey) => {
-  const createBuildCreateAnswerKeyOnUserRef = buildCreateAnswerKeyOnUserRef(issueKey, newAnswerKey);
+export const createAnswerKeyOnIssuesRef = (issueKey, newAnswerKey) => {
+  const createBuildCreateAnswerKeyOnIssuesRef = buildCreateAnswerKeyOnIssuesRef(issueKey, newAnswerKey);
+  return dispatch => createBuildCreateAnswerKeyOnIssuesRef(dispatch)
+};
+
+export const createAnswerKeyOnIssuesRefSuccess = () => ({
+  type: CREATE_ANSWER_KEY_ON_ISSUES_REF_SUCCESS
+});
+
+export const createAnswerKeyOnUserRef = (newAnswerKey, userId) => {
+  const createBuildCreateAnswerKeyOnUserRef = buildCreateAnswerKeyOnUserRef(newAnswerKey, userId);
   return dispatch => createBuildCreateAnswerKeyOnUserRef(dispatch)
 };
 
@@ -67,6 +84,28 @@ export const createAnswerKeyOnUserRefSuccess = () => ({
   type: CREATE_ANSWER_KEY_ON_USER_REF_SUCCESS
 });
 
+export function createAnswerError(error) {
+  return {
+    type: CREATE_ANSWER_ERROR,
+    payload: error
+  };
+}
+
+export function filterAnswers(filterType) {
+  return {
+    type: FILTER_ANSWERS,
+    payload: {filterType}
+  };
+}
+
+export function unloadAnswers() {
+  return {
+    type: UNLOAD_ANSWERS_SUCCESS
+  };
+}
+
+
+// Like/Dislike Actions
 export const fetchLikesAnswer = (answerKey, issueKey) => {
   const createBuildFetchLikesAnswer = buildFetchLikesAnswer(answerKey, issueKey);
   return dispatch => createBuildFetchLikesAnswer(dispatch)
@@ -99,6 +138,7 @@ export const dislikeAnswerSuccess = () => ({
 });
 
 
+// App Data Actions
 export const fetchAppDataAnswer = (answerKey, appName) => {
   const createBuildfetchAppDataAnswer = buildfetchAppDataAnswer(answerKey, appName);
   return dispatch => createBuildfetchAppDataAnswer(dispatch)
@@ -113,23 +153,3 @@ export const fetchAppDataAnswerSuccess = (answerKey, appData) => {
     }
   };
 };
-
-export function createAnswerError(error) {
-  return {
-    type: CREATE_ANSWER_ERROR,
-    payload: error
-  };
-}
-
-export function filterAnswers(filterType) {
-  return {
-    type: FILTER_ANSWERS,
-    payload: {filterType}
-  };
-}
-
-export function unloadAnswers() {
-  return {
-    type: UNLOAD_ANSWERS_SUCCESS
-  };
-}

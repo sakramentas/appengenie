@@ -5,6 +5,7 @@ import {
 import {
   CREATE_ANSWER_SUCCESS,
   CREATE_ANSWER_KEY_ON_USER_REF_SUCCESS,
+  CREATE_ANSWER_KEY_ON_ISSUES_REF_SUCCESS,
   FILTER_ANSWERS,
   FETCH_LIKES_ANSWER_SUCCESS,
   FETCH_APPS_FROM_API_SUCCESS,
@@ -15,14 +16,7 @@ import {
   FETCH_APP_DATA_ANSWER_SUCCESS
 } from './action-types';
 
-
-export const AnswersState = {
-  filter: '',
-  list: {},
-  appsFromApi: {}
-};
-
-
+// Answers reducer
 export function answersReducer(state = {}, {payload, type}) {
   switch (type) {
     case CREATE_ANSWER_SUCCESS:
@@ -80,6 +74,9 @@ export function answersReducer(state = {}, {payload, type}) {
       return state;
 
     case CREATE_ANSWER_KEY_ON_USER_REF_SUCCESS:
+      return state;
+
+    case CREATE_ANSWER_KEY_ON_ISSUES_REF_SUCCESS:
       return state;
 
     case UNLOAD_ANSWERS_SUCCESS:

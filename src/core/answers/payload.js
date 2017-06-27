@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 
+// Firebase payloads for Answers
 export const buildCreateAnswerDataPayload = (newAnswerKey, appName, body) => ({
   key: newAnswerKey,
   appName,

@@ -1,5 +1,6 @@
 import {createSelector} from 'reselect';
 
+// Answer selectors
 export function getAnswers(state) {
   return state.answers;
 }
@@ -22,7 +23,7 @@ export function getDeletedAnswer(state) {
 
 
 //=====================================
-//  MEMOIZED SELECTORS
+//  MEMOIZED SELECTORS RESELECT
 //-------------------------------------
 //TODO: create different types of filter, such as selected answer and by keyword
 export const getVisibleAnswers = createSelector(

@@ -6,6 +6,8 @@ import {
   createAnswerSuccess,
   createAnswerKeyOnUserRef,
   createAnswerKeyOnUserRefSuccess,
+  createAnswerKeyOnIssuesRef,
+  createAnswerKeyOnIssuesRefSuccess,
   likeAnswerSuccess,
   dislikeAnswerSuccess,
   fetchAppDataAnswerSuccess
@@ -15,7 +17,7 @@ import {
   buildCreateAnswerUserPayload
 } from './payload'
 
-
+// Fetch all answers from Firebase
 export const buildFetchAnswers = issueKey => {
   return dispatch => {
     firebaseDb.ref(`answers`).child(issueKey)
@@ -29,6 +31,7 @@ export const buildFetchAnswers = issueKey => {
   }
 };
 
+// Create a new answer on Firebase
 export const buildCreateAnswer = (issueKey, appName, appData, body, userInfo) => {
   return dispatch => {
     try {
@@ -38,7 +41,8 @@ export const buildCreateAnswer = (issueKey, appName, appData, body, userInfo) =>
       answerRef.child('user').update(buildCreateAnswerUserPayload(userInfo));
       firebaseDb.ref(`apps/${appData.title}`).update(appData);
       dispatch(createAnswerSuccess());
-      createAnswerKeyOnUserRef(issueKey, newAnswerKey)
+      dispatch(createAnswerKeyOnIssuesRef(issueKey, newAnswerKey));
+      dispatch(createAnswerKeyOnUserRef(newAnswerKey, userInfo.uid));
     }
     catch (err) {
       console.error(err)
@@ -46,13 +50,23 @@ export const buildCreateAnswer = (issueKey, appName, appData, body, userInfo) =>
   };
 };
 
-export const buildCreateAnswerKeyOnUserRef = (issueKey, newAnswerKey) => {
+// Create a answer reference on Issues ref
+export const buildCreateAnswerKeyOnIssuesRef = (issueKey, newAnswerKey) => {
   return dispatch => {
-    firebaseDb.ref(`issues/${issueKey}`).child('answers').update({[newAnswerKey]: true})
-    dispatch(createAnswerKeyOnUserRefSuccess())
+    firebaseDb.ref(`issues/${issueKey}`).child('answers').update({[newAnswerKey]: true});
+    dispatch(createAnswerKeyOnIssuesRefSuccess());
   }
 };
 
+// Create a answer reference on User ref
+export const buildCreateAnswerKeyOnUserRef = (answerKey, userId) => {
+  return dispatch => {
+    firebaseDb.ref(`users/${userId}/answers`).update({[answerKey]: true});
+    dispatch(createAnswerKeyOnUserRefSuccess());
+  }
+};
+
+// Fetch the likes in an answer
 export const buildFetchLikesAnswer = (answerKey, issueKey) => {
   return dispatch => {
     firebaseDb.ref(`answers/${issueKey}`).child(answerKey)
@@ -67,6 +81,7 @@ export const buildFetchLikesAnswer = (answerKey, issueKey) => {
   }
 };
 
+// Like an answer
 export const buildLikeAnswer = (answerKey, issueKey) => {
   return dispatch => {
     let currentUserUid = firebaseAuth.currentUser.uid;
@@ -76,6 +91,7 @@ export const buildLikeAnswer = (answerKey, issueKey) => {
   }
 };
 
+// Dislike an answer
 export const buildDislikeAnswer = (answerKey, issueKey) => {
   return dispatch => {
     let currentUserUid = firebaseAuth.currentUser.uid;
@@ -85,6 +101,7 @@ export const buildDislikeAnswer = (answerKey, issueKey) => {
   }
 };
 
+// Fetch App data from Apps ref on Firebase
 export const buildfetchAppDataAnswer = (answerKey, appName) => {
   return dispatch => {
     firebaseDb.ref(`apps`).child(appName)
