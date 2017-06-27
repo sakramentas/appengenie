@@ -10,7 +10,7 @@ import {
 } from './actions'
 import get from 'lodash/get';
 
-
+// Fetch all Issues from Firebase
 export const buildFetchIssue = issueKey => {
   return dispatch => {
     firebaseDb.ref(`issues`).child(issueKey)
@@ -24,6 +24,7 @@ export const buildFetchIssue = issueKey => {
   }
 };
 
+// Fetch AppRank from Firebase - It's getting the first app on the list for now, need to implement a logic later
 export const buildFetchIssueAppRank = issueKey => {
   return dispatch => {
     firebaseDb.ref(`answers/${issueKey}`)
@@ -39,6 +40,7 @@ export const buildFetchIssueAppRank = issueKey => {
   }
 };
 
+// Fetch Likes on question
 export const buildFetchLikesQuestion = (issueKey) => {
   return dispatch => {
     firebaseDb.ref(`issues/${issueKey}`)
@@ -53,6 +55,7 @@ export const buildFetchLikesQuestion = (issueKey) => {
   }
 };
 
+// Like a question
 export const buildLikeQuestion = (issueKey) => {
   return dispatch => {
     const currentUserUid = firebaseAuth.currentUser.uid;
@@ -62,6 +65,7 @@ export const buildLikeQuestion = (issueKey) => {
   }
 };
 
+// Dislike a question
 export const buildDislikeQuestion = (issueKey) => {
   return dispatch => {
     const currentUserUid = firebaseAuth.currentUser.uid;
@@ -71,6 +75,7 @@ export const buildDislikeQuestion = (issueKey) => {
   }
 };
 
+// Fetch the app data from the app rank to show on the issue list
 export const buildfetchAppDataIssueAppRank = (issueKey, appName) => {
   return dispatch => {
     firebaseDb.ref(`apps`).child(appName)

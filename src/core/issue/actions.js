@@ -16,6 +16,8 @@ import {
   buildfetchAppDataIssueAppRank
 } from './firebasebuild';
 
+
+// Issue actions
 export const fetchIssue = issueKey => {
   const getIssue = buildFetchIssue(issueKey);
   return dispatch => getIssue(dispatch)
@@ -41,6 +43,7 @@ export const unloadIssue = () => ({
 });
 
 
+// Like actions
 export const fetchLikesQuestion = (issueKey) => {
   const createBuildFetchLikesQuestion = buildFetchLikesQuestion(issueKey);
   return dispatch => createBuildFetchLikesQuestion(dispatch)
@@ -71,6 +74,7 @@ export const dislikeQuestionSuccess = () => ({
   type: DISLIKE_QUESTION_SUCCESS
 });
 
+// App data actions
 export const fetchAppDataIssueAppRank = (issueKey, appName) => {
   console.log('CALLED fetchAppDataIssueAppRank', issueKey, appName)
   const createBuildFetchAppDataIssueAppRank = buildfetchAppDataIssueAppRank(issueKey, appName);
