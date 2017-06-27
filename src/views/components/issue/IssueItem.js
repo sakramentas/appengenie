@@ -3,10 +3,9 @@ import {connect} from 'react-redux';
 import {issuesActions} from 'src/core/issues';
 import {userActions} from 'src/core/user';
 import {Link} from 'react-router';
-import LikeBtn from 'material-ui/svg-icons/action/favorite';
-import {red500} from 'material-ui/styles/colors';
 import {dateSimple} from 'src/util/date-formatter';
 import {get, size} from 'lodash';
+import {Icon} from 'semantic-ui-react';
 
 
 class IssueItem extends Component {
@@ -19,7 +18,7 @@ class IssueItem extends Component {
   componentWillMount() {
     let {getMostRecommendedAppIcon, fetchUserInfo, issue, fetchLikesQuestion} = this.props;
     issue.key ? getMostRecommendedAppIcon(issue.key) : null;
-    // issue.userId ? fetchUserInfo(issue.userId, issue.key) : null;
+    issue.userId ? fetchUserInfo(issue.userId, issue.key) : null;
     issue.likes ? fetchLikesQuestion(issue.key) : null;
   }
 
@@ -28,7 +27,7 @@ class IssueItem extends Component {
   }
 
   render() {
-    const {issue, userInfo, likesOnQuestion, mostRecommendedAppIcon} = this.props;
+    const {issue, userInfo, likesOnQuestion, answersCounter, mostRecommendedAppIcon} = this.props;
     return (
       <Link to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
         <div className="issue-item aeg-card1 align-top row">
@@ -43,8 +42,14 @@ class IssueItem extends Component {
             </div>
             <div className="info-icons small-12 column">
               <div className="like-icon align-middle row align-left aeg-m-top">
-                <LikeBtn color={red500}/>
-                <span className="">{size(likesOnQuestion)} likes</span>
+                <div className="small-4 column info-icons--likes">
+                  <Icon name="thumbs up" color="red" />
+                  <span className="">{size(likesOnQuestion)}</span>
+                </div>
+                <div className="small-4 column info-icons--answers">
+                  <Icon name='comments' color="blue" />
+                  <span className="">{size(answersCounter)}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -66,9 +71,10 @@ class IssueItem extends Component {
 const appIconDefault = 'https://km.support.apple.com/resources/sites/APPLE/content/live/IMAGES/0/IM282/en_US/mac-app-store-480.png';
 const mapStateToProps = (state, ownProps) => ({
   mostRecommendedAppIcon: get(state, `issues.list.${ownProps.issue.key}.mostRecommendedAppIcon`, appIconDefault),
-  userInfo: get(state, `issues.list.${ownProps.issue.key}.user`, {}),
-  // userInfo: get(state, `user.${ownProps.issue.key}`, {}), //TODO: FIND SOLUTION LATER - GET USERS USING THIS METHOD
+  // userInfo: get(state, `issues.list.${ownProps.issue.key}.user`, {}),
+  userInfo: get(state, `user.${ownProps.issue.key}`, {}),
   likesOnQuestion: get(state, `issues.list.${ownProps.issue.key}.likes`, {}),
+  answersCounter: get(state, `issues.list.${ownProps.issue.key}.answers`, {}),
 });
 
 const mapDispatchToProps = {

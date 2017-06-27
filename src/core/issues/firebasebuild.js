@@ -10,7 +10,7 @@ import {
   buildCreateIssueDataPayload,
   buildCreateIssueAnswerPayload
 } from './payload';
-import get from 'lodash/get';
+// import {get, has} from 'lodash';
 
 
 export const buildFetchIssues = () => {
@@ -33,8 +33,21 @@ export const buildGetMostRecommendedAppIcon = issueKey => {
         let snapshot = snap.val();
         if (snapshot) {
           const snapshotFinal = Object.keys(snapshot).map(e => snapshot[e]);
-          const appIcon = snapshotFinal[0].appData ? snapshotFinal[0].appData.icon_72 : null;
-          dispatch(getMostRecommendedAppIconSuccess(issueKey, appIcon));
+          if (snapshotFinal[0].appData) {
+            const appIcon = snapshotFinal[0].appData.icon_72;
+            dispatch(getMostRecommendedAppIconSuccess(issueKey, appIcon));
+          } else {
+            const appName = snapshotFinal[0].appName;
+            firebaseDb.ref(`apps/${appName}`)
+              .once('value', snap => {
+                const snapshot = snap.val();
+                if (snapshot) {
+                  const appIcon = snapshot.icon_72;
+                  dispatch(getMostRecommendedAppIconSuccess(issueKey, appIcon));
+                }
+              });
+          }
+
         }
       })
       .catch(err => console.error(err))
@@ -60,7 +73,7 @@ export const buildFetchLikesQuestion = (issueKey) => {
         const snapshot = snap.val();
         // const likesObj = get(snapshot, 'likes', {});
         // if (likesObj) {
-          dispatch(fetchLikesQuestionSuccess(issueKey, snapshot));
+        dispatch(fetchLikesQuestionSuccess(issueKey, snapshot));
         // }
       })
       .catch(err => console.error(err))

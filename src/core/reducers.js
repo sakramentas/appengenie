@@ -14,7 +14,7 @@ export default combineReducers({
   issues: issuesReducer,
   issue: issueReducer,
   answers: answersReducer,
-  likes: likesReducer,
+  // likes: likesReducer,
   user: userReducer,
 });
 

@@ -5,14 +5,16 @@
 .issue-item {
   .info-icons {
     padding-top: 5px;
-    .like-icon {
-      svg {
-        width: 16px !important;
-        height: 16px !important;
-      }
+    &--likes {
       span {
         font-size: 14px;
         color: red;
+      }
+    }
+    &--answers {
+      span {
+        font-size: 14px;
+        color: #2185D0;
       }
     }
   }
@@ -21,6 +23,8 @@
       font-size: 14px;
       font-weight: 500;
       color: $primary-color;
+      line-height: 17px;
+      padding-bottom: 5px;
     }
     &--user {
       font-size: 12px;
