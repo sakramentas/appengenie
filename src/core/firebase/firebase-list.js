@@ -1,6 +1,7 @@
 import { firebaseDb } from './firebase';
 
-
+// A Class to deal with all the Firebase methods. I'm removing the dependency on this class
+// creating a firebasebuild file for all the core components.
 export class FirebaseList {
   constructor(actions, modelClass, path = null) {
     this._actions = actions;

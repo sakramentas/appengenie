@@ -1,6 +1,7 @@
 import {escapeRegexCharacters} from 'src/helpers'
 import toArray from 'lodash/toArray'
 
+// Build suggestions for the Search input 'I wish there was an app to...'
 export const getSuggestions = (value, obj) => {
   const escapedValue = escapeRegexCharacters(value.trim());
   if (escapedValue === '') {

@@ -8,7 +8,7 @@ import {
   SIGN_OUT_SUCCESS
 } from './action-types';
 
-
+// Auth actions - Need to move all the Firebase functions to a firebasebuild file
 const authenticate = provider => {
   return dispatch => {
     firebaseAuth.signInWithPopup(provider)

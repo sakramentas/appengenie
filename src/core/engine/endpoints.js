@@ -1,4 +1,4 @@
-
+// Android store API Endpoint builder
 export const buildFetchAppsfromApi = (searchTerm) => ({
   url: 'https://data.42matters.com/api/v2.0/android/apps/search.json',
   params: {
