@@ -1,0 +1,17 @@
+//=========================================================
+//  Profile Page
+//---------------------------------------------------------
+
+.profile-page {
+  img {
+    margin: 0 auto;
+  }
+
+  .label {
+    background: none !important;
+  }
+
+  &-stats {
+    margin-top: 25px;
+  }
+}
