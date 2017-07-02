@@ -30,7 +30,7 @@ class IssueItem extends Component {
     const {issue, userInfo, likesOnQuestion, answersCounter, mostRecommendedAppIcon} = this.props;
     return (
       <Link to={{pathname: '/issues/page', query: {id: `${issue.key}`}}}>
-        <div className="issue-item aeg-card1 align-top row">
+        <div className="issue-item aeg-card1 align-top row small-collapse">
           <div className="small-9 column">
             <div className="issue-item-left small-9 column">
             <span className="issue-item-left--bodyText row">
@@ -43,23 +43,19 @@ class IssueItem extends Component {
             <div className="info-icons small-12 column">
               <div className="like-icon align-middle row align-left aeg-m-top">
                 <div className="small-4 column info-icons--likes">
-                  <Icon name="thumbs up" color="red" />
+                  <Icon name="thumbs up" color="red"/>
                   <span className="">{size(likesOnQuestion)}</span>
                 </div>
                 <div className="small-4 column info-icons--answers">
-                  <Icon name='comments' color="blue" />
+                  <Icon name='comments' color="blue"/>
                   <span className="">{size(answersCounter)}</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="small-3 column">
-            <div className="issue-item-right">
-              <div className="row align-center">
-                <div className="small-10 column">
-                  <img src={mostRecommendedAppIcon} alt="Icon"/>
-                </div>
-              </div>
+            <div className="issue-item-right row align-center">
+              <img src={mostRecommendedAppIcon} alt="Icon" className="issue-item-mostRecommendedAppIcon"/>
             </div>
           </div>
         </div>

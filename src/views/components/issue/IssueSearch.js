@@ -137,7 +137,7 @@ class IssueSearch extends Component {
       onChange: this.onChange
     };
     return (
-      <div className="row">
+      <div>
         {showSearchInput ?
           <div className="issue-search row align-center align-middle">
             <h3>I <b>wish</b> there was an app to...</h3>
