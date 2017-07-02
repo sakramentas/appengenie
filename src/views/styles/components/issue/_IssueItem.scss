@@ -30,10 +30,8 @@
       font-size: 12px;
     }
   }
-  &-right {
-    > img {
-      max-width: 32px;
-      max-height: 32px;
-    }
+  &-mostRecommendedAppIcon {
+    max-width: 48px;
+    max-height: 48px;
   }
 }

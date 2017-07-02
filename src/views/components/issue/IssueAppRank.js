@@ -14,21 +14,32 @@ class IssueAppRank extends Component {
 
   render() {
     const {mostRecommendedApp, genieData} = this.props;
+    console.log('most recommended ', mostRecommendedApp)
     // let mostRecommendedAppData = mostRecommendedApp && mostRecommendedApp.appData;
     return (
       <div>
         {mostRecommendedApp ?
           <div className='appRank-box aeg-card1'>
-            <div className='appRank-box-mostLiked'>
-              <span className="appRank-box-mostLiked--title">Most Recommended App</span>
-              <h4 className="appRank-box-mostLiked--title subheader">Genie: {genieData.displayName}</h4>
-              <img src={mostRecommendedApp.icon_72} className=""/>
-              <span className="appRank-box-mostLiked--app aeg-block">{mostRecommendedApp.title}</span>
-              <div className="appRank-box-mostLiked--download">
-                <a href={`https://www.apple.com/ie/search/${mostRecommendedApp.title}?src=serp`} target="_blank"><img
-                  src={appStoreBadge} className="appStore-badge"/></a>
-                <a href={mostRecommendedApp.market_url} target="_blank"><img
-                  src={playStoreBadge} className="playStore-badge"/></a>
+            <div className="bg-blur-img" style={{backgroundImage: `url(${mostRecommendedApp.icon_72})`}}></div>
+            <div className='appRank-box-mostLiked row'>
+              <div className="small-9 column align-left">
+                <span className="appRank-box-mostLiked--app aeg-block">{mostRecommendedApp.title}</span>
+                <span className="subheader">{mostRecommendedApp.short_desc}</span>
+              </div>
+              <div className="small-3 column">
+                <img src={mostRecommendedApp.icon_72} className=""/>
+              </div>
+              {/*<span className="appRank-box-mostLiked--title">Most Recommended App</span>*/}
+
+              <div className="appRank-box-mostLiked--download row align-middle">
+                <div className="small-6 column">
+                  <a href={`https://www.apple.com/ie/search/${mostRecommendedApp.title}?src=serp`} target="_blank"><img
+                    src={appStoreBadge} className="appStore-badge"/></a>
+                </div>
+                <div className="small-6 column">
+                  <a href={mostRecommendedApp.market_url} target="_blank"><img
+                    src={playStoreBadge} className="playStore-badge"/></a>
+                </div>
               </div>
             </div>
           </div>
@@ -38,9 +49,7 @@ class IssueAppRank extends Component {
   }
 }
 
-const apprankStyles = {
-  marginTop: '10px'
-};
+// const apprankStyles = {background: `url(${mostRecommendedApp.icon_72})`};
 
 const mapStateToProps = state => ({
   mostRecommendedApp: get(state, 'issue.mostRecommendedApp', {}),

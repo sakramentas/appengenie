@@ -5,23 +5,42 @@
 .appRank-box {
   margin-top: 15px;
   padding: 16px;
+  position: relative;
+  overflow: hidden;
+  .bg-blur-img {
+    position: absolute;
+    width: 100%;
+    display: block;
+    height: 100%;
+    top: 0;
+    background-repeat: no-repeat;
+    left: 0;
+    z-index: 1;
+    filter: blur(18px);
+    background-size: 112%;
+    background-position: -27px -124px;
+    background-image: url(https://lh3.googleusercontent.com/QkkvNOSkcSt3iHvBj4EilzYsJJvwbkY1t6Mwe-PlmTK2C9vtt8Rx3OFa4RqHY5Dqszcg=w72);
+  }
   .appRank-box-mostLiked {
-    text-align: center;
+    z-index: 99;
+    position: relative;
     &--title {
-      font-size: 15px;
+      font-size: 14px;
       display: block;
     }
     &--app {
-      font-size: 25px;
+      font-size: 18px;
+      text-align: left;
       color: $primary-color;
     }
     &--download {
       img {
-        width: 45%;
+        width: auto;
+        height: 38px;
         display: inline-block;
       }
       .playStore-badge {
-        width: 51%;
+        height: 58px;
       }
     }
   }

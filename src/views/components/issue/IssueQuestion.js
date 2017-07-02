@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Card} from 'material-ui/Card';
-import {Image} from 'semantic-ui-react'
+import {Link} from 'react-router';
+import {Image} from 'semantic-ui-react';
 import {dateSimple} from 'src/util/date-formatter';
 import {userActions} from 'src/core/user';
 import {issueActions} from 'src/core/issue';
@@ -34,7 +35,9 @@ class IssueQuestion extends Component {
           <div className="issue-page_question__bottom row align-middle">
             <h6 className="subheader small-2 column aeg-p-color">Wisher</h6>
             <div className="issue-page_question__avatar small-3 column text-center small-collapse">
-              <Image src={userInfo && userInfo.userImg} alt="avatar" size='medium' shape='circular'/>
+              <Link to={{pathname: '/users/profile', query: {id: `${userInfo.uid}`}}}>
+                <Image src={userInfo && userInfo.userImg} alt="avatar" size='medium' shape='circular'/>
+              </Link>
             </div>
             <div className="issue-page_question__userName small-7 column">
               <h3>{userInfo && userInfo.displayName}</h3>
@@ -48,12 +51,13 @@ class IssueQuestion extends Component {
       </Card>
     )
   }
-};
+}
+;
 
 const mapStateToProps = (state, ownProps) => ({
   likes: get(state, `issue.likes`, {}),
-  userInfo: get(state, `user.${ownProps.issue.key}`),
-  youLiked: has(state, `issue.likes.${state.auth.id}`)
+  userInfo: get(state, `user.${ownProps.issue.key}`, {}),
+  youLiked: has(state, `issue.likes.${state.auth.id}`, false)
 });
 
 const mapDispatchToProps = {
