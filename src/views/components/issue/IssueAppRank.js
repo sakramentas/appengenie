@@ -31,14 +31,17 @@ class IssueAppRank extends Component {
               </div>
               {/*<span className="appRank-box-mostLiked--title">Most Recommended App</span>*/}
 
-              <div className="appRank-box-mostLiked--download row align-middle">
-                <div className="small-6 column">
-                  <a href={`https://www.apple.com/ie/search/${mostRecommendedApp.title}?src=serp`} target="_blank"><img
-                    src={appStoreBadge} className="appStore-badge"/></a>
-                </div>
-                <div className="small-6 column">
-                  <a href={mostRecommendedApp.market_url} target="_blank"><img
-                    src={playStoreBadge} className="playStore-badge"/></a>
+              <div className="appRank-box-mostLiked--download small-12 column">
+                <div className="row align-middle aeg-m-top">
+                  <div className="small-6 column">
+                    <a href={`https://www.apple.com/ie/search/${mostRecommendedApp.title}?src=serp`}
+                       target="_blank"><img
+                      src={appStoreBadge} className="appStore-badge"/></a>
+                  </div>
+                  <div className="small-6 column">
+                    <a href={mostRecommendedApp.market_url} target="_blank"><img
+                      src={playStoreBadge} className="playStore-badge"/></a>
+                  </div>
                 </div>
               </div>
             </div>

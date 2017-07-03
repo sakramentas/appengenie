@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import { Grid, Image, Label, Segment } from 'semantic-ui-react'
 import {answersActions} from 'src/core/answers';
 import {LikeBtn} from 'src/views/components/actions/LikeBtn';
 import {get, has, size} from 'lodash';
@@ -23,15 +24,15 @@ class IssueAnswerItem extends Component {
   render() {
     let {answer, likes, youLiked, appData} = this.props;
     return (
-      <div className="issue-box__answerList aeg-card1">
-        <CardHeader title={`${answer.appName || ''} - ${answer.body}`}
-                    avatar={appData.icon_72}
-                    subtitle={`by ${answer.user.displayName}`}/>
-        <CardActions>
+      <div>
+        <Segment padded className="issue-box__answerList aeg-card1">
+          <Label attached='top'><img src={appData.icon_72} className="bg-blur-img"/><img src={appData.icon_72} className="app-icon" /> {answer.appName} </Label>
+          <span>{answer.body}</span> <br/>
           <LikeBtn handleLikeAnswer={this.handleLikeAnswer.bind(this)}
                    likesQt={size(likes)}
                    youLiked={youLiked}/>
-        </CardActions>
+        </Segment>
+
       </div>
     )
   }
