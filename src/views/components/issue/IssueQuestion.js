@@ -11,6 +11,11 @@ import {get, has, size} from 'lodash';
 
 class IssueQuestion extends Component {
 
+  constructor(props) {
+    super(props);
+    this.handleLikeQuestion = this.handleLikeQuestion.bind(this);
+  }
+
   componentWillMount() {
     const {issue, fetchUserInfo, fetchLikesQuestion} = this.props;
     // issue.userId ? fetchUserInfo(issue.userId, issue.key) : null;
@@ -40,7 +45,10 @@ class IssueQuestion extends Component {
             {/*</Link>*/}
             {/*</div>*/}
             <Header as='h4'>
-              <Image shape='circular' src={userInfo && userInfo.userImg}/>
+              <Image
+                shape='circular'
+                src={userInfo && userInfo.userImg}
+              />
               <Header.Content>
                 {userInfo && userInfo.displayName}
                 <Header.Subheader>
@@ -51,9 +59,11 @@ class IssueQuestion extends Component {
                 </Header.Subheader>
               </Header.Content>
             </Header>
-            <LikeBtn handleLikeAnswer={this.handleLikeQuestion.bind(this)}
-                     likesQt={size(likes)}
-                     youLiked={youLiked}/>
+            <LikeBtn
+              handleLikeAnswer={this.handleLikeQuestion}
+              likesQt={size(likes)}
+              youLiked={youLiked}
+            />
           </div>
 
         </div>

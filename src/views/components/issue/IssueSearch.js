@@ -69,8 +69,10 @@ class IssueSearch extends Component {
     let {value, suggestions, showAlert} = this.state;
     if (value !== '' && suggestions.length <= 0 && showAlert) {
       return (
-        <AlertShort text={value}
-                    openIssueForm={this.openIssueForm}/>
+        <AlertShort
+          text={value}
+          openIssueForm={this.openIssueForm}
+        />
       )
     }
   }
@@ -149,23 +151,28 @@ class IssueSearch extends Component {
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
-              ref="searchInput"/>
+              ref="searchInput"
+            />
           </div>
           : null
         }
         {this.suggestCreateIssue()}
         {this.state.issueFormOpened === true ?
-          <IssueCreate createIssue={this.props.createIssue}
-                       closeIssueForm={this.closeIssueForm}
-                       handleOpenSnackbar={this.handleOpenSnackbar}
-                       title={this.state.value}/>
+          <IssueCreate
+            createIssue={this.props.createIssue}
+            closeIssueForm={this.closeIssueForm}
+            handleOpenSnackbar={this.handleOpenSnackbar}
+            title={this.state.value}
+          />
           : null
         }
-        <Snackbar open={openSnackbar}
-                  message={`Wish created with success`}
-                  action="Open"
-                  autoHideDuration={4000}
-                  onRequestClose={this.handleRequestClose}/>
+        <Snackbar
+          open={openSnackbar}
+          message={`Wish created with success`}
+          action="Open"
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }

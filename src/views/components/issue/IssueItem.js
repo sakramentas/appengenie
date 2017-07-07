@@ -47,7 +47,10 @@ class IssueItem extends Component {
                   <span className="">{size(likesOnQuestion)}</span>
                 </div>
                 <div className="small-4 column info-icons--answers">
-                  <Icon name='comments' color="blue"/>
+                  <Icon
+                    name='comments'
+                    color="blue"
+                  />
                   <span className="">{size(answersCounter)}</span>
                 </div>
               </div>
@@ -55,7 +58,11 @@ class IssueItem extends Component {
           </div>
           <div className="small-3 column">
             <div className="issue-item-right row align-center">
-              <img src={mostRecommendedAppIcon} alt="Icon" className="issue-item-mostRecommendedAppIcon"/>
+              <img
+                src={mostRecommendedAppIcon}
+                alt="Icon"
+                className="issue-item-mostRecommendedAppIcon"
+              />
             </div>
           </div>
         </div>

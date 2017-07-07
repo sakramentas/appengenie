@@ -81,7 +81,10 @@ class IssueAnswerForm extends Component {
             value={this.state.body}
           />
           <div className="issue-create__cta aeg-m-top">
-            <Button onClick={this.onSubmit} primary>Send</Button>
+            <Button
+              onClick={this.onSubmit}
+              primary
+            >Send</Button>
           </div>
       </div>
     );
