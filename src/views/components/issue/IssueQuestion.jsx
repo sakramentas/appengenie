@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Card} from 'material-ui/Card';
-import {Link} from 'react-router';
-import {Image, Header} from 'semantic-ui-react';
-import {dateSimple} from 'src/util/date-formatter';
-import {userActions} from 'src/core/user';
-import {issueActions} from 'src/core/issue';
-import {LikeBtn} from 'src/views/components/actions/LikeBtn';
-import {get, has, size} from 'lodash';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Card } from 'material-ui/Card';
+import { Image, Header } from 'semantic-ui-react';
+import { get, has, size } from 'lodash';
+import PropTypes from 'prop-types';
+import { dateSimple } from '../../../util/date-formatter';
+import { userActions } from '../../../core/user';
+import { issueActions } from '../../../core/issue';
+import LikeBtn from '../actions/LikeBtn';
 
 class IssueQuestion extends Component {
 
@@ -17,36 +17,37 @@ class IssueQuestion extends Component {
   }
 
   componentWillMount() {
-    const {issue, fetchUserInfo, fetchLikesQuestion} = this.props;
+    const { issue, fetchLikesQuestion } = this.props;
     // issue.userId ? fetchUserInfo(issue.userId, issue.key) : null;
     fetchLikesQuestion(issue.key);
   }
 
   handleLikeQuestion() {
-    const {issue, likeQuestion, dislikeQuestion, fetchLikesQuestion, youLiked} = this.props;
-    youLiked === true ? dislikeQuestion(issue.key) : likeQuestion(issue.key);
+    const { issue, likeQuestion, dislikeQuestion, fetchLikesQuestion, youLiked } = this.props;
+    if (youLiked) {
+      dislikeQuestion(issue.key);
+    } else {
+      likeQuestion(issue.key);
+    }
     fetchLikesQuestion(issue.key);
   }
 
   render() {
-    const {issue, userInfo, likes, youLiked} = this.props;
+    const { issue, userInfo, likes, youLiked } = this.props;
     return (
       <Card className="issue-page_question--card">
 
         <div className="issue-page_question row small-collapse align-center">
           <div className="issue-page_question__bodyText small-12 column">
-            <h2><span className="issue-page_question__wish--text">I wish there was an App to</span> {issue.body}</h2>
+            <h2>
+              <span className="issue-page_question__wish--text">I wish there was an App to</span>
+              {issue.body}
+            </h2>
           </div>
           <div className="issue-page_question__bottom small-12 column align-middle">
-
-            {/*<div className="issue-page_question__avatar small-3 column text-center small-collapse">*/}
-            {/*<Link to={{pathname: '/users/profile', query: {id: `${userInfo.uid}`}}}>*/}
-            {/*<Image src={userInfo && userInfo.userImg} alt="avatar" size='medium' shape='circular'/>*/}
-            {/*</Link>*/}
-            {/*</div>*/}
-            <Header as='h4'>
+            <Header as="h4">
               <Image
-                shape='circular'
+                shape="circular"
                 src={userInfo && userInfo.userImg}
               />
               <Header.Content>
@@ -68,14 +69,24 @@ class IssueQuestion extends Component {
 
         </div>
       </Card>
-    )
+    );
   }
+}
+
+IssueQuestion.propTypes = {
+  likes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  issue: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  userInfo: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  youLiked: PropTypes.bool.isRequired,
+  fetchLikesQuestion: PropTypes.func.isRequired,
+  likeQuestion: PropTypes.func.isRequired,
+  dislikeQuestion: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  likes: get(state, `issue.likes`, {}),
+  likes: get(state, 'issue.likes', {}),
   userInfo: get(state, `user.${ownProps.issue.key}`, {}),
-  youLiked: has(state, `issue.likes.${state.auth.id}`, false)
+  youLiked: has(state, `issue.likes.${state.auth.id}`, false),
 });
 
 const mapDispatchToProps = {
@@ -85,5 +96,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(IssueQuestion);

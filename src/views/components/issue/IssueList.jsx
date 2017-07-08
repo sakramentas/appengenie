@@ -1,24 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CircularProgress from 'material-ui/CircularProgress';
+import { map } from 'lodash';
 import IssueItem from './IssueItem';
-import {map, size} from 'lodash';
 
 class IssueList extends Component {
-  static propTypes = {
-    // issues: PropTypes.object.isRequired
-  };
 
   renderIssueItems() {
-    const {issues} = this.props;
-    return map(issues, (issue, index) => {
-      return (
-        <IssueItem
-          key={index}
-          issue={issue}
-        />
-      );
-    });
+    const { issues } = this.props;
+    return map(issues, (issue, index) => (
+      <IssueItem
+        key={index}
+        issue={issue}
+      />
+    ));
   }
 
   render() {
@@ -29,8 +23,13 @@ class IssueList extends Component {
           {this.renderIssueItems().reverse()}
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default IssueList
+IssueList.propTypes = {
+  issues: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+export default IssueList;
+

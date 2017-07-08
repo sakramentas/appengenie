@@ -1,33 +1,28 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {browserHistory} from 'react-router'
-import IssueCreate from './IssueCreate';
-import AlertShort from '../notification/alert-short';
+import { browserHistory } from 'react-router';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import Snackbar from 'material-ui/Snackbar';
-import {getSuggestions, getSuggestionValue} from 'src/core/engine/search';
+import { getSuggestions, getSuggestionValue } from '../../../core/engine/search';
+import IssueCreate from './IssueCreate';
+import AlertShort from '../notification/alert-short';
 
 
 class IssueSearch extends Component {
-  static propTypes = {
-    // issues: PropTypes.obj.isRequired,
-    // createIssue: PropTypes.func.isRequired
-  };
 
   constructor(props) {
     super(props);
 
-    this.onChange = ::this.onChange;
-    this.onKeyUp = ::this.onKeyUp;
-    this.onSuggestionsFetchRequested = ::this.onSuggestionsFetchRequested;
-    this.onSuggestionsClearRequested = ::this.onSuggestionsClearRequested;
-    this.onSuggestionSelected = ::this.onSuggestionSelected;
-    this.openIssueForm = ::this.openIssueForm;
-    this.closeIssueForm = ::this.closeIssueForm;
-    this.handleOpenSnackbar = ::this.handleOpenSnackbar;
-    this.handleRequestClose = ::this.handleRequestClose;
+    this.onChange = this.onChange.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+    this.openIssueForm = this.openIssueForm.bind(this);
+    this.closeIssueForm = this.closeIssueForm.bind(this);
+    this.handleOpenSnackbar = this.handleOpenSnackbar.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
 
     this.state = {
       value: '',
@@ -35,28 +30,28 @@ class IssueSearch extends Component {
       issueFormOpened: 'false',
       showAlert: true,
       showSearchInput: true,
-      openSnackbar: false
-    }
+      openSnackbar: false,
+    };
   }
 
-  onChange(event, {newValue}) {
+  onChange(event, { newValue }) {
     this.setState({
       value: newValue,
-      suggestions: this.state.suggestions === [] ? 'Create a new issue' : this.state.suggestions
+      suggestions: this.state.suggestions === [] ? 'Create a new issue' : this.state.suggestions,
     });
   }
 
-  onSuggestionsFetchRequested({value}) {
+  onSuggestionsFetchRequested({ value }) {
     this.setState({
-      suggestions: getSuggestions(value, this.props.issues)
+      suggestions: getSuggestions(value, this.props.issues),
     });
-  };
+  }
 
   onSuggestionsClearRequested() {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
-  };
+  }
 
   onKeyUp(event) {
     // Clear on esc
@@ -65,78 +60,81 @@ class IssueSearch extends Component {
     }
   }
 
+  onSuggestionSelected(event, { suggestion }) { // eslint-disable-line
+    browserHistory.push(`/issues/page?id=${suggestion.key}`);
+  }
+
   suggestCreateIssue() {
-    let {value, suggestions, showAlert} = this.state;
+    const { value, suggestions, showAlert } = this.state;
     if (value !== '' && suggestions.length <= 0 && showAlert) {
       return (
         <AlertShort
           text={value}
           openIssueForm={this.openIssueForm}
         />
-      )
+      );
     }
+    return null;
+  }
+
+  handleRequestClose() {
+    return this.setState({
+      openSnackbar: false,
+    });
   }
 
   openIssueForm() {
     this.setState({
       issueFormOpened: true,
       showAlert: false,
-      showSearchInput: false
-    })
+      showSearchInput: false,
+    });
   }
 
   closeIssueForm() {
     this.setState({
       issueFormOpened: false,
       showAlert: true,
-      showSearchInput: true
-    })
+      showSearchInput: true,
+    });
   }
 
   handleOpenSnackbar() {
     this.setState({
-      openSnackbar: true
-    })
+      openSnackbar: true,
+    });
   }
 
-  renderSuggestion(suggestion, {query}) {
-    const suggestionText = `${suggestion.body}`;
+  renderSuggestion(suggestion, { query }) { // eslint-disable-line
+    const suggestionText = suggestion.body;
     const matches = AutosuggestHighlightMatch(suggestionText, query);
     const parts = AutosuggestHighlightParse(suggestionText, matches);
 
     return (
-      <span className={'suggestion-content ' + suggestion.body}>
-      <span className="name">
-        {
-          parts.map((part, index) => {
-            const className = part.highlight ? 'highlight' : null;
-            return (
-              <span className={className}
-                    key={index}>{part.text}</span>
-            );
-          })
-        }
+      <span className={`suggestion-content ${suggestion.body}`}>
+        <span className="name">
+          {
+            parts.map((part, index) => {
+              const className = part.highlight ? 'highlight' : null;
+              return (
+                <span
+                  className={className}
+                  key={index} // eslint-disable-line react/no-array-index-key
+                >{part.text}</span>
+              );
+            })
+          }
+        </span>
       </span>
-    </span>
     );
   }
 
-  onSuggestionSelected(event, {suggestion}) {
-    return browserHistory.push(`/issues/page?id=${suggestion.key}`)
-  }
-
-  handleRequestClose() {
-    return this.setState({
-      openSnackbar: false
-    })
-  }
-
   render() {
-    const {value, suggestions, showSearchInput, openSnackbar} = this.state;
-    var inputProps = {
-      placeholder: "Type here",
-      value: value,
-      onChange: this.onChange
+    const { value, suggestions, showSearchInput, openSnackbar } = this.state;
+    const inputProps = {
+      value,
+      placeholder: 'Type here',
+      onChange: this.onChange,
     };
     return (
       <div>
@@ -151,7 +149,6 @@ class IssueSearch extends Component {
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
-              ref="searchInput"
             />
           </div>
           : null
@@ -168,7 +165,7 @@ class IssueSearch extends Component {
         }
         <Snackbar
           open={openSnackbar}
-          message={`Wish created with success`}
+          message={'Wish created with success'}
           action="Open"
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
@@ -177,5 +174,10 @@ class IssueSearch extends Component {
     );
   }
 }
+
+IssueSearch.propTypes = {
+  issues: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  createIssue: PropTypes.func.isRequired,
+};
 
 export default IssueSearch;

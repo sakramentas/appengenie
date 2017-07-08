@@ -37,7 +37,7 @@ module.exports = config;
 
 
 config.resolve = {
-  extensions: ['', '.js'],
+  extensions: ['', '.js', '.jsx'],
   modulesDirectories: ['node_modules'],
   root: path.resolve('.')
 };
