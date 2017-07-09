@@ -1,4 +1,4 @@
-import { firebaseAuth } from 'src/core/firebase';
+import { firebaseAuth } from '../firebase';
 import * as authActions from './actions';
 
 export { authActions };
@@ -7,16 +7,14 @@ export { authReducer } from './reducer';
 export { getAuth, isAuthenticated } from './selectors';
 
 
-export const initAuth = dispatch => {
-  return new Promise((resolve, reject) => {
-    const unsub = firebaseAuth.onAuthStateChanged(
-      user => {
-        dispatch(authActions.initAuth(user));
-        unsub();
-        resolve();
-      },
-      error => reject(error)
-    );
-  });
-}
+export const initAuth = dispatch => new Promise((resolve, reject) => {
+  const unsub = firebaseAuth.onAuthStateChanged(
+    (user) => {
+      dispatch(authActions.initAuth(user));
+      unsub();
+      resolve();
+    },
+    error => reject(error),
+  );
+});
 

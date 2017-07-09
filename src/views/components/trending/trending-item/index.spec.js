@@ -10,12 +10,12 @@ describe('TaskItem', () => {
 
 
   beforeEach(() => {
-    task = new Task({completed: true, title: 'test'});
+    task = new Task({ completed: true, title: 'test' });
 
     taskItem = createTestComponent(TaskItem, {
       task,
       deleteTask: sinon.spy(),
-      updateTask: sinon.spy()
+      updateTask: sinon.spy(),
     });
   });
 
@@ -66,7 +66,7 @@ describe('TaskItem', () => {
       it('should set #state.editing to `false`', () => {
         taskItem.state.editing = true;
         taskItem.saveTitle({
-          target: {value: ''}
+          target: { value: '' },
         });
         expect(taskItem.state.editing).toEqual(false);
       });
@@ -74,7 +74,7 @@ describe('TaskItem', () => {
       it('should call #taskActions.updateTask', () => {
         taskItem.state.editing = true;
         taskItem.saveTitle({
-          target: {value: 'foo'}
+          target: { value: 'foo' },
         });
         expect(taskItem.props.updateTask.callCount).toEqual(1);
         expect(taskItem.props.updateTask.args[0][0]).toEqual(task);
@@ -85,7 +85,7 @@ describe('TaskItem', () => {
     describe('#toggleStatus', () => {
       it('should call #taskActions.updateTask', () => {
         taskItem.toggleStatus({
-          target: {checked: true}
+          target: { checked: true },
         });
 
         expect(taskItem.props.updateTask.callCount).toEqual(1);
@@ -101,7 +101,7 @@ describe('TaskItem', () => {
       describe('with enter key', () => {
         it('should call #saveTitle with event object', () => {
           taskItem.saveTitle = sinon.spy();
-          taskItem.onKeyUp({keyCode: 13});
+          taskItem.onKeyUp({ keyCode: 13 });
           expect(taskItem.saveTitle.callCount).toEqual(1);
         });
       });
@@ -109,7 +109,7 @@ describe('TaskItem', () => {
       describe('with escape key', () => {
         it('should set #state.editing to `false`', () => {
           taskItem.state.editing = true;
-          taskItem.onKeyUp({keyCode: 27});
+          taskItem.onKeyUp({ keyCode: 27 });
           expect(taskItem.state.editing).toEqual(false);
         });
       });
@@ -121,7 +121,7 @@ describe('TaskItem', () => {
     describe('`click` event triggered on toggle-status button', () => {
       it('should call #toggleStatus()', () => {
         taskItem.toggleStatus = sinon.spy();
-        taskItem.setState({editing: true});
+        taskItem.setState({ editing: true });
         Simulate.click(taskItem.toggleStatusButton);
         expect(taskItem.toggleStatus.callCount).toEqual(1);
       });
@@ -130,14 +130,14 @@ describe('TaskItem', () => {
 
     describe('title', () => {
       it('should be rendered as a text input field when editing', () => {
-        taskItem.setState({editing: true});
-        let element = taskItem.titleInput;
+        taskItem.setState({ editing: true });
+        const element = taskItem.titleInput;
         expect(element.tagName).toEqual('INPUT');
       });
 
       it('should be rendered as text when not editing', () => {
-        taskItem.setState({editing: false});
-        let element = taskItem.titleText;
+        taskItem.setState({ editing: false });
+        const element = taskItem.titleText;
         expect(element.innerText).toEqual(task.title);
       });
     });
@@ -146,13 +146,13 @@ describe('TaskItem', () => {
     describe('`blur` event triggered on text field', () => {
       it('should call #saveTitle()', () => {
         taskItem.saveTitle = sinon.spy();
-        taskItem.setState({editing: true});
+        taskItem.setState({ editing: true });
         Simulate.blur(taskItem.titleInput);
         expect(taskItem.saveTitle.callCount).toEqual(1);
       });
 
       it('should toggle visibility of text field and task title', () => {
-        taskItem.setState({editing: true});
+        taskItem.setState({ editing: true });
         Simulate.blur(taskItem.titleInput);
         expect(taskItem.titleInput).toBe(null);
         expect(taskItem.titleText).toBeDefined();
@@ -163,14 +163,14 @@ describe('TaskItem', () => {
     describe('`keyup` event triggered with enter key on text field', () => {
       it('should call #saveTitle()', () => {
         taskItem.saveTitle = sinon.spy();
-        taskItem.setState({editing: true});
-        Simulate.keyUp(taskItem.titleInput, {keyCode: 13});
+        taskItem.setState({ editing: true });
+        Simulate.keyUp(taskItem.titleInput, { keyCode: 13 });
         expect(taskItem.saveTitle.callCount).toEqual(1);
       });
 
       it('should toggle visibility of text field and task title', () => {
-        taskItem.setState({editing: true});
-        Simulate.keyUp(taskItem.titleInput, {keyCode: 13});
+        taskItem.setState({ editing: true });
+        Simulate.keyUp(taskItem.titleInput, { keyCode: 13 });
         expect(taskItem.titleInput).toBe(null);
         expect(taskItem.titleText).toBeDefined();
       });
@@ -180,14 +180,14 @@ describe('TaskItem', () => {
     describe('`keyup` event triggered with escape key on text field', () => {
       it('should call #stopEditing()', () => {
         taskItem.stopEditing = sinon.spy();
-        taskItem.setState({editing: true});
-        Simulate.keyUp(taskItem.titleInput, {keyCode: 27});
+        taskItem.setState({ editing: true });
+        Simulate.keyUp(taskItem.titleInput, { keyCode: 27 });
         expect(taskItem.stopEditing.callCount).toEqual(1);
       });
 
       it('should toggle visibility of text field and task title', () => {
-        taskItem.setState({editing: true});
-        Simulate.keyUp(taskItem.titleInput, {keyCode: 27});
+        taskItem.setState({ editing: true });
+        Simulate.keyUp(taskItem.titleInput, { keyCode: 27 });
         expect(taskItem.titleInput).toBe(null);
         expect(taskItem.titleText).toBeDefined();
       });
@@ -210,7 +210,7 @@ describe('TaskItem', () => {
     describe('`click` event triggered on delete button', () => {
       it('should call #delete()', () => {
         taskItem.delete = sinon.spy();
-        taskItem.setState({editing: true});
+        taskItem.setState({ editing: true });
         Simulate.click(taskItem.deleteButton);
         expect(taskItem.delete.callCount).toEqual(1);
       });

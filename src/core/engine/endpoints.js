@@ -1,10 +1,12 @@
 // Android store API Endpoint builder
-export const buildFetchAppsfromApi = (searchTerm) => ({
+export const buildFetchAppsfromApi = searchTerm => ({
   url: 'https://data.42matters.com/api/v2.0/android/apps/search.json',
   params: {
     access_token: '447c10686ce94632d921e9c5f015c42974b2e792',
     q: searchTerm,
     lang: 'en',
-    limit: 5
-  }
+    limit: 5,
+  },
 });
+
+export default buildFetchAppsfromApi;

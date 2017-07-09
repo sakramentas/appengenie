@@ -1,6 +1,6 @@
 import {
-  SIGN_OUT_SUCCESS
-} from 'src/core/auth';
+  SIGN_OUT_SUCCESS,
+} from '../auth';
 
 import {
   CREATE_ISSUE_SUCCESS,
@@ -9,7 +9,7 @@ import {
   CREATE_ISSUE_ANSWER_SUCCESS,
   FETCH_ISSUES_SUCCESS,
   GET_MOST_RECOMMENDED_APP_ICON_SUCCESS,
-  FETCH_LIKES_QUANTITY_QUESTION_SUCCESS
+  FETCH_LIKES_QUANTITY_QUESTION_SUCCESS,
 } from './action-types';
 
 
@@ -19,35 +19,33 @@ export const IssuesState = {
 };
 
 
-export function issuesReducer(state = IssuesState, {payload, type}) {
+export function issuesReducer(state = IssuesState, { payload, type }) {
   switch (type) {
     case CREATE_ISSUE_SUCCESS:
       return {
         ...state,
-        list: payload
+        list: payload,
       };
     case DELETE_ISSUE_SUCCESS:
       return {
         ...state,
-        list: state.list.filter(issue => issue.key !== payload.key)
+        list: state.list.filter(issue => issue.key !== payload.key),
       };
     case CREATE_ISSUE_ANSWER_SUCCESS:
       return state.merge({
-        list: state.list.map(issue => {
-          return issue.key === payload.key ? {...state, payload} : issue;
-        }),
+        list: state.list.map(issue => (issue.key === payload.key ? { ...state, payload } : issue)),
       });
 
     case FILTER_ISSUES:
       return {
         ...state,
-        filter: payload.filterType || ''
+        filter: payload.filterType || '',
       };
 
     case FETCH_ISSUES_SUCCESS:
       return {
         ...state,
-        list: payload
+        list: payload,
       };
 
     case GET_MOST_RECOMMENDED_APP_ICON_SUCCESS:
@@ -58,10 +56,10 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
             ...state.list,
             [payload.issueKey]: {
               ...state.list[payload.issueKey],
-              mostRecommendedAppIcon: payload.appIcon
-            }
-          }
-        }
+              mostRecommendedAppIcon: payload.appIcon,
+            },
+          },
+        };
       }
       return state;
 
@@ -72,9 +70,9 @@ export function issuesReducer(state = IssuesState, {payload, type}) {
           ...state.list,
           [payload.issueKey]: {
             ...state.list[payload.issueKey],
-            likes: payload.likesObj
-          }
-        }
+            likes: payload.likesObj,
+          },
+        },
       };
 
     case SIGN_OUT_SUCCESS:

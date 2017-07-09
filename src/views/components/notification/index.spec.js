@@ -13,7 +13,7 @@ describe('Notification', () => {
       actionLabel: 'actionLabel',
       dismiss: sinon.spy(),
       display: true,
-      message: 'message'
+      message: 'message',
     };
   });
 
@@ -50,7 +50,7 @@ describe('Notification', () => {
     it('should re-start the timer if props.display === true', () => {
       notification = createTestComponent(Notification, props);
       sinon.spy(notification, 'startTimer');
-      notification.componentWillReceiveProps({display: true});
+      notification.componentWillReceiveProps({ display: true });
 
       expect(notification.startTimer.callCount).toBe(1);
     });
@@ -58,7 +58,7 @@ describe('Notification', () => {
     it('should NOT re-start the timer if props.display === false', () => {
       notification = createTestComponent(Notification, props);
       sinon.spy(notification, 'startTimer');
-      notification.componentWillReceiveProps({display: false});
+      notification.componentWillReceiveProps({ display: false });
 
       expect(notification.startTimer.callCount).toBe(0);
     });
@@ -79,7 +79,7 @@ describe('Notification', () => {
 
       expect(notification.timerId).toBeDefined();
 
-      let timerId = notification.timerId;
+      const timerId = notification.timerId;
       notification.startTimer();
 
       expect(notification.timerId).not.toBe(timerId);
@@ -88,7 +88,7 @@ describe('Notification', () => {
 
 
   describe('Expired timer', () => {
-    it('should invoke `props.dismiss()`', done => {
+    it('should invoke `props.dismiss()`', (done) => {
       props.duration = 10;
       notification = createTestComponent(Notification, props);
 

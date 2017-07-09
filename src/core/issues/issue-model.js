@@ -8,9 +8,8 @@ export const IssueModel =
     userId = null,
     likes = null,
     createdAt = null,
-    appData = {}
-  }) => {
-  return {
+    appData = {},
+  }) => ({
     key,
     body,
     edited,
@@ -19,7 +18,7 @@ export const IssueModel =
     userId,
     likes,
     createdAt,
-    appData
-  }
-};
+    appData,
+  });
 
+export default IssueModel;

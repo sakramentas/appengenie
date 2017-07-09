@@ -4,5 +4,7 @@ export const firebaseConfig = {
   databaseURL: 'https://lookapp-b1421.firebaseio.com',
   projectId: 'lookapp-b1421',
   storageBucket: 'lookapp-b1421.appspot.com',
-  messagingSenderId: '300512092754'
+  messagingSenderId: '300512092754',
 };
+
+export default firebaseConfig;

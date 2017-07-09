@@ -5,7 +5,7 @@ import {
   FETCH_LIKES_QUESTION_SUCCESS,
   LIKE_QUESTION_SUCCESS,
   DISLIKE_QUESTION_SUCCESS,
-  FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS
+  FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS,
 } from './action-types';
 import {
   buildFetchIssue,
@@ -13,79 +13,76 @@ import {
   buildFetchLikesQuestion,
   buildLikeQuestion,
   buildDislikeQuestion,
-  buildfetchAppDataIssueAppRank
+  buildfetchAppDataIssueAppRank,
 } from './firebasebuild';
 
 
 // Issue actions
-export const fetchIssue = issueKey => {
+export const fetchIssue = (issueKey) => {
   const getIssue = buildFetchIssue(issueKey);
-  return dispatch => getIssue(dispatch)
+  return dispatch => getIssue(dispatch);
 };
 
-export const fetchIssueSuccess = (data) => ({
+export const fetchIssueSuccess = data => ({
   type: FETCH_ISSUE_SUCCESS,
-  payload: data
+  payload: data,
 });
 
-export const fetchIssueAppRank = issueKey => {
+export const fetchIssueAppRank = (issueKey) => {
   const getIssueAppRank = buildFetchIssueAppRank(issueKey);
-  return dispatch => getIssueAppRank(dispatch)
+  return dispatch => getIssueAppRank(dispatch);
 };
 
 export const fetchIssueAppRankSuccess = data => ({
   type: FETCH_ISSUE_APP_RANK_SUCCESS,
-  payload: data
+  payload: data,
 });
 
 export const unloadIssue = () => ({
-  type: UNLOAD_ISSUE_SUCCESS
+  type: UNLOAD_ISSUE_SUCCESS,
 });
 
 
 // Like actions
 export const fetchLikesQuestion = (issueKey) => {
   const createBuildFetchLikesQuestion = buildFetchLikesQuestion(issueKey);
-  return dispatch => createBuildFetchLikesQuestion(dispatch)
+  return dispatch => createBuildFetchLikesQuestion(dispatch);
 };
 
-export const fetchLikesQuestionSuccess = (likesObj) => ({
+export const fetchLikesQuestionSuccess = likesObj => ({
   type: FETCH_LIKES_QUESTION_SUCCESS,
   payload: {
-    likesObj
-  }
+    likesObj,
+  },
 });
 
 export const likeQuestion = (issueKey) => {
   const createBuildLikeQuestion = buildLikeQuestion(issueKey);
-  return dispatch => createBuildLikeQuestion(dispatch)
+  return dispatch => createBuildLikeQuestion(dispatch);
 };
 
 export const likeQuestionSuccess = () => ({
-  type: LIKE_QUESTION_SUCCESS
+  type: LIKE_QUESTION_SUCCESS,
 });
 
 export const dislikeQuestion = (issueKey) => {
   const createBuildDislikeQuestion = buildDislikeQuestion(issueKey);
-  return dispatch => createBuildDislikeQuestion(dispatch)
+  return dispatch => createBuildDislikeQuestion(dispatch);
 };
 
 export const dislikeQuestionSuccess = () => ({
-  type: DISLIKE_QUESTION_SUCCESS
+  type: DISLIKE_QUESTION_SUCCESS,
 });
 
 // App data actions
 export const fetchAppDataIssueAppRank = (issueKey, appName) => {
-  console.log('CALLED fetchAppDataIssueAppRank', issueKey, appName)
   const createBuildFetchAppDataIssueAppRank = buildfetchAppDataIssueAppRank(issueKey, appName);
-  return dispatch => createBuildFetchAppDataIssueAppRank(dispatch)
+  return dispatch => createBuildFetchAppDataIssueAppRank(dispatch);
 };
 
-export const fetchAppDataIssueAppRankSuccess = (appData) => {
-  return {
-    type: FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS,
-    payload: {
-      appData
-    }
-  };
-};
+export const fetchAppDataIssueAppRankSuccess = appData => ({
+  type: FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS,
+  payload: {
+    appData,
+  },
+});

@@ -4,7 +4,6 @@ import { authReducer } from './auth';
 import { issuesReducer } from './issues';
 import { issueReducer } from './issue';
 import { answersReducer } from './answers';
-import { likesReducer } from './likes';
 import { userReducer } from './user';
 
 
@@ -14,7 +13,6 @@ export default combineReducers({
   issues: issuesReducer,
   issue: issueReducer,
   answers: answersReducer,
-  // likes: likesReducer,
   user: userReducer,
 });
 

@@ -1,31 +1,33 @@
 import {
   FETCH_USER_INFO_SUCCESS,
-  FETCH_USER_INFO_PROFILE_SUCCESS
+  FETCH_USER_INFO_PROFILE_SUCCESS,
 } from './action-types';
 
-export const userReducer = (state = {}, {payload, type}) => {
+export const userReducer = (state = {}, { payload, type }) => {
   switch (type) {
     case FETCH_USER_INFO_SUCCESS:
       return {
         ...state,
         [payload.key]: {
           ...payload.userData,
-          uid: payload.uid
-        }
+          uid: payload.uid,
+        },
       };
 
-      case FETCH_USER_INFO_PROFILE_SUCCESS:
+    case FETCH_USER_INFO_PROFILE_SUCCESS:
       return {
         ...state,
         profile: {
           [payload.uid]: {
             ...payload.userData,
-            uid: payload.uid
-          }
-        }
+            uid: payload.uid,
+          },
+        },
       };
 
     default:
-      return state
+      return state;
   }
 };
+
+export default userReducer;

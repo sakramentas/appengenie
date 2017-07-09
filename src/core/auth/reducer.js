@@ -1,35 +1,33 @@
 import {
   INIT_AUTH,
   SIGN_IN_SUCCESS,
-  SIGN_OUT_SUCCESS
+  SIGN_OUT_SUCCESS,
 } from './action-types';
 
 
 export const AuthState = {
   authenticated: false,
-  id: null
+  id: null,
 };
 
 
 export const authReducer = (state = AuthState, action) => {
-  let {payload, type} = action;
+  const { payload, type } = action;
   switch (type) {
     case INIT_AUTH:
     case SIGN_IN_SUCCESS:
-      let newState = {
-        authenticated: payload, //true
-        id: payload ? payload.uid : null
-      };
       return {
         ...state,
-        ...newState
+        authenticated: payload,
+        id: payload ? payload.uid : null,
       };
 
     case SIGN_OUT_SUCCESS:
-      return AuthState;
+      return state;
 
     default:
       return state;
   }
 };
 
+export default authReducer;

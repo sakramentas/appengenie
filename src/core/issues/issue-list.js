@@ -1,9 +1,9 @@
-import { FirebaseList } from 'src/core/firebase';
+import { FirebaseList } from '../firebase';
 import {
   createIssueSuccess,
   updateIssueSuccess,
   loadIssuesSuccess,
-  deleteIssueSuccess
+  deleteIssueSuccess,
 } from './actions';
 import { IssueModel } from './issue-model';
 
@@ -11,5 +11,7 @@ export const issueList = new FirebaseList({
   onAdd: createIssueSuccess,
   onChange: updateIssueSuccess,
   onLoad: loadIssuesSuccess,
-  onRemove: deleteIssueSuccess
+  onRemove: deleteIssueSuccess,
 }, IssueModel);
+
+export default issueList;

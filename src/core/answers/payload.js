@@ -8,8 +8,8 @@ export const buildCreateAnswerDataPayload = (newAnswerKey, appName, body) => ({
   createdAt: firebase.database.ServerValue.TIMESTAMP,
 });
 
-export const buildCreateAnswerUserPayload = (userInfo) => ({
+export const buildCreateAnswerUserPayload = userInfo => ({
   displayName: userInfo.displayName,
   id: userInfo.uid,
-  image: userInfo.photoURL
+  image: userInfo.photoURL,
 });

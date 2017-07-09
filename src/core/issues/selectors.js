@@ -1,16 +1,17 @@
-import {createSelector} from 'reselect';
+import { createSelector } from 'reselect';
 
-export const getIssues = (state) => state.issues;
-export const getIssueList = (state) => getIssues(state).list;
-export const getIssueFilter = (state) => getIssues(state).filter;
-export const getIssueFilterSelected = (state) => getIssues(state).filterSelected;
-export const getDeletedIssue = (state) => getIssues(state).deleted;
+export const getIssues = state => state.issues;
+export const getIssueList = state => getIssues(state).list;
+export const getIssueFilter = state => getIssues(state).filter;
+export const getIssueFilterSelected = state => getIssues(state).filterSelected;
+export const getDeletedIssue = state => getIssues(state).deleted;
 
 // MEMOIZED SELECTORS
 export const getVisibleIssues = createSelector(
   getIssueList,
   getIssueFilter,
-  (issues, filter) => (filter.length) ? issues.filter(issue => !issue.title.indexOf(filter)) : issues
+  (issues, filter) => (filter.length > 0 ?
+    issues.filter(issue => !issue.title.indexOf(filter)) : issues),
 );
 
 // const buildGetVisibleIssues = (issues, filter) => { TODO SEE IF IT WORTH REMOVING RESELECT OR NOT
@@ -22,4 +23,5 @@ export const getVisibleIssues = createSelector(
 //   }
 // };
 
-// export const getVisibleIssues = (state) => buildGetVisibleIssues(getIssueList(state), getIssueFilter(state));
+// export const getVisibleIssues = (state) =>
+// buildGetVisibleIssues(getIssueList(state), getIssueFilter(state));

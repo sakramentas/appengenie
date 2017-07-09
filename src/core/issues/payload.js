@@ -1,10 +1,10 @@
 import firebase from 'firebase';
 
 export const buildCreateIssueDataPayload = (body, newIssueKey, uid) => ({
-    key: newIssueKey,
-    body: body,
-    createdAt: firebase.database.ServerValue.TIMESTAMP,
-    userId: uid
+  key: newIssueKey,
+  body,
+  createdAt: firebase.database.ServerValue.TIMESTAMP,
+  userId: uid,
 });
 
 // export const buildCreateIssueUserPayload = (userInfo) => ({
@@ -13,6 +13,6 @@ export const buildCreateIssueDataPayload = (body, newIssueKey, uid) => ({
 //     image: userInfo.photoURL
 // });
 
-export const buildCreateIssueAnswerPayload = (details) => ({
-    answer: details
+export const buildCreateIssueAnswerPayload = details => ({
+  answer: details,
 });

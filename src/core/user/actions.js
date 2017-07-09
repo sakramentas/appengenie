@@ -1,17 +1,16 @@
 import {
   FETCH_USER_INFO_SUCCESS,
-  FETCH_USER_INFO_PROFILE_SUCCESS
+  FETCH_USER_INFO_PROFILE_SUCCESS,
 } from './action-types';
 import {
   buildFetchUserInfo,
-  buildFetchUserInfoProfile
+  buildFetchUserInfoProfile,
 } from './firebasebuild';
-
 
 
 export const fetchUserInfo = (uid, key) => {
   const getUser = buildFetchUserInfo(uid);
-  return dispatch => getUser(dispatch, key)
+  return dispatch => getUser(dispatch, key);
 };
 
 export const fetchUserInfoSuccess = (key, uid, data) => ({
@@ -19,20 +18,20 @@ export const fetchUserInfoSuccess = (key, uid, data) => ({
   payload: {
     key,
     uid,
-    userData: data
-  }
+    userData: data,
+  },
 });
 
 export const fetchUserInfoProfile = (uid) => {
   const getUserProfile = buildFetchUserInfoProfile(uid);
-  return dispatch => getUserProfile(dispatch)
+  return dispatch => getUserProfile(dispatch);
 };
 
 export const fetchUserInfoProfileSuccess = (uid, data) => ({
   type: FETCH_USER_INFO_PROFILE_SUCCESS,
   payload: {
     uid,
-    userData: data
-  }
+    userData: data,
+  },
 });
 

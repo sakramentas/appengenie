@@ -5,16 +5,16 @@ import {
   LIKE_QUESTION_SUCCESS,
   DISLIKE_QUESTION_SUCCESS,
   FETCH_LIKES_QUESTION_SUCCESS,
-  FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS
+  FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS,
 } from './action-types';
 
-export const issueReducer = (state = {}, {payload, type}) => {
+export const issueReducer = (state = {}, { payload, type }) => {
   switch (type) {
 
     case FETCH_ISSUE_SUCCESS:
       return {
         ...state,
-        ...payload
+        ...payload,
       };
 
     case FETCH_ISSUE_APP_RANK_SUCCESS:
@@ -23,7 +23,7 @@ export const issueReducer = (state = {}, {payload, type}) => {
     case FETCH_APP_DATA_ISSUE_APP_RANK_SUCCESS:
       return {
         ...state,
-        mostRecommendedApp: payload.appData
+        mostRecommendedApp: payload.appData,
       };
 
     case LIKE_QUESTION_SUCCESS:
@@ -35,13 +35,15 @@ export const issueReducer = (state = {}, {payload, type}) => {
     case FETCH_LIKES_QUESTION_SUCCESS:
       return {
         ...state,
-        likes: payload.likesObj
+        likes: payload.likesObj,
       };
 
     case UNLOAD_ISSUE_SUCCESS:
-      return state = {};
+      return state;
 
     default:
-      return state
+      return state;
   }
 };
+
+export default issueReducer;

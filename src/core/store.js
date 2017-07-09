@@ -1,10 +1,9 @@
 import { applyMiddleware, compose, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import { createLogger } from 'redux-logger';
 
 export default (initialState = {}) => {
-
   // Redux Logger
   const logger = createLogger();
 
@@ -13,7 +12,7 @@ export default (initialState = {}) => {
 
   // Activate Redux Devtools when on dev environment
   if (process.env.NODE_ENV !== 'production') {
-    const devToolsExtension = window.devToolsExtension;
+    const devToolsExtension = window.devToolsExtension; // eslint-disable-line
     if (typeof devToolsExtension === 'function') {
       middleware = compose(middleware, devToolsExtension());
     }
@@ -25,7 +24,7 @@ export default (initialState = {}) => {
   // Activate hot loader for reducers
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      store.replaceReducer(require('./reducers').default);
+      store.replaceReducer(reducers.default);
     });
   }
 

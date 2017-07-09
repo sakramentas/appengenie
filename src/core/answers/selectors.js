@@ -1,4 +1,4 @@
-import {createSelector} from 'reselect';
+import { createSelector } from 'reselect';
 
 // Answer selectors
 export function getAnswers(state) {
@@ -22,10 +22,10 @@ export function getDeletedAnswer(state) {
 }
 
 
-//=====================================
+//= ====================================
 //  MEMOIZED SELECTORS RESELECT
 //-------------------------------------
-//TODO: create different types of filter, such as selected answer and by keyword
+// TODO: create different types of filter, such as selected answer and by keyword
 export const getVisibleAnswers = createSelector(
   getAnswerList,
   getAnswerFilter,
@@ -33,10 +33,9 @@ export const getVisibleAnswers = createSelector(
     if (filter.length) {
       return answers.filter(answer => !answer.title.indexOf(filter));
     }
-    else {
-      return answers
-    }
-  }
+
+    return answers;
+  },
 );
 
 export const getVisibleAnswerSelected = createSelector(
@@ -46,9 +45,8 @@ export const getVisibleAnswerSelected = createSelector(
     if (filter) {
       return answers.filter(answer => !answer.key.indexOf(filter));
     }
-    else {
-      return answers;
-    }
-  }
+
+    return answers;
+  },
 );
 

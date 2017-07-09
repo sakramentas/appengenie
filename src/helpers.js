@@ -7,15 +7,13 @@ export function deepFlatten(arr) {
     arr.map(x =>             // with each x in array
       Array.isArray(x.title)      // is x an array?
         ? deepFlatten(x)    // if yes, return deeply flattened x
-        : x.title.split(' ')                 // if no, return just x
-    )
+        : x.title.split(' '),                 // if no, return just x
+    ),
   );
 }
 
 // Default Regex
-export const escapeRegexCharacters = (str) => {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-};
+export const escapeRegexCharacters = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 
 // return deepFlatten(issues)

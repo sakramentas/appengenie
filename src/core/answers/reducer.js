@@ -1,6 +1,6 @@
 import {
-  SIGN_OUT_SUCCESS
-} from 'src/core/auth';
+  SIGN_OUT_SUCCESS,
+} from '../auth';
 
 import {
   CREATE_ANSWER_SUCCESS,
@@ -13,11 +13,11 @@ import {
   DISLIKE_ANSWER_SUCCESS,
   UNLOAD_ANSWERS_SUCCESS,
   FETCH_ANSWERS_SUCCESS,
-  FETCH_APP_DATA_ANSWER_SUCCESS
+  FETCH_APP_DATA_ANSWER_SUCCESS,
 } from './action-types';
 
 // Answers reducer
-export function answersReducer(state = {}, {payload, type}) {
+export const answersReducer = (state = {}, { payload, type }) => {
   switch (type) {
     case CREATE_ANSWER_SUCCESS:
       return state;
@@ -25,19 +25,19 @@ export function answersReducer(state = {}, {payload, type}) {
     case FILTER_ANSWERS:
       return {
         ...state,
-        filter: payload.filterType || ''
+        filter: payload.filterType || '',
       };
 
     case FETCH_APPS_FROM_API_SUCCESS:
       return {
         ...state,
-        appsFromApi: payload
+        appsFromApi: payload,
       };
 
     case FETCH_ANSWERS_SUCCESS:
       return {
         ...state,
-        list: payload.data
+        list: payload.data,
       };
 
     case LIKE_ANSWER_SUCCESS:
@@ -53,9 +53,9 @@ export function answersReducer(state = {}, {payload, type}) {
           ...state.list,
           [payload.answerKey]: {
             ...state.list[payload.answerKey],
-            likesObj: payload.likesObj
-          }
-        }
+            likesObj: payload.likesObj,
+          },
+        },
       };
 
     case FETCH_APP_DATA_ANSWER_SUCCESS:
@@ -65,9 +65,9 @@ export function answersReducer(state = {}, {payload, type}) {
           ...state.list,
           [payload.answerKey]: {
             ...state.list[payload.answerKey],
-            appData2: payload.appData
-          }
-        }
+            appData2: payload.appData,
+          },
+        },
       };
 
     case SIGN_OUT_SUCCESS:
@@ -80,9 +80,11 @@ export function answersReducer(state = {}, {payload, type}) {
       return state;
 
     case UNLOAD_ANSWERS_SUCCESS:
-      return state = {};
+      return {};
 
     default:
       return state;
   }
-}
+};
+
+export default answersReducer;
