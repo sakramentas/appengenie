@@ -28,7 +28,7 @@ Quick Start
 $ git clone https://github.com/sakramentas/appengenie.git
 $ cd appengenie
 $ npm install
-$ npm run server:dev
+$ npm start
 ```
 
 #### Install firebase-tools:

@@ -76,7 +76,7 @@ class IssueQuestion extends Component {
 IssueQuestion.propTypes = {
   likes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   issue: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  userInfo: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  userInfo: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   youLiked: PropTypes.bool.isRequired,
   fetchLikesQuestion: PropTypes.func.isRequired,
   likeQuestion: PropTypes.func.isRequired,

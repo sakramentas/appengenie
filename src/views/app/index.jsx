@@ -1,22 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { authActions, getAuth } from 'src/core/auth';
+import { authActions, getAuth } from '../../core/auth';
 import { paths } from '../routes';
 import Header from '../components/partials/Header';
-import BottomNav from '../components/partials/BottomNav';
 
 
-export class App extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  static propTypes = {
-    auth: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired,
-    signOut: PropTypes.func.isRequired
-  };
+class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { router } = this.context;
@@ -37,31 +27,30 @@ export class App extends Component {
           authenticated={this.props.auth.authenticated}
           signOut={this.props.signOut}
         />
-
-        {/*<BottomNav*/}
-          {/*authenticated={this.props.auth.authenticated}*/}
-          {/*signOut={this.props.signOut}*/}
-        {/*/>*/}
-
         <main className="main">{this.props.children}</main>
       </div>
     );
   }
 }
 
+App.contextTypes = {
+  router: React.PropTypes.object.isRequired,
+};
 
-//=====================================
-//  CONNECT
-//-------------------------------------
+App.propTypes = {
+  auth: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  children: PropTypes.object, // eslint-disable-line
+  signOut: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = createSelector(
   getAuth,
-  auth => ({auth})
+  auth => ({ auth }),
 );
 
 const mapDispatchToProps = (authActions);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);
