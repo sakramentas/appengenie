@@ -1,12 +1,10 @@
-// Material UI Provider
-export MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   cyan900, cyan500, lightBlue900,
   pinkA200,
   grey100, grey400, grey500,
-  white, darkBlack, fullBlack, lightGreen800, deepOrange600
+  white, darkBlack, fullBlack, deepOrange600,
 } from 'material-ui/styles/colors';
 
 export const muiTheme = getMuiTheme({
@@ -22,9 +20,12 @@ export const muiTheme = getMuiTheme({
     canvasColor: white,
     borderColor: cyan900,
     pickerHeaderColor: cyan500,
-    shadowColor: fullBlack
+    shadowColor: fullBlack,
   },
   appBar: {
-    height: 60
-  }
+    height: 60,
+  },
 });
+
+
+export { MuiThemeProvider };
