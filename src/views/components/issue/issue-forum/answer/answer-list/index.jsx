@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IssueAnswerItem from './IssueAnswerItem';
+import IssueAnswerItem from '../answer-item/index';
 
 const IssueAnswerList = (props) => {
   const { answers, issueId } = props;

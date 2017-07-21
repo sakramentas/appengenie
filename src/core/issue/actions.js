@@ -17,7 +17,7 @@ import {
 } from './firebasebuild';
 
 
-// Issue actions
+// Issue social
 export const fetchIssue = (issueKey) => {
   const getIssue = buildFetchIssue(issueKey);
   return dispatch => getIssue(dispatch);
@@ -43,7 +43,7 @@ export const unloadIssue = () => ({
 });
 
 
-// Like actions
+// Like social
 export const fetchLikesQuestion = (issueKey) => {
   const createBuildFetchLikesQuestion = buildFetchLikesQuestion(issueKey);
   return dispatch => createBuildFetchLikesQuestion(dispatch);
@@ -74,7 +74,7 @@ export const dislikeQuestionSuccess = () => ({
   type: DISLIKE_QUESTION_SUCCESS,
 });
 
-// App data actions
+// App data social
 export const fetchAppDataIssueAppRank = (issueKey, appName) => {
   const createBuildFetchAppDataIssueAppRank = buildfetchAppDataIssueAppRank(issueKey, appName);
   return dispatch => createBuildFetchAppDataIssueAppRank(dispatch);

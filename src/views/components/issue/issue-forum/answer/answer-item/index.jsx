@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Label, Segment } from 'semantic-ui-react';
 import { get, has, size } from 'lodash';
 import PropTypes from 'prop-types';
-import { answersActions } from '../../../core/answers';
-import LikeBtn from '../actions/LikeBtn';
+import { answersActions } from 'src/core/answers';
+import LikeBtn from 'src/views/components/social/like-button';
 
 class IssueAnswerItem extends Component {
 

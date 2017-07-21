@@ -4,7 +4,7 @@ import { Input, Button, Card, Image } from 'semantic-ui-react';
 import Q from 'q';
 import PropTypes from 'prop-types';
 import { get, isEmpty } from 'lodash';
-import { answersActions } from '../../../core/answers';
+import { answersActions } from 'src/core/answers';
 
 class IssueAnswerAppSearch extends Component {
 

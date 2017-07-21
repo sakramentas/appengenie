@@ -4,10 +4,10 @@ import { Card } from 'material-ui/Card';
 import { Image, Header } from 'semantic-ui-react';
 import { get, has, size } from 'lodash';
 import PropTypes from 'prop-types';
-import { dateSimple } from '../../../util/date-formatter';
-import { userActions } from '../../../core/user';
-import { issueActions } from '../../../core/issue';
-import LikeBtn from '../actions/LikeBtn';
+import { dateSimple } from '../../../../../util/date-formatter';
+import { userActions } from 'src/core/user';
+import { issueActions } from 'src/core/issue';
+import LikeBtn from 'src/views/components/social/like-button';
 
 class IssueQuestion extends Component {
 

@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { get, isEmpty } from 'lodash';
 import { Message } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import IssueQuestion from './IssueQuestion';
-import IssueAppRank from './IssueAppRank';
-import IssueAnswerList from './IssueAnswerList';
-import IssueAnswerForm from './IssueAnswerForm';
-import { issueActions } from '../../../core/issue';
-import { answersActions } from '../../../core/answers';
+import IssueQuestion from './question/index';
+import IssueAppRank from './app-rank/index';
+import IssueAnswerList from './answer/answer-list/index';
+import IssueAnswerForm from './answer/answer-form/index';
+import { issueActions } from 'src/core/issue';
+import { answersActions } from 'src/core/answers';
 
 
 class IssueForum extends Component {

@@ -43,7 +43,7 @@ export const signInSuccess = result => ({
   payload: result.user,
 });
 
-// Auth actions - Need to move all the Firebase functions to a firebasebuild file
+// Auth social - Need to move all the Firebase functions to a firebasebuild file
 const authenticate = provider => (dispatch) => {
   firebaseAuth.signInWithPopup(provider)
     .then((result) => {

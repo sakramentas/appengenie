@@ -4,9 +4,9 @@ import { get, size } from 'lodash';
 import { Link } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { issuesActions } from '../../../core/issues';
-import { userActions } from '../../../core/user';
-import { dateSimple } from '../../../util/date-formatter';
+import { issuesActions } from 'src/core/issues';
+import { userActions } from 'src/core/user';
+import { dateSimple } from 'src/util/date-formatter';
 
 
 class IssueItem extends Component {

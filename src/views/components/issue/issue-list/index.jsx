@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { map } from 'lodash';
-import IssueItem from './IssueItem';
+import IssueItem from './issue-item/index';
 
 class IssueList extends Component {
 

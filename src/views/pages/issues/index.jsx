@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getIssueFilter, getVisibleIssues, issuesActions } from '../../../core/issues';
-import IssueSearch from '../../components/issue/IssueSearch';
-import IssueList from '../../components/issue/IssueList';
+import IssueSearch from '../../components/issue/search/index';
+import IssueList from '../../components/issue/issue-list/index';
 
 class Issues extends Component {
 

@@ -5,9 +5,9 @@ import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import Snackbar from 'material-ui/Snackbar';
-import { getSuggestions, getSuggestionValue } from '../../../core/engine/search';
-import IssueCreate from './IssueCreate';
-import AlertShort from '../notification/alert-short';
+import { getSuggestions, getSuggestionValue } from '../../../../core/engine/search';
+import IssueCreate from '../create-issue/index';
+import AlertShort from '../../notification/alert-short';
 
 
 class IssueSearch extends Component {

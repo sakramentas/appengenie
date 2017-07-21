@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card } from 'material-ui/Card';
 import PropTypes from 'prop-types';
-import { firebaseAuth } from '../../../core/firebase';
+import { firebaseAuth } from 'src/core/firebase';
 
 class IssueCreate extends Component {
 

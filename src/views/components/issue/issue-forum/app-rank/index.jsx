@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { issueActions } from '../../../core/issue';
-import appStoreBadge from '../../../images/appstore-download-img.svg';
-import playStoreBadge from '../../../images/playstore-download-img.png';
+import { issueActions } from 'src/core/issue';
+import appStoreBadge from '../../../../../images/appstore-download-img.svg';
+import playStoreBadge from '../../../../../images/playstore-download-img.png';
 
 class IssueAppRank extends Component {
 

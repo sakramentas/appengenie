@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { TextArea, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { firebaseAuth } from '../../../core/firebase';
-import IssueAnswerAppSearch from './IssueAnswerAppSearch';
+import { firebaseAuth } from 'src/core/firebase';
+import IssueAnswerAppSearch from '../app-search/index';
 
 class IssueAnswerForm extends Component {
 
