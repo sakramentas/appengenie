@@ -1,6 +1,6 @@
 
 # Appengenie
-A repository of issues with app recommendations.
+App Discovery React Application
 
 
 ## Tools
