@@ -1,6 +1,6 @@
 
 # Appengenie
-App Discovery React Application
+React + Redux Application to discover new Apps based on a given description
 
 
 ## Tools
