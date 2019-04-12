@@ -8,7 +8,7 @@ React + Redux Application to discover new Apps based on a given description
 
 <p align="center">
    <img height="500" src="https://user-images.githubusercontent.com/16007048/56063900-7a384200-5d68-11e9-8a2c-8f41a808c651.jpg">
-   <img height="500" src="https://user-images.githubusercontent.com/16007048/56063901-7a384200-5d68-11e9-9818-d74481c6ea2d.jpg">
+   <img height="500" src="https://user-images.githubusercontent.com/16007048/56064274-7822b300-5d69-11e9-8c1d-610b10f2c585.jpg">
    <img height="500" src="https://user-images.githubusercontent.com/16007048/56063903-7a384200-5d68-11e9-91b7-3c20fd4b7491.jpg">
 </p>
 ## Tools
