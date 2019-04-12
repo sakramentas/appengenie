@@ -1,5 +1,5 @@
 
-# Appengenie
+# Appengenie (App + Engine + Genie)
 React + Redux Application to discover new Apps based on a given description
 
 
